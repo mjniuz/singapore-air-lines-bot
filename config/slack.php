@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'endpoint'                => '',
+    'endpoint'                => env('SLACK_WEBHOOK', ''),
 
     /*
     |-------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'channel'                 => '#general',
+    'channel'                 => '#' . env('SLACK_CHANNEL', 'general'),
 
     /*
     |-------------------------------------------------------------
@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'username'                => 'Robot',
+    'username'                => 'Bot Singapure',
 
     /*
     |-------------------------------------------------------------
@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'icon'                    => null,
+    'icon'                    => 'https://maxcdn.icons8.com/Share/icon/ios7/Industry//bot1600.png',
 
     /*
     |-------------------------------------------------------------
