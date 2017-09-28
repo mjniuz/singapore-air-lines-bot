@@ -5,8 +5,13 @@ use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * this function for first call function if call another function
+     *
+     * @param \Illuminate\Http\Request $request The request
+     */
+    public function __construct(Request $request)
     {
-        return "OK";
+        parent::__construct($request);
     }
 }

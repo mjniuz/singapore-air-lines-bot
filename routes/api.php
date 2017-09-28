@@ -18,5 +18,6 @@
 
 Route::group(['namespace' => 'Api'], function ()
 {
-    Route::get('/bot/messenger', ['uses' => 'MessengerController@index']);
+    Route::get('/bot/messenger', ['uses' => 'MessengerController@verifyToken']);
+    Route::post('/bot/messenger', ['uses' => 'MessengerController@messengerBot']);
 });
