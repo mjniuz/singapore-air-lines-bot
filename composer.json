@@ -4,15 +4,21 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/mjniuz/slack-laravel.git"
+        }
+    ],
     "require": {
         "php": ">=7.0.0",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "guzzlehttp/guzzle": "^6.3",
-        "laravelcollective/html": "5.5.*",
+        "laravelcollective/html": "^5.4.0",
         "doctrine/dbal": "^2.3",
-        "maknz/slack-laravel": "^1.0",
+        "mjniuz/slack-laravel": "dev-master",
         "maknz/slack": "^1.7"
     },
     "require-dev": {
