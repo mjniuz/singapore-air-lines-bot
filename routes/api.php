@@ -16,7 +16,7 @@
 //     return $request->user();
 // });
 
-Route::group(['namespace' => 'Api'], function ()
+Route::group(['namespace' => 'Api', 'middleware' => 'api.auth'], function ()
 {
     Route::get('/bot/messenger', ['uses' => 'MessengerController@verifyToken']);
     Route::post('/bot/messenger', ['uses' => 'MessengerController@messengerBot']);
