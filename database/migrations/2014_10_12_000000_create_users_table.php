@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('facebook_id')->nullable();
             $table->string('telegram_id')->nullable();
             $table->string('line_id')->nullable();
-            $table->string('token');
+            $table->string('token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
