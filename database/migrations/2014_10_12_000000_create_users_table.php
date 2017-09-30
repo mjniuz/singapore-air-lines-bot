@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->nullable();
             $table->string('password')->nullable();
             $table->string('profile_picture')->nullable();
+            $table->integer('access')->default(2);
             $table->string('facebook_id')->nullable();
             $table->string('telegram_id')->nullable();
             $table->string('line_id')->nullable();

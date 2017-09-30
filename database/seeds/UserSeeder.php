@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
             'full_name' => 'Administrator',
             'password'  => Hash::make('singapure_bot2017'),
             'username'  => 'administrator',
+            'access'    => User::ADMIN,
         ];
 
         $user = User::create($new_user);
