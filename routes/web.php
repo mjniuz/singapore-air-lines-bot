@@ -18,6 +18,7 @@ Route::get('/', function ()
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
 {
+    // auth
     Route::get('/', ['as' => 'admin.login', 'uses' => 'AuthController@index']);
     Route::post('/', ['as' => 'admin.login.submit', 'uses' => 'AuthController@login']);
     Route::get('/logout', ['as' => 'admin.logout', 'uses' => 'AuthController@logout']);
@@ -25,5 +26,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
     Route::group(['middleware' => 'auth.admin'], function ()
     {
         Route::get('/dashboard', ['as' => 'admin.dashboard', 'uses' => 'SiteController@dashboard']);
+
+        // users
+        Route::get('/users', ['as' => 'admin.users', 'uses' => 'UserController@index']);
+
     });
 });

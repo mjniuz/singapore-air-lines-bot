@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-Store Users
+Users
 @stop
 
 @section('content')
@@ -11,21 +11,21 @@ Store Users
 			<div class="box">
 				<div class="box-header">
 					<div class="col-md-12">
-							<h3 align="center">STORE USERS</h3>
-						<div class="col-md-2">
-						<hr>
-							<a href="{{ route('admin.create.user') }}" class="btn bg-navy"><i class="fa fa-plus"></i> Create New</a>
-						</div>
-						{!! Form::open(['role' => 'form', 'route' => 'admin.search.user', 'method' =>'get']) !!}
-							<div class="col-md-3">
+							<h3 align="center">Users</h3>
+						{!! Form::open(['role' => 'form', 'route' => 'admin.users']) !!}
+							<div class="col-md-4">
 							<hr>
 								{!! Form::text('searchname', Input::get('searchname')?: null, ['class' => 'form-control', 'placeholder' => 'Searching By Name ']) !!}
 							</div>
 							<div class="col-md-4">
 							<hr>
-								{!! Form::text('searchnamestore', Input::get('searchnamestore')?: null, ['class' => 'form-control', 'placeholder' => 'Searching By Name Store']) !!}
+							    {!! Form::select('searchaccess', [
+							    		1 => 'Access Admin',
+							    		2 => 'Access Member',
+							    	], Input::get('searchaccess')?: null, ['class' => 'form-control select2 to-select',
+							        'placeholder' => 'Searching By Access' ]) !!}
 							</div>
-							<div class="col-md-3">
+							<div class="col-md-4">
 							<hr>
 								{!! Form::text('searchusername', Input::get('searchusername')?: null, ['class' => 'form-control', 'placeholder' => 'Searching By Username']) !!}
 							</div>
@@ -44,35 +44,31 @@ Store Users
 							<table class="table table-bordered table-striped">
 								<thead>
 									<tr>
+										<th>No.</th>
 										<th>Full Name</th>
-										<th>Store Name</th>
+										<th>Image</th>
 										<th>Username</th>
-										<th>Action</th>
+										<th>Access</th>
 									</tr>
 								</thead>
 								<tbody>
 									@foreach($users as $key => $user)
 										<tr>
-											<td>{{ $user->first_name . " " . $user->last_name }}</td>
-											<td>
-												{{ isset($user->store->name) ? $user->store->name : '' }}
+                                            <td align="center">
+                                                {{ ($users->currentpage()-1) * $users->perpage() + $key + 1 }}
+                                            </td>
+											<td>{{ $user->full_name }}</td>
+											<td align="center">
+												<img src="{{ $user->image_path }}" width="100px">
 											</td>
 											<td>{{ $user->username }}</td>
-											<td class="text-center">
-												<div class="btn-group">
-													<a href="{{ route('admin.detail.user', $user->id) }}">
-						                      		<button class="btn btn-warning btn-sm"> 
-						                      			<span class="glyphicon glyphicon-eye-open"></span> &nbsp; View	
-						                      		</button>
-							                      	</a>
-							                    </div>
-												<div class="btn-group">
-													<a href="{{ route('admin.reset.user', $user->id) }}">
-						                      		<button class="btn btn-info btn-sm"> 
-						                      			<span class="glyphicon glyphicon-refresh"></span> &nbsp; Reset Password	
-						                      		</button>
-							                      	</a>
-							                    </div>
+											<td>
+												@if ($user->access != \App\Models\User::ADMIN)
+													Member
+												@else
+													Admin
+												@endif
+											</td>
 							                 </td>
 										</tr>
 									@endforeach

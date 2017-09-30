@@ -16,6 +16,12 @@
                     <span>Dashboard</span>
                 </a>
             </li>
+            <li class="{{ (Request::is('*/users*')) ? 'active' : '' }}">
+                <a href="{{ route('admin.users') }}">
+                    <i class='fa fa-user'></i> 
+                    <span>Users</span>
+                </a>
+            </li>
         </ul>
     </section>
 </aside>

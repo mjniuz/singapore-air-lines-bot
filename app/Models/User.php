@@ -2,6 +2,8 @@
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Storage;
+use URL;
 
 class User extends Authenticatable
 {
@@ -24,4 +26,28 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * this function for get image URL
+     *
+     * @return object The image path attribute.
+     */
+    public function getImagePathAttribute()
+    {
+        if (empty($this->attributes['image']) || $this->attributes['image'] == null)
+        {
+            return URL::to('assets/img/photo.jpg');
+        }
+        else
+        {
+            if (env('FILESYSTEM_DRIVER') == 'local')
+            {
+                return URL::to($this->attributes['image']);
+            }
+            else
+            {
+                return Storage::disk(env('FILESYSTEM_DRIVER'))->url($this->attributes['image']);
+            }
+        }
+    }
 }
