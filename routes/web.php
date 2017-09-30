@@ -15,3 +15,8 @@ Route::get('/', function ()
 {
     return view('welcome');
 });
+
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
+{
+    Route::get('/', ['as' => 'admin.login', 'uses' => 'AuthController@index']);
+});
