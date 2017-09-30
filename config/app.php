@@ -177,7 +177,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Maknz\Slack\Laravel\ServiceProvider::class,
+        // Maknz\Slack\Laravel\ServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
 
     ],
@@ -230,7 +230,7 @@ return [
         'View'         => Illuminate\Support\Facades\View::class,
 
         'Input'        => Illuminate\Support\Facades\Input::class,
-        'Slack'        => Maknz\Slack\Laravel\Facade::class,
+        // 'Slack'        => Maknz\Slack\Laravel\Facade::class,
         'Form'         => Collective\Html\FormFacade::class,
         'Html'         => Collective\Html\HtmlFacade::class,
     ],
