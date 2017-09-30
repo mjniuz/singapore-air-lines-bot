@@ -15,8 +15,7 @@
                 <div class="login-logo">
                     <b>S</b>INGAPORE <b>A</b>IRLINES
                 </div>
-                @include('admin._partials.notifications')
-                {!! Form::open(['route' => 'admin.login']) !!}
+                {!! Form::open(['route' => 'admin.login.submit']) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="form-group has-feedback">
                         {!! Form::text('username', null, ['class' => 'form-control', 'placeholder' => 'Username', 'required']) !!}

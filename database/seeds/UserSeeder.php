@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
     {
         $new_user = [
             'full_name' => 'Administrator',
-            'password'  => Hash::make('singapure_bot2017'),
+            'password'  => Hash::make('singapore_bot2017'),
             'username'  => 'administrator',
             'access'    => User::ADMIN,
         ];

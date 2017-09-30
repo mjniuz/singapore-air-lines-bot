@@ -19,4 +19,5 @@ Route::get('/', function ()
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
 {
     Route::get('/', ['as' => 'admin.login', 'uses' => 'AuthController@index']);
+    Route::post('/', ['as' => 'admin.login.submit', 'uses' => 'AuthController@login']);
 });
