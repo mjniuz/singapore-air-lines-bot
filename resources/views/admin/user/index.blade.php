@@ -12,7 +12,7 @@ Users
 				<div class="box-header">
 					<div class="col-md-12">
 							<h3 align="center">Users</h3>
-						{!! Form::open(['role' => 'form', 'route' => 'admin.users']) !!}
+						{!! Form::open(['role' => 'form', 'route' => 'admin.users', 'method' => 'GET']) !!}
 							<div class="col-md-4">
 							<hr>
 								{!! Form::text('searchname', Input::get('searchname')?: null, ['class' => 'form-control', 'placeholder' => 'Searching By Name ']) !!}
