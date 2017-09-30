@@ -20,5 +20,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
 {
     Route::get('/', ['as' => 'admin.login', 'uses' => 'AuthController@index']);
     Route::post('/', ['as' => 'admin.login.submit', 'uses' => 'AuthController@login']);
-    Route::post('/logout', ['as' => 'admin.login.submit', 'uses' => 'AuthController@logout']);
+    Route::get('/logout', ['as' => 'admin.logout', 'uses' => 'AuthController@logout']);
+
+    Route::group(['middleware' => 'auth.admin'], function ()
+    {
+        Route::get('/dashboard', ['as' => 'admin.dashboard', 'uses' => 'SiteController@dashboard']);
+    });
 });
