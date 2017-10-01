@@ -51,13 +51,13 @@ class MessengerRepository extends Repository
         {
             // saving data user
             $data                  = $get_facebook_detail['message'];
-            $name                  = $data['first_name'] . ' ' . $data['last_name'];
+            $name                  = $data->first_name . ' ' . $data->last_name;
             $username              = str_slug($name);
             $user                  = User::firstOrNew(['username' => $username, 'facebook_id' => $facebook_id]);
             $user->username        = $username;
             $user->full_name       = $name;
             $user->facebook_id     = $facebook_id;
-            $user->profile_picture = $data['profile_pic'];
+            $user->profile_picture = $data->profile_pic;
             $user->access          = User::MEMBER;
             $user->save();
         }
