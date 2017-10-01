@@ -34,11 +34,11 @@
 	                        </div>
 	                        <div class="form-group required">
 	                            <label>Start At</label>
-	                            {!! Form::text('start_at', isset($promotion->start_at) ? $promotion->start_at : null, ['class' => 'form-control', 'data-date-format' => 'yyyy-mm-dd', 'required']) !!}
+	                            {!! Form::text('start_at', isset($promotion->start_at) ? $promotion->start_at : null, ['class' => 'datepicker form-control', 'data-date-format' => 'yyyy-mm-dd', 'required']) !!}
 	                        </div>
 	                        <div class="form-group required">
 	                            <label>Expired At</label>
-	                            {!! Form::text('expired_at', isset($promotion->expired_at) ? $promotion->expired_at : null, ['class' => 'form-control', 'data-date-format' => 'yyyy-mm-dd', 'required']) !!}
+	                            {!! Form::text('expired_at', isset($promotion->expired_at) ? $promotion->expired_at : null, ['class' => 'datepicker form-control', 'data-date-format' => 'yyyy-mm-dd', 'required']) !!}
 	                        </div>
 	                        <div class="form-group">
 	                            <label>Image</label>
@@ -76,9 +76,7 @@
     		use24hours: true,
             showInputs: false
         });
-    });
-</script>
-<script type="text/javascript">
+	});
     $('.datepicker').datepicker({
     	format: 'yyyy-mm-dd'
     });
