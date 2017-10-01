@@ -19,11 +19,11 @@ Promotions
 							</div>
 							<div class="col-md-4">
 							<hr>
-								{!! Form::text('searchstartat', Input::get('searchstartat')?: null, ['class' => 'form-control', 'placeholder' => 'Searching By Start At']) !!}
+								{!! Form::text('searchstartat', Input::get('searchstartat')?: null, ['class' => 'form-control datepicker', 'data-date-format' => 'yyyy-mm-dd', 'placeholder' => 'Searching By Start At']) !!}
 							</div>
 							<div class="col-md-4">
 							<hr>
-								{!! Form::text('searchexpiredat', Input::get('searchexpiredat')?: null, ['class' => 'form-control', 'placeholder' => 'Searching By Expired At']) !!}
+								{!! Form::text('searchexpiredat', Input::get('searchexpiredat')?: null, ['class' => 'form-control datepicker', 'data-date-format' => 'yyyy-mm-dd', 'placeholder' => 'Searching By Expired At']) !!}
 							</div>
 
 							<div class="col-md-12">
@@ -62,8 +62,8 @@ Promotions
 											<td align="center">
 												<img src="{{ $promotion->image_file }}" width="100px">
 											</td>
-											<td>{{ $promotion->start_at }}</td>
-											<td>{{ $promotion->expired_at }}</td>
+											<td>{{ $promotion->start }}</td>
+											<td>{{ $promotion->expired }}</td>
 											<td>
 								                <a href="{{ URL::route('admin.promotion.form',$promotion->id) }}" class="btn btn-default btn-warning">
 								                    <i class="glyphicon glyphicon-pencil"></i>  &nbsp;Edit
@@ -89,7 +89,7 @@ Promotions
 @section('script')
 <script src="{{ asset('assets/js/dataTable-boostrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap-switch.js') }}"></script>
-<script>
+<script type="text/javascript">
 	$(function () {
 		$("#example1").DataTable();
 		$('#example2').DataTable({
@@ -102,5 +102,16 @@ Promotions
         });
         $("[type='checkbox']").bootstrapSwitch();
 	});
+
+    $(function() {
+        //Timepicker
+        $(".timepicker").timepicker({
+    		use24hours: true,
+            showInputs: false
+        });
+	});
+    $('.datepicker').datepicker({
+    	format: 'yyyy-mm-dd'
+    });
 </script>
 @stop

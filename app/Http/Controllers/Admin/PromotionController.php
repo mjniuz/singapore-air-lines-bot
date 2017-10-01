@@ -16,7 +16,32 @@ class PromotionController extends Controller
      */
     public function index(Request $request)
     {
-        $promotions = Promotion::orderBy('id', 'desc')->paginate();
+        // set request data
+        $searchtitle     = $request->input('searchtitle');
+        $searchstartat   = $request->input('searchstartat');
+        $searchexpiredat = $request->input('searchexpiredat');
+        $promotions      = Promotion::orderBy('id', 'desc');
+
+        // check title
+        if (!empty($searchtitle))
+        {
+            $promotions = $promotions->where('title', 'LIKE', '%' . $searchtitle . '%');
+        }
+
+        // check start at
+        if (!empty($searchstartat))
+        {
+            $promotions = $promotions->where('start_at', '>', $searchstartat . ' 00:00:00');
+        }
+
+        // check expired at
+        if (!empty($searchexpiredat))
+        {
+            $promotions = $promotions->where('expired_at', '<', $searchexpiredat . ' 23:59:59');
+        }
+
+        // set paginations
+        $promotions = $promotions->paginate();
 
         return view('admin.promotion.index', compact('promotions'));
     }

@@ -8,7 +8,7 @@ class Promotion extends BaseModel
 {
     protected $table   = 'promotions';
     protected $guarded = [];
-    protected $appends = ['image_file'];
+    protected $appends = ['image_file', 'start', 'expired'];
 
     /**
      * this function fo get image
@@ -31,5 +31,23 @@ class Promotion extends BaseModel
                 return URL::to('medias/' . Config::get('path.promotion') . $this->attributes['image']);
             }
         }
+    }
+
+    /**
+     * this function change format start at
+     * @return date
+     */
+    public function getStartAttribute()
+    {
+        return date("Y-m-d", strtotime($this->attributes['start_at']));
+    }
+
+    /**
+     * this function change format start at
+     * @return date
+     */
+    public function getExpiredAttribute()
+    {
+        return date("Y-m-d", strtotime($this->attributes['expired_at']));
     }
 }
