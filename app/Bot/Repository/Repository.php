@@ -30,6 +30,6 @@ class Repository
      */
     public function handlingErrorFormat()
     {
-        return "Format yang kamu masukkan salah, check kembali format kamu di " . url('/format/chat');
+        return "Your format is not correct, check before your format in " . url('/format/chat');
     }
 }

@@ -71,12 +71,24 @@ class Bot extends GuzzleHttpLibrary
      * @param  string   $params The parameters
      * @return string
      */
-    public function hitFacebookReplyMessege($params)
+    public function getFacebookReplyMessege($params)
     {
         $this->body    = $params; //data in body
         $this->method  = 'POST'; // method
         $this->service = '/me/messages?access_token=' . env('FACEBOOK_TOKEN'); // url
-        $this->version = '/v2.6'; // change version
+
+        return $this->handler();
+    }
+
+    /**
+     * get facebooku. user detail
+     * @param  integer  $facebook_id
+     * @return object
+     */
+    public function getUserFacebookDetail($facebook_id)
+    {
+        $this->method  = 'GET'; // method
+        $this->service = '/' . $facebook_id . '?fields=first_name,last_name,profile_pic,timezone,gender&access_token=' . env('FACEBOOK_TOKEN');
 
         return $this->handler();
     }

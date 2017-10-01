@@ -48,18 +48,21 @@ class MessengerController extends ApiController
         $data = $request->all();
         if (isset($data['entry'][0]['messaging'][0]['sender']['id']))
         {
-            $id             = $data['entry'][0]['messaging'][0]['sender']['id'];
+            $facebook_id    = $data['entry'][0]['messaging'][0]['sender']['id'];
             $sender_message = $data['entry'][0]['messaging'][0]['message']['text'];
+
+            // get detail user
+            $response = $this->messenger_repository->getDetailMember($facebook_id);
 
             // check if sender messege if not empty
             if (!empty($sender_message))
             {
-                $message = $this->request_repository->handlingRequest($sender_message, $id);
+                $message = $this->request_repository->handlingRequest($sender_message, $facebook_id);
                 if (empty($message))
                 {
                     $message = $this->request_repository->handlingErrorFormat();
                 }
-                $response = $this->messenger_repository->sendTextMessage($id, $message);
+                $response = $this->messenger_repository->sendTextMessage($facebook_id, $message);
 
                 // return messege
                 return response()->json(['message' => $message, 'response' => $response], 200);
