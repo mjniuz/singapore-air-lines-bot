@@ -1,5 +1,7 @@
 <?php namespace App\Exceptions;
 
+use App\Bot\Exceptions\RestExceptionHandlerTrait;
+use App\Bot\Exceptions\RestTrait;
 use App\Bot\Services\Slack\Slack;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -11,6 +13,8 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
+    use RestExceptionHandlerTrait, RestTrait;
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -74,7 +78,37 @@ class Handler extends ExceptionHandler
                 {
                     Slack::sendNotifyError($request->url(), $request->all(), $e->getMessage(), $e->getFile());
                 }
-                $retval = parent::render($request, $e);
+
+                if (!$this->isApiCall($request))
+                {
+                    if (!($e instanceof HttpResponseException) &&
+                        !($e instanceof ModelNotFoundException) &&
+                        !($e instanceof AuthenticationException) &&
+                        !($e instanceof AuthorizationException) &&
+                        !($e instanceof ValidationException && $e->getResponse()) &&
+                        !$this->isHttpException($e)
+                    )
+                    {
+                        $retval = response()->view('errors.500');
+                    }
+                    else
+                    {
+                        $retval = parent::render($request, $e);
+                    }
+                }
+                else
+                {
+
+                    if (!($e instanceof HttpResponseException))
+                    {
+                        // Show appropriate error response for API
+                        $retval = $this->getJsonResponseForException($request, $e);
+                    }
+                    else
+                    {
+                        $retval = parent::render($request, $e);
+                    }
+                }
         }
 
         return $retval;
