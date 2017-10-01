@@ -78,7 +78,7 @@ class PromotionController extends Controller
             // check data if id not empty
             if ($id != '')
             {
-                $image_storage->deleteImage($promotion, 'promotion');
+                Storage::delete(Config::get('path.promotion') . $promotion->image);
             }
         }
         // create and update data

@@ -10,6 +10,10 @@ class Promotion extends BaseModel
     protected $guarded = [];
     protected $appends = ['image_file'];
 
+    /**
+     * this function fo get image
+     * @return string
+     */
     public function getImageFileAttribute()
     {
         if (empty($this->attributes['image']))

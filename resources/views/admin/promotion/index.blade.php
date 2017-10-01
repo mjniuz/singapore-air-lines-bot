@@ -64,6 +64,11 @@ Promotions
 											</td>
 											<td>{{ $promotion->start_at }}</td>
 											<td>{{ $promotion->expired_at }}</td>
+											<td>
+								                <a href="{{ URL::route('admin.promotion.form',$promotion->id) }}" class="btn btn-default btn-warning">
+								                    <i class="glyphicon glyphicon-pencil"></i>  &nbsp;Edit
+								                </a>	
+											</td>
 										</tr>
 									@endforeach
 								</tbody>
