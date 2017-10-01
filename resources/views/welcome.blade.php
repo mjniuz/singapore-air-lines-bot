@@ -69,7 +69,7 @@
         <div class="flex-center position-ref full-height">
             <div class="content">
                 <div class="title m-b-md">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9d/Singapore_Airlines_Logo.svg/1200px-Singapore_Airlines_Logo.svg.png">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9d/Singapore_Airlines_Logo.svg/1200px-Singapore_Airlines_Logo.svg.png" class="img-responsive" style="width:400px; height:150px; ">
                 </div>
             </div>
         </div>
