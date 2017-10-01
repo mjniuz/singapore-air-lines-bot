@@ -34,5 +34,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
         Route::get('/promotions', ['as' => 'admin.promotions', 'uses' => 'PromotionController@index']);
         Route::get('/promotion/form/{id?}', ['as' => 'admin.promotion.form', 'uses' => 'PromotionController@form']);
         Route::post('/promotion/form/{id?}', ['as' => 'admin.promotion.store', 'uses' => 'PromotionController@store']);
+        Route::delete('promotion/delete/{id?}', ['as' => 'admin.promotion.delete', 'uses' => 'PromotionController@delete']);
     });
 });

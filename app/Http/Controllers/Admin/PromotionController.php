@@ -94,4 +94,34 @@ class PromotionController extends Controller
 
         return redirect()->route('admin.promotions')->with('success', 'Success save promotion');
     }
+
+    /**
+     * this function for delete data base on id
+     *
+     * @param  \Illuminate\Http\Request $request The request
+     * @param  string                   $id      The identifier
+     * @return object                   \
+     */
+    public function delete(Request $request, $id = '')
+    {
+        // find promotion
+        $promotion = Promotion::find($id);
+        // if promotion empty redirect promotion
+        if (empty($promotion))
+        {
+            return redirect()->back();
+        }
+        // check if promotion image is not empty
+        if ($promotion->image != '')
+        {
+            if (Storage::exists($promotion->image))
+            {
+                Storage::delete($promotion->image);
+            }
+        }
+        // promotion delete
+        $promotion->delete();
+        // return back
+        return redirect()->back()->with('success', 'Success delete promotion');
+    }
 }

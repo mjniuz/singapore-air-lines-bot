@@ -67,7 +67,12 @@ Promotions
 											<td>
 								                <a href="{{ URL::route('admin.promotion.form',$promotion->id) }}" class="btn btn-default btn-warning">
 								                    <i class="glyphicon glyphicon-pencil"></i>  &nbsp;Edit
-								                </a>	
+								                </a>
+	                        						{!! Form::model($promotion, ['role' => 'form', 'method' => 'DELETE', 'route' => ['admin.promotion.delete', $promotion->id]]) !!}
+	                                    				<button class="btn btn-default btn-danger" onclick="return confirm('Are You Sure?');">
+	                                    					<i class="glyphicon glyphicon-trash"></i>  &nbsp;Delete
+	                                    				</button>
+                    								{!! Form::close() !!}
 											</td>
 										</tr>
 									@endforeach
