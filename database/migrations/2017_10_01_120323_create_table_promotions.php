@@ -17,7 +17,7 @@ class CreateTablePromotions extends Migration
         {
             $table->increments('id');
             $table->string('title');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->text('description');
             $table->datetime('start_at');
             $table->datetime('expired_at');

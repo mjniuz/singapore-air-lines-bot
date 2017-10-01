@@ -24,7 +24,7 @@
             </li>
             <li class="{{ (Request::is('*/promotion*')) ? 'active' : '' }}">
                 <a href="{{ route('admin.promotions') }}">
-                    <i class='fa fa-user'></i> 
+                    <i class='glyphicon glyphicon-blackboard'></i> 
                     <span>Promotions</span>
                 </a>
             </li>

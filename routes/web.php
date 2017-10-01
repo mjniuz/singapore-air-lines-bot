@@ -30,7 +30,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
         // users
         Route::get('/users', ['as' => 'admin.users', 'uses' => 'UserController@index']);
 
-        // promo
+        // promotions
         Route::get('/promotions', ['as' => 'admin.promotions', 'uses' => 'PromotionController@index']);
+        Route::get('/promotion/form/{id?}', ['as' => 'admin.promotion.form', 'uses' => 'PromotionController@form']);
+        Route::post('/promotion/form/{id?}', ['as' => 'admin.promotion.store', 'uses' => 'PromotionController@store']);
     });
 });

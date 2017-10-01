@@ -45,6 +45,11 @@ Promotions
 										<th>Image</th>
 										<th>Start At</th>
 										<th>Expired At</th>
+										<th>
+							                <a href="{{ URL::route('admin.promotion.form') }}" class="btn btn-default btn-primary">
+							                    <i class="fa fa-plus"></i> Create Promotions
+							                </a>
+										</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -55,7 +60,7 @@ Promotions
                                             </td>
 											<td>{{ $promotion->title }}</td>
 											<td align="center">
-												<img src="{{ $promotion->image_path }}" width="100px">
+												<img src="{{ $promotion->image_file }}" width="100px">
 											</td>
 											<td>{{ $promotion->start_at }}</td>
 											<td>{{ $promotion->expired_at }}</td>
