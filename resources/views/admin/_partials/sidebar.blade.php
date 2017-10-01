@@ -22,6 +22,12 @@
                     <span>Users</span>
                 </a>
             </li>
+            <li class="{{ (Request::is('*/promotion*')) ? 'active' : '' }}">
+                <a href="{{ route('admin.promotions') }}">
+                    <i class='fa fa-user'></i> 
+                    <span>Promotions</span>
+                </a>
+            </li>
         </ul>
     </section>
 </aside>
