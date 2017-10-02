@@ -4,6 +4,7 @@ use App\Bot\Repository\MessengerRepository;
 use App\Bot\Repository\RequestRepository;
 use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class MessengerController extends ApiController
 {
@@ -35,7 +36,9 @@ class MessengerController extends ApiController
         {
             return response($request->input('hub_challenge'), 200);
         }
-        abort(404);
+        Log::error(json_encode($request->all()));
+        
+        return response($request->input('hub_challenge'), 200);
     }
 
     /**
