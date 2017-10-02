@@ -12,6 +12,7 @@ class MessengerController extends ApiController
      *
      * @param \Illuminate\Http\Request $request The request
      */
+    protected $request_repository, $messenger_repository;
     public function __construct(Request $request)
     {
         parent::__construct($request);
