@@ -50,6 +50,7 @@ class MessengerController extends ApiController
     public function messengerBot(Request $request)
     {
         $data = $request->all();
+        Log::error(json_encode($data));
         if (isset($data['entry'][0]['messaging'][0]['sender']['id']))
         {
             $facebook_id    = $data['entry'][0]['messaging'][0]['sender']['id'];
