@@ -18,7 +18,7 @@ class Bot extends GuzzleHttpLibrary
 
     public function __construct()
     {
-        $this->endpoint = env('FACEBOOK_ENDPOIND'); // get endpoint
+        $this->endpoint = env('FACEBOOK_ENDPOINT'); // get endpoint
         $this->method   = 'POST'; // set default POST method
         $this->version  = '/v2.6'; //set default version 1
 
