@@ -5,9 +5,9 @@ use App\Bot\Exceptions\RestTrait;
 use App\Bot\Services\Slack\Slack;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Http\Exception\HttpResponseException;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -23,7 +23,7 @@ class Handler extends ExceptionHandler
     protected $dontReport = [
         AuthorizationException::class,
         HttpException::class,
-        HttpResponseException::class,
+        \HttpResponseException::class,
         ModelNotFoundException::class,
         ValidationException::class,
     ];
@@ -69,7 +69,7 @@ class Handler extends ExceptionHandler
             default:
                 // send notification to slack
                 // and Only notify internal server error
-                if (!($e instanceof HttpResponseException) &&
+                if (!($e instanceof \HttpResponseException) &&
                     !($e instanceof ModelNotFoundException) &&
                     !($e instanceof AuthenticationException) &&
                     !($e instanceof AuthorizationException) &&
@@ -78,10 +78,10 @@ class Handler extends ExceptionHandler
                 {
                     Slack::sendNotifyError($request->url(), $request->all(), $e->getMessage(), $e->getFile());
                 }
-
+                $retval = parent::render($request, $e);
                 if (!$this->isApiCall($request))
                 {
-                    if (!($e instanceof HttpResponseException) &&
+                    if (!($e instanceof \HttpResponseException) &&
                         !($e instanceof ModelNotFoundException) &&
                         !($e instanceof AuthenticationException) &&
                         !($e instanceof AuthorizationException) &&
@@ -99,7 +99,7 @@ class Handler extends ExceptionHandler
                 else
                 {
 
-                    if (!($e instanceof HttpResponseException))
+                    if (!($e instanceof \HttpResponseException))
                     {
                         // Show appropriate error response for API
                         $retval = $this->getJsonResponseForException($request, $e);

@@ -4,6 +4,7 @@ use App\Bot\Repository\MessengerRepository;
 use App\Bot\Repository\RequestRepository;
 use App\Http\Controllers\Api\ApiController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class MessengerController extends ApiController
 {
@@ -12,6 +13,7 @@ class MessengerController extends ApiController
      *
      * @param \Illuminate\Http\Request $request The request
      */
+    protected $request_repository, $messenger_repository;
     public function __construct(Request $request)
     {
         parent::__construct($request);
@@ -34,7 +36,9 @@ class MessengerController extends ApiController
         {
             return response($request->input('hub_challenge'), 200);
         }
-        abort(404);
+        Log::error(json_encode($request->all()));
+
+        return response($request->input('hub_challenge'), 200);
     }
 
     /**
@@ -46,6 +50,7 @@ class MessengerController extends ApiController
     public function messengerBot(Request $request)
     {
         $data = $request->all();
+        Log::error(json_encode($data));
         if (isset($data['entry'][0]['messaging'][0]['sender']['id']))
         {
             $facebook_id    = $data['entry'][0]['messaging'][0]['sender']['id'];
@@ -70,7 +75,9 @@ class MessengerController extends ApiController
         }
         else
         {
-            abort(404);
+            return response()->json([
+                'message'   => 'error'
+            ]);
         }
     }
 }

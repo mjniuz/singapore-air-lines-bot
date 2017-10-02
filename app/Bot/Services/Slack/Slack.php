@@ -17,13 +17,18 @@ class Slack
      */
     public static function sendNotifyError($url, $request, $error, $location)
     {
+        // set client slack
+        $client  = new Maknz\Slack\Client(Config::get('slack.endpoint'));
+        $channel = Config::get('slack.channel');
+        $env     = env('APP_ENV');
+        $icon    = Config::get('slack.icon');
         // set environment Attachment
         $attachment = new Attachment([
             'fallback'    => 'Environment',
             'author_name' => 'Environment',
-            'author_icon' => Config::get('slack.icon'),
+            'author_icon' => $icon,
             'username'    => 'Bot Singapure',
-            'text'        => env('APP_ENV'),
+            'text'        => $env,
             'fields'      => [
                 new AttachmentField([
                     'title' => 'URL',
@@ -47,6 +52,10 @@ class Slack
                 ]),
             ],
         ]);
+
+        $message = $client->createMessage();
+        $message->attach($attachment);
+        $message->to($channel)->withIcon($icon)->send('Bot Error');
 
         self::sendNotification($attachment);
     }
