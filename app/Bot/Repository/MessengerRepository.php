@@ -2,6 +2,7 @@
 
 use App\Bot\Services\Bot\Bot;
 use App\Models\User;
+use App\Models\Activity;
 
 class MessengerRepository extends Repository
 {
@@ -11,11 +12,12 @@ class MessengerRepository extends Repository
      *
      * @param \Illuminate\Http\Request $request The request
      */
-    protected $bot;
+    protected $bot, $activity;
     public function __construct()
     {
         // repository messenger for handle process data
         $this->bot = new Bot;
+        $this->activity = new Activity();
     }
 
     /**
@@ -41,7 +43,7 @@ class MessengerRepository extends Repository
     /**
      * this function for save member facebook id
      * @param  integer  $facebook_id
-     * @return array
+     * @return object
      */
     public function getDetailMember($facebook_id)
     {
@@ -61,7 +63,20 @@ class MessengerRepository extends Repository
             $user->profile_picture = $data->profile_pic;
             $user->access          = User::MEMBER;
             $user->save();
+
+            return $user;
         }
-        return $get_facebook_detail;
+        return null;
+    }
+
+    public function create($userID = null, $type = 'text', $message = ""){
+        $activity   = new Activity();
+        $activity->user_id  = $userID;
+        $activity->type     = $type;
+        $activity->message  = $message;
+        $activity->save();
+
+        return $activity;
+
     }
 }
