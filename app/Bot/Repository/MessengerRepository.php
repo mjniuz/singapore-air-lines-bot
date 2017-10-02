@@ -11,6 +11,7 @@ class MessengerRepository extends Repository
      *
      * @param \Illuminate\Http\Request $request The request
      */
+    protected $bot;
     public function __construct()
     {
         // repository messenger for handle process data
@@ -40,7 +41,7 @@ class MessengerRepository extends Repository
     /**
      * this function for save member facebook id
      * @param  integer  $facebook_id
-     * @return object
+     * @return array
      */
     public function getDetailMember($facebook_id)
     {

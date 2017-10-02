@@ -2,7 +2,7 @@
 
 use GuzzleHttp\Client as GuzzleHttpLibrary;
 use GuzzleHttp\RequestOptions;
-use Log;
+use Illuminate\Support\Facades\Log;
 
 /**
  * class extend from guzzle for send data to bot
@@ -34,7 +34,7 @@ class Bot extends GuzzleHttpLibrary
 
     /**
      * handling response from bot
-     * @return string
+     * @return array
      */
     public function handler()
     {
@@ -54,8 +54,8 @@ class Bot extends GuzzleHttpLibrary
             Log::error($ex);
 
             // return error message from etalastic
-            $message     = json_decode($ex->getResponse()->getBody()->getContents());
-            $status_code = $ex->getResponse()->getStatusCode();
+            $message     = json_decode($ex->getMessage());
+            $status_code = $ex->getCode();
             $ex          = [
                 'http_code' => $status_code,
                 'message'   => $message,
@@ -69,9 +69,9 @@ class Bot extends GuzzleHttpLibrary
      * this function for check mobile or email
      *
      * @param  string   $params The parameters
-     * @return string
+     * @return array
      */
-    public function getFacebookReplyMessege($params)
+    public function getFacebookReplyMessege(array $params)
     {
         $this->body    = $params; //data in body
         $this->method  = 'POST'; // method
@@ -83,7 +83,7 @@ class Bot extends GuzzleHttpLibrary
     /**
      * get facebooku. user detail
      * @param  integer  $facebook_id
-     * @return object
+     * @return array
      */
     public function getUserFacebookDetail($facebook_id)
     {
@@ -95,7 +95,7 @@ class Bot extends GuzzleHttpLibrary
 
     /**
      * send data via guzzle to etalastic
-     * @return object
+     * @return string
      */
     private function _send()
     {
