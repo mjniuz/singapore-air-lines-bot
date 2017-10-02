@@ -50,7 +50,6 @@ class MessengerController extends ApiController
     public function messengerBot(Request $request)
     {
         $data = $request->all();
-        Log::error(json_encode($data));
         if (isset($data['entry'][0]['messaging'][0]['sender']['id']))
         {
             $facebook_id    = $data['entry'][0]['messaging'][0]['sender']['id'];
@@ -75,6 +74,7 @@ class MessengerController extends ApiController
                 // create log
                 $this->messenger_repository->create($user->id,'text', $message);
                 $response = $this->messenger_repository->sendTextMessage($facebook_id, $message);
+                Log::error(json_encode($user));
 
                 // return message
                 return response()->json(['message' => $message, 'response' => $response], 200);

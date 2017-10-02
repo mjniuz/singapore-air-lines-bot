@@ -3,6 +3,7 @@
 use App\Bot\Services\Bot\Bot;
 use App\Models\User;
 use App\Models\Activity;
+use Illuminate\Support\Facades\Log;
 
 class MessengerRepository extends Repository
 {
