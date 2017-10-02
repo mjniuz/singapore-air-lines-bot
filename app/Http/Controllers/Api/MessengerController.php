@@ -37,7 +37,7 @@ class MessengerController extends ApiController
             return response($request->input('hub_challenge'), 200);
         }
         Log::error(json_encode($request->all()));
-        
+
         return response($request->input('hub_challenge'), 200);
     }
 
@@ -74,7 +74,9 @@ class MessengerController extends ApiController
         }
         else
         {
-            abort(404);
+            return response()->json([
+                'message'   => 'error'
+            ]);
         }
     }
 }
