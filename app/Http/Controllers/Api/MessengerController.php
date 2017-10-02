@@ -32,7 +32,6 @@ class MessengerController extends ApiController
      */
     public function verifyToken(Request $request)
     {
-        $a = new A();
         if ($request->input('hub_mode') === "subscribe" && $request->input('hub_verify_token') === env('FACEBOOK_VERIFY_TOKEN'))
         {
             return response($request->input('hub_challenge'), 200);
