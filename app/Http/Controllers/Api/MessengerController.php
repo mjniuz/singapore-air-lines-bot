@@ -32,6 +32,7 @@ class MessengerController extends ApiController
      */
     public function verifyToken(Request $request)
     {
+        $a = new A();
         if ($request->input('hub_mode') === "subscribe" && $request->input('hub_verify_token') === env('FACEBOOK_VERIFY_TOKEN'))
         {
             return response($request->input('hub_challenge'), 200);
@@ -76,8 +77,7 @@ class MessengerController extends ApiController
                 $this->messenger_repository->create($user->id,'text', $message);
                 $response = $this->messenger_repository->sendTextMessage($facebook_id, $message);
 
-                // insert a
-                // return messege
+                // return message
                 return response()->json(['message' => $message, 'response' => $response], 200);
             }
         }

@@ -1,6 +1,5 @@
 <?php namespace App\Http\Middleware;
 
-use App\Bot\Services\Slack\Slack;
 use Closure;
 
 class ApiAuthentication
@@ -16,7 +15,7 @@ class ApiAuthentication
     {
         if (env('APP_ENV') != 'local')
         {
-            Slack::sendNotifyRequest($request->all(), $request->url());
+            //Slack::sendNotifyRequest($request->all(), $request->url());
         }
         return $next($request);
     }
