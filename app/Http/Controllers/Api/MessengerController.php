@@ -115,7 +115,8 @@ class MessengerController extends ApiController
         // is event read
         $messaging  = !empty($data['entry'][0]['messaging']) ? $data['entry'][0]['messaging'][0] : false;
 
-        if(!$messaging OR !empty($messaging['read']) OR !empty($messaging['delivery'])){
+        if(!$messaging OR !empty($messaging['read']) OR !empty($messaging['delivery'])
+            OR (!empty($messaging['message']) AND !empty($messaging['message']['is_echo']))){
             return true;
         }
 
