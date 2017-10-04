@@ -4,6 +4,7 @@ namespace App\FlightPriceReminder;
 
 use App\Bot\Repository\TemplateService;
 use App\Bot\Services\Word\WordService;
+use Illuminate\Support\Facades\Log;
 
 class PriceReminderService extends FlightReminderRepository{
     protected $user, $message, $type, $template, $word, $arr, $has_active;
@@ -59,7 +60,7 @@ class PriceReminderService extends FlightReminderRepository{
 
         if((int)$this->has_active->amount == 0){
             // please set your amount
-            $this->setAmount();
+            return $this->setAmount();
         }
 
         if(!empty($this->arr['price_reminder_confirm_all'])){
