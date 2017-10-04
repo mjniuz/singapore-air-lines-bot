@@ -23,6 +23,7 @@ class FlightReminderRepository{
         $flight->to         = "";
         $flight->amount     = 0;
         $flight->airline    = "";
+        $flight->date_flight    = null;
         $flight->save();
 
         return $flight;
