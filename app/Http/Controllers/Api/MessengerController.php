@@ -127,6 +127,10 @@ class MessengerController extends ApiController
             return $data['entry'][0]['messaging'][0]['message']['text'];
         }
 
+        if($this->getMessageType($data) == 'postback'){
+            return $data['entry'][0]['messaging'][0]['postback']['payload'];
+        }
+
         return false;
     }
 
@@ -135,13 +139,18 @@ class MessengerController extends ApiController
             return false;
         }
 
-        $message    = $data['entry'][0]['messaging'][0]['message'];
-
-        if(!empty($message['text'])){
-            return 'text';
+        $messaging  = $data['entry'][0]['messaging'][0];
+        if(!empty($messaging['message'])){
+            if(!empty($message['text'])){
+                return 'text';
+            }
         }
 
-        if(!empty($message['attachments'])){
+        if(!empty($messaging['postback'])){
+            return 'postback';
+        }
+
+        if(!empty($message['message']['attachments'])){
             return $message['attachments'][0]['type'];
         }
 

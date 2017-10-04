@@ -6,13 +6,17 @@ use App\Bot\Repository\TemplateService;
 use App\Bot\Services\Word\WordService;
 
 class PriceReminderService extends FlightReminderRepository{
-    protected $user, $message, $type, $template, $word;
+    protected $user, $message, $type, $template, $word, $arr;
     public function __construct($user, $message, $type = 'text') {
         $this->user     = $user;
         $this->message  = $message;
         $this->type     = $type;
         $this->template = new TemplateService();
         $this->word     = new WordService();
+
+        // get postback param
+        parse_str($this->message, $arr);
+        $this->arr      = $arr;
     }
 
 

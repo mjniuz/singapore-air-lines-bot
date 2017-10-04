@@ -62,6 +62,14 @@ class TemplateService
         ];
     }
 
+    public function sendGeneric($genericTemplates = [], $delay = 0 /*second*/){
+        return [
+            'type'      => 'generic',
+            'response'  => $genericTemplates,
+            'delay'     => $delay
+        ];
+    }
+
     public function sendButton($buttonTemplates = [], $delay = 0 /*second*/){
         return [
             'type'      => 'button',
