@@ -86,23 +86,25 @@ class MessengerRepository extends Repository
                         "pnr_number"    => $message['pnr_number'],
                         "checkin_url"   => $message['checkin_url'],
                         "flight_info"   => [
-                            "flight_number"     => $message['flight_number'],
-                            "departure_airport" => [
-                                "airport_code"      => $message['departure_airport']['airport_code'],
-                                "city"              => $message['departure_airport']['city'],
-                                "terminal"          => $message['departure_airport']['terminal'],
-                                "gate"              => $message['departure_airport']['gate'],
-                            ],
-                            "arrival_airport" => [
-                                "airport_code"      => $message['arrival_airport']['airport_code'],
-                                "city"              => $message['arrival_airport']['city'],
-                                "terminal"          => $message['arrival_airport']['terminal'],
-                                "gate"              => $message['arrival_airport']['gate'],
-                            ],
-                            "flight_schedule" => [
-                                "boarding_time"     => date("Y-m-dTH:m", strtotime($message['flight_schedule']['boarding_time'])),
-                                "departure_time"    => date("Y-m-dTH:m", strtotime($message['flight_schedule']['departure_time'])),
-                                "arrival_time"      => date("Y-m-dTH:m", strtotime($message['flight_schedule']['arrival_time']))
+                            [
+                                "flight_number"     => $message['flight_number'],
+                                "departure_airport" => [
+                                    "airport_code"      => $message['departure_airport']['airport_code'],
+                                    "city"              => $message['departure_airport']['city'],
+                                    "terminal"          => $message['departure_airport']['terminal'],
+                                    "gate"              => $message['departure_airport']['gate'],
+                                ],
+                                "arrival_airport" => [
+                                    "airport_code"      => $message['arrival_airport']['airport_code'],
+                                    "city"              => $message['arrival_airport']['city'],
+                                    "terminal"          => $message['arrival_airport']['terminal'],
+                                    "gate"              => $message['arrival_airport']['gate'],
+                                ],
+                                "flight_schedule" => [
+                                    "boarding_time"     => date("Y-m-dTH:m", strtotime($message['flight_schedule']['boarding_time'])),
+                                    "departure_time"    => date("Y-m-dTH:m", strtotime($message['flight_schedule']['departure_time'])),
+                                    "arrival_time"      => date("Y-m-dTH:m", strtotime($message['flight_schedule']['arrival_time']))
+                                ]
                             ]
                         ]
                     ]
