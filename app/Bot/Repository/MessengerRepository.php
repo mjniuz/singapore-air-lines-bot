@@ -83,7 +83,7 @@ class MessengerRepository extends Repository
             }
 
             if(!empty($message['buttons'])){
-                $element['buttons']    = $message['buttons'];
+                $element['buttons']    = $this->getButtons($message['buttons']);
             }
 
             $elements[] = $element;
