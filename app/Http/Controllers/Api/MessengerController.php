@@ -84,10 +84,11 @@ class MessengerController extends ApiController
 
             $priceReminderRepo      = new FlightReminderRepository();
             $hasNonFinishedFlight   = $priceReminderRepo->findNotFinishedByUser($user->id);
-            
+
             $priceReminder          = new PriceReminderService($user, $message, $msgType, $hasNonFinishedFlight);
             if($hasNonFinishedFlight OR $this->stringContain($message, "price reminder") OR $this->stringContain($message, "price_reminder")){
                 $priceReminderResponse  = $priceReminder->start();
+
                 if(!empty($priceReminderResponse)){
                     return $bot->responseMessage($priceReminderResponse);
                 }

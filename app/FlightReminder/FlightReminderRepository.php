@@ -19,6 +19,10 @@ class FlightReminderRepository{
     public function insert($userID = null){
         $flight = new FlightReminder();
         $flight->user_id    = $userID;
+        $flight->from       = "";
+        $flight->to         = "";
+        $flight->amount     = 0;
+        $flight->airline    = "";
         $flight->save();
 
         return $flight;
