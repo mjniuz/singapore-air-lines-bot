@@ -96,7 +96,7 @@ class WordService{
 
     public function askConfirmBudgetButton($budget = 0){
         $buttons    = [
-            "title"     => "Is your budget " . number_format($budget,0) . " correct?",
+            "title"     => "Is your budget SGD " . number_format($budget,0) . " correct?",
             "buttons"   => [
                 [
                     "type"      => "postback",
