@@ -109,6 +109,12 @@ class PriceReminderService extends FlightReminderRepository{
             ];
         }
 
+        if(!$this->isValidNum($this->message)){
+            return [
+                $this->template->sendText("Please input number only in SGD, (ex 110)")
+            ];
+        }
+
         if(!empty($this->arr['price_reminder_set_amount'])){
             // final confirm amount
             $validAmount    = $this->arr['price_reminder_set_amount'];
@@ -123,11 +129,9 @@ class PriceReminderService extends FlightReminderRepository{
             ];
         }
 
-        //if(!$this->isValidNum($this->message)){
-            return [
-                $this->template->sendText("Please input number only in SGD, (ex 110)")
-            ];
-        //}
+        return [
+            $this->template->sendText("Please input number only in SGD, (ex 110)")
+        ];
     }
 
     private function setDateFlight(){
