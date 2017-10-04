@@ -15,19 +15,15 @@ Check Flights
 						{!! Form::open(['role' => 'form', 'route' => 'admin.checkflights', 'method' => 'GET']) !!}
 							<div class="col-md-4">
 							<hr>
-								{!! Form::text('searchname', Input::get('searchname')?: null, ['class' => 'form-control', 'placeholder' => 'Searching By Name ']) !!}
+								{!! Form::text('searchlocationfrom', Input::get('searchlocationfrom')?: null, ['class' => 'form-control', 'placeholder' => 'Searching By Location From ']) !!}
 							</div>
 							<div class="col-md-4">
 							<hr>
-							    {!! Form::select('searchaccess', [
-							    		1 => 'Access Admin',
-							    		2 => 'Access Member',
-							    	], Input::get('searchaccess')?: null, ['class' => 'form-control select2 to-select',
-							        'placeholder' => 'Searching By Access' ]) !!}
+								{!! Form::text('searchlocationto', Input::get('searchlocationto')?: null, ['class' => 'form-control', 'placeholder' => 'Searching By Location To']) !!}
 							</div>
 							<div class="col-md-4">
 							<hr>
-								{!! Form::text('searchusername', Input::get('searchusername')?: null, ['class' => 'form-control', 'placeholder' => 'Searching By Username']) !!}
+								{!! Form::text('searchdate', Input::get('searchdate')?: null, ['class' => 'form-control datepicker', 'data-date-format' => 'yyyy-mm-dd', 'placeholder' => 'Searching By Date']) !!}
 							</div>
 
 							<div class="col-md-12">
@@ -48,6 +44,7 @@ Check Flights
 										<th>Location Form</th>
 										<th>Location To</th>
 										<th>Amount Found</th>
+										<th>Date</th>
 										<th>Travel Time</th>
 									</tr>
 								</thead>
@@ -60,6 +57,7 @@ Check Flights
 											<td>{{ $user->from_location }}</td>
 											<td>{{ $user->to_location }}</td>
 											<td>{{ $user->amount_found }}</td>
+											<td>{{ $user->date }}</td>
 											<td>{{ $user->travel_time }} Minute</td>
 										</tr>
 									@endforeach
@@ -76,7 +74,7 @@ Check Flights
 @section('script')
 <script src="{{ asset('assets/js/dataTable-boostrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap-switch.js') }}"></script>
-<script>
+<script type="text/javascript">
 	$(function () {
 		$("#example1").DataTable();
 		$('#example2').DataTable({
@@ -89,5 +87,17 @@ Check Flights
         });
         $("[type='checkbox']").bootstrapSwitch();
 	});
+
+    $(function() {
+        //Timepicker
+        $(".timepicker").timepicker({
+    		use24hours: true,
+            showInputs: false
+        });
+	});
+    $('.datepicker').datepicker({
+    	format: 'yyyy-mm-dd'
+    });
 </script>
 @stop
+
