@@ -6,12 +6,13 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "doctrine/dbal": "^2.3",
         "fideloper/proxy": "~3.3",
+        "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
-        "guzzlehttp/guzzle": "^6.3",
         "laravelcollective/html": "^5.4.0",
-        "doctrine/dbal": "^2.3"
+        "ramsey/uuid": "^3.7"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

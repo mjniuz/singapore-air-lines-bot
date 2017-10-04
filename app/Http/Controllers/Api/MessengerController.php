@@ -2,7 +2,11 @@
 
 use App\Bot\Repository\MessengerRepository;
 use App\Bot\Repository\RequestRepository;
+use App\Bot\Repository\TemplateService;
+use App\Bot\Repository\UserRepository;
+use App\FlightPriceReminder\PriceReminderService;
 use App\Http\Controllers\Api\ApiController;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -13,15 +17,14 @@ class MessengerController extends ApiController
      *
      * @param \Illuminate\Http\Request $request The request
      */
-    protected $request_repository, $messenger_repository;
+    protected $request_repository, $userRepo, $template;
     public function __construct(Request $request)
     {
         parent::__construct($request);
-
-        // repository messenger for handle process data
-        $this->messenger_repository = new MessengerRepository();
         // this repository for handling request
-        $this->request_repository = new RequestRepository();
+        $this->request_repository   = new RequestRepository();
+        $this->userRepo             = new UserRepository();
+        $this->template             = new TemplateService();
     }
 
     /**
@@ -52,33 +55,38 @@ class MessengerController extends ApiController
         $data = $request->all();
         if (isset($data['entry'][0]['messaging'][0]['sender']['id']))
         {
-            $facebook_id    = $data['entry'][0]['messaging'][0]['sender']['id'];
+            $msgType        = $this->getMessageType($data);
+            $facebook_id    = $this->getFacebookID($data);
             $message        = $data['entry'][0]['messaging'][0]['message']['text'];
 
             // get detail user
-            $user   = $this->messenger_repository->getDetailMember($facebook_id);
-            if(is_null($user)){
-                return response()->json([
-                    'message'   => 'error'
-                ]);
+            $user   = $this->userRepo->findUserByFacebookID($facebook_id);
+            if(!$user){
+                $user   = $this->userRepo->getDetailMember($facebook_id);
+                if(is_null($user)){
+                    return response()->json([
+                        'message'   => 'error'
+                    ]);
+                }
             }
 
             // check if sender messege if not empty
             if (!empty($message))
             {
-                /*$message = $this->request_repository->handlingRequest($sender_message, $facebook_id);
-                if (empty($message))
-                {
-                    $message = $this->request_repository->handlingErrorFormat();
-                }*/
+                $bot    = new MessengerRepository($user->facebook_id);
+                $this->userRepo->create($user->id,$msgType, $message);
+
+                $priceReminder          = new PriceReminderService($user, $message, $msgType);
+                $priceReminderResponse  = $priceReminder->start();
+                if(!empty($priceReminderResponse)){
+                    return $bot->responseMessage($priceReminderResponse);
+                }
+
                 // create log
-                $this->messenger_repository->create($user->id,'text', $message);
-                $response = $this->messenger_repository->sendTextMessage($facebook_id, $message);
-                Log::error(json_encode($response));
-
-
-                // return message
-                return response()->json(['message' => $message, 'response' => $response], 200);
+                // default
+                return $bot->responseMessage([
+                    $this->template->sendText($message)
+                ]);
             }
         }
         else
@@ -87,5 +95,32 @@ class MessengerController extends ApiController
                 'message'   => 'error'
             ]);
         }
+    }
+
+    private function getFacebookID($data){
+
+        return $data['entry'][0]['messaging'][0]['sender']['id'];
+    }
+
+    private function getMessage($data){
+        if($this->getMessageType($data) == 'text'){
+            return $data['entry'][0]['messaging'][0]['message']['text'];
+        }
+
+        return false;
+    }
+
+    private function getMessageType(array $data = []){
+        $message    = $data['entry'][0]['messaging'][0]['message'];
+
+        if(!empty($message['text'])){
+            return 'text';
+        }
+
+        if(!empty($message['attachments'])){
+            return $message['attachments'][0]['type'];
+        }
+
+        return false;
     }
 }
