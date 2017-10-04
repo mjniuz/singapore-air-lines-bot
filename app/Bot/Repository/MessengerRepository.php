@@ -88,6 +88,10 @@ class MessengerRepository extends Repository
 
             $elements[] = $element;
         }
+
+        $additionalButton   = [
+
+        ];
         $params = [
             'recipient' => [
                 'id' => $this->facebookID,
