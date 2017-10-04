@@ -105,7 +105,8 @@ class MessengerController extends ApiController
                 }
                 else
                 {
-                    return "berhasil";
+                    // send message to messenger
+                    $return_response = $bot->sendDataFlights($response_message, $user);
                 }
 
                 // return message

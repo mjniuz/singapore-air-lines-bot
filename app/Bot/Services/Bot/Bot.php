@@ -68,7 +68,7 @@ class Bot extends GuzzleHttpLibrary
     /**
      * this function for check mobile or email
      *
-     * @param  string   $params The parameters
+     * @param  string  $params The parameters
      * @return array
      */
     public function getFacebookReplyMessage(array $params)
@@ -82,7 +82,7 @@ class Bot extends GuzzleHttpLibrary
 
     /**
      * get facebooku. user detail
-     * @param  integer  $facebook_id
+     * @param  integer $facebook_id
      * @return array
      */
     public function getUserFacebookDetail($facebook_id)
