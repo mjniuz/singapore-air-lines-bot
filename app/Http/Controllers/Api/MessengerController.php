@@ -53,10 +53,10 @@ class MessengerController extends ApiController
     public function messengerBot(Request $request)
     {
         $data = $request->all();
-        $facebook_id    = $this->getFacebookID($data);
         $isFeedBackOnly = $this->isFeedBackReadDelivery($data);
 
-        if ($facebook_id AND !$isFeedBackOnly) {
+        if (!$isFeedBackOnly) {
+            $facebook_id    = $this->getFacebookID($data);
             $msgType        = $this->getMessageType($data);
 
             // get detail user
