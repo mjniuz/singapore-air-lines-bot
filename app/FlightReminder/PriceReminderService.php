@@ -33,10 +33,12 @@ class PriceReminderService extends FlightReminderRepository{
     }
 
     private function createNew(){
-        $askCreateNew   = $this->word->askStartNewPriceReminder();
+        $askCreateNew   = $this->word->askStartNewPriceReminderButton();
+        $askGenericNew  = $this->word->askStartNewPriceReminderGeneric();
 
         return [
-            $this->template->sendButton($askCreateNew)
+            $this->template->sendButton($askCreateNew),
+            $this->template->sendGeneric($askGenericNew)
         ];
     }
 

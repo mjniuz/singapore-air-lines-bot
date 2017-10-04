@@ -53,8 +53,8 @@ class MessengerRepository extends Repository
                 case 'audio':
                     //$this->sendAudio($response['response']);
                     break;
-                case 'carousel':
-                    //$this->sendCarousels($response['response']);
+                case 'generic':
+                    $this->sendGenericMessage($response['response']);
                     break;
                 case 'button':
                     $this->sendButtonMessage($response['response']);
@@ -68,10 +68,60 @@ class MessengerRepository extends Repository
         return "success";
     }
 
+    public function sendGenericMessage($messages){
+        $elements   = [];
+        foreach ($messages as $message){
+            $element[]    = [
+                "title"     => $message['title'],
+                "image_url" => $message['image'],
+                "subtitle"  => $message['subtitle'],
+                "buttons"   => $this->getButtons($message['buttons'])
+            ];
+        }
+
+        $params = [
+            'recipient' => [
+                'id' => $this->facebookID,
+            ],
+            'message'   => [
+                'attachment' => [
+                    "type"      => "template",
+                    "payload"   => [
+                        "template_type" => "generic",
+                        "elements"      => $elements
+                    ]
+                ]
+            ],
+        ];
+
+        // return data
+        return $this->bot->getFacebookReplyMessage($params);
+    }
+
     public function sendButtonMessage($message)
     {
+        $params = [
+            'recipient' => [
+                'id' => $this->facebookID,
+            ],
+            'message'   => [
+                'attachment' => [
+                    "type"      => "template",
+                    "payload"   => [
+                        "template_type" => "button",
+                        "text"          => $message['title'],
+                        "buttons"       => $this->getButtons($message['buttons'])
+                    ]
+                ]
+            ],
+        ];
+        // return data
+        return $this->bot->getFacebookReplyMessage($params);
+    }
+
+    private function getButtons($buttonsData){
         $buttons    = [];
-        foreach ($message['buttons'] as $button){
+        foreach ($buttonsData as $button){
             if($button['type']  == 'url'){
                 $button =  [
                     "type"  => "web_url",
@@ -99,23 +149,8 @@ class MessengerRepository extends Repository
 
             $buttons[]  = $button;
         }
-        $params = [
-            'recipient' => [
-                'id' => $this->facebookID,
-            ],
-            'message'   => [
-                'attachment' => [
-                    "type"      => "template",
-                    "payload"   => [
-                        "template_type" => "button",
-                        "text"          => $message['title'],
-                        "buttons"       => $buttons
-                    ]
-                ]
-            ],
-        ];
-        // return data
-        return $this->bot->getFacebookReplyMessage($params);
+
+        return $buttons;
     }
 
     /**
