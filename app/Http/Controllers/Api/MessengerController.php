@@ -4,6 +4,7 @@ use App\Bot\Repository\MessengerRepository;
 use App\Bot\Repository\RequestRepository;
 use App\Bot\Repository\TemplateService;
 use App\Bot\Repository\UserRepository;
+use App\FlightPriceReminder\FlightReminderRepository;
 use App\FlightPriceReminder\PriceReminderService;
 use App\Http\Controllers\Api\ApiController;
 use App\Models\User;
@@ -81,10 +82,15 @@ class MessengerController extends ApiController
             // create log
             $this->userRepo->createActivity($user->id,$msgType, $message);
 
-            $priceReminder          = new PriceReminderService($user, $message, $msgType);
-            $priceReminderResponse  = $priceReminder->start();
-            if(!empty($priceReminderResponse)){
-                return $bot->responseMessage($priceReminderResponse);
+            $priceReminderRepo      = new FlightReminderRepository();
+            $hasNonFinishedFlight   = $priceReminderRepo->findNotFinishedByUser($user->id);
+            
+            $priceReminder          = new PriceReminderService($user, $message, $msgType, $hasNonFinishedFlight);
+            if($hasNonFinishedFlight OR $this->stringContain($message, "price reminder") OR $this->stringContain($message, "price_reminder")){
+                $priceReminderResponse  = $priceReminder->start();
+                if(!empty($priceReminderResponse)){
+                    return $bot->responseMessage($priceReminderResponse);
+                }
             }
 
             // default
@@ -153,6 +159,18 @@ class MessengerController extends ApiController
 
         if(!empty($messaging['message']['attachments'])){
             return $messaging['message']['attachments'][0]['type'];
+        }
+
+        return false;
+    }
+
+    private function stringContain($str = "", $contain = ""){
+        if($str == "" OR $contain == ""){
+            return false;
+        }
+
+        if (strpos($str, $contain) !== false) {
+            return true;
         }
 
         return false;

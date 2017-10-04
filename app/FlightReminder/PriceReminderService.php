@@ -7,7 +7,7 @@ use App\Bot\Services\Word\WordService;
 
 class PriceReminderService extends FlightReminderRepository{
     protected $user, $message, $type, $template, $word, $arr, $has_active;
-    public function __construct($user, $message, $type = 'text') {
+    public function __construct($user, $message, $type = 'text', $nonFinishedConfiguration) {
         $this->user     = $user;
         $this->message  = $message;
         $this->type     = $type;
@@ -18,7 +18,7 @@ class PriceReminderService extends FlightReminderRepository{
         parse_str($this->message, $arr);
         $this->arr      = $arr;
 
-        $this->has_active   = $this->findNotFinishedByUser($this->user->id);
+        $this->has_active   = $nonFinishedConfiguration;
     }
 
 
