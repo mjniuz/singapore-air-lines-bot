@@ -53,10 +53,9 @@ class MessengerController extends ApiController
     public function messengerBot(Request $request)
     {
         $data = $request->all();
-        if (isset($data['entry'][0]['messaging'][0]['sender']['id']))
-        {
+        $facebook_id    = $this->getFacebookID($data);
+        if ($facebook_id) {
             $msgType        = $this->getMessageType($data);
-            $facebook_id    = $this->getFacebookID($data);
 
             // get detail user
             $user   = $this->userRepo->findUserByFacebookID($facebook_id);
@@ -77,23 +76,19 @@ class MessengerController extends ApiController
                 ]);
             }
 
-            // check if sender messege if not empty
-            if (!empty($message))
-            {
-                $this->userRepo->create($user->id,$msgType, $message);
+            // create log
+            $this->userRepo->createActivity($user->id,$msgType, $message);
 
-                $priceReminder          = new PriceReminderService($user, $message, $msgType);
-                $priceReminderResponse  = $priceReminder->start();
-                if(!empty($priceReminderResponse)){
-                    return $bot->responseMessage($priceReminderResponse);
-                }
-
-                // create log
-                // default
-                return $bot->responseMessage([
-                    $this->template->sendText($message)
-                ]);
+            $priceReminder          = new PriceReminderService($user, $message, $msgType);
+            $priceReminderResponse  = $priceReminder->start();
+            if(!empty($priceReminderResponse)){
+                return $bot->responseMessage($priceReminderResponse);
             }
+
+            // default
+            return $bot->responseMessage([
+                $this->template->sendText($message)
+            ]);
         }
         else
         {

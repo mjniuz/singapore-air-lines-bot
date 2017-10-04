@@ -47,7 +47,7 @@ class UserRepository{
             ->first();
     }
 
-    public function create($userID = null, $type = 'text', $message = ""){
+    public function createActivity($userID = null, $type = 'text', $message = ""){
         $activity   = new Activity();
         $activity->uuid     = $this->gen_uuid();
         $activity->user_id  = $userID;
