@@ -15,7 +15,7 @@ class ChatSeeder extends Seeder
         $new_chat = [
             'format_chat'  => 'SA_DATE_DESTINATION-LOCATION_FROM-LOCATION',
             'example_chat' => 'SA_2017-12-12_Jakarta_Singapore',
-            'count_chat'   => '3',
+            'count_chat'   => '4',
         ];
 
         $chat = Chat::create($new_chat);
