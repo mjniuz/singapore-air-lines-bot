@@ -43,5 +43,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
         Route::get('/chats', ['as' => 'admin.chats', 'uses' => 'ChatController@index']);
         Route::get('/chat/form/{id?}', ['as' => 'admin.chat.form', 'uses' => 'ChatController@form']);
         Route::post('/chat/form/{id?}', ['as' => 'admin.chat.store', 'uses' => 'ChatController@store']);
+        Route::delete('chat/delete/{id?}', ['as' => 'admin.chat.delete', 'uses' => 'ChatController@delete']);
     });
 });

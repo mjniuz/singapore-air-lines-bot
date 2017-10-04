@@ -81,4 +81,26 @@ class ChatController extends Controller
 
         return redirect()->route('admin.chats')->with('success', 'Success save chat');
     }
+
+    /**
+     * this function for delete data base on id
+     *
+     * @param  \Illuminate\Http\Request $request The request
+     * @param  string                   $id      The identifier
+     * @return object                   \
+     */
+    public function delete(Request $request, $id = '')
+    {
+        // find chat
+        $chat = Chat::find($id);
+        // if chat empty redirect chat
+        if (empty($chat))
+        {
+            return redirect()->back()->with('danger', 'Not Success Deleted');
+        }
+        // chat delete
+        $chat->delete();
+        // return back
+        return redirect()->back()->with('success', 'Success delete chat');
+    }
 }
