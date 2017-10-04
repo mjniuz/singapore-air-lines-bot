@@ -38,7 +38,7 @@ class MessengerRepository extends Repository
             ],
         ];
         // return data
-        return $this->bot->getFacebookReplyMessege($params);
+        return $this->bot->getFacebookReplyMessage($params);
     }
 
     /**

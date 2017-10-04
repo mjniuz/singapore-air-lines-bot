@@ -74,7 +74,7 @@ class MessengerController extends ApiController
                 // create log
                 $this->messenger_repository->create($user->id,'text', $message);
                 $response = $this->messenger_repository->sendTextMessage($facebook_id, $message);
-                Log::error(json_encode($user));
+                Log::error(json_encode($response));
 
                 // return message
                 return response()->json(['message' => $message, 'response' => $response], 200);
