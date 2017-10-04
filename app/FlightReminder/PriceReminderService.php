@@ -117,7 +117,7 @@ class PriceReminderService extends FlightReminderRepository{
 
         if(!empty($this->arr['price_reminder_set_amount'])){
             // final confirm amount
-            $validAmount    = $this->arr['price_reminder_set_amount'];
+            $validAmount        = $this->arr['price_reminder_set_amount'];
             $this->has_active   = $this->updateAmount($this->has_active->id, $validAmount);
 
             $message            = "Last step, please verify your airfare price reminder configuration bellow";
@@ -290,7 +290,11 @@ class PriceReminderService extends FlightReminderRepository{
         return $timestamp ? date("d-m-Y", strtotime($date)) : null;
     }
 
-    private function isValidNum($num){
-        return ctype_digit($num) && (int) $num > 0;
+    private function isValidNum($string_number = ""){
+        //$string_number = '1.512.523,55';
+        // NOTE: You don't really have to use floatval() here, it's just to prove that it's a legitimate float value.
+        $number = floatval(str_replace(',', '.', str_replace('.', '', $string_number)));
+
+        return $number;
     }
 }
