@@ -113,7 +113,11 @@ class MessengerController extends ApiController
 
     private function isFeedBackReadDelivery($data){
         // is event read
-        $messaging  = $data['entry'][0]['messaging'][0];
+        $messaging  = !empty($data['entry'][0]['messaging']) ? $data['entry'][0]['messaging'][0] : false;
+        if(!$messaging){
+            // standby mode
+            return false;
+        }
 
         if(!empty($messaging['read']) OR !empty($messaging['delivery'])){
             return true;
