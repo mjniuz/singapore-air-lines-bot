@@ -54,10 +54,10 @@ class TemplateService
         ];
     }
 
-    public function sendCarousel($carouselTemplates = [], $delay = 0 /*second*/){
+    public function sendList($lists = [], $delay = 0 /*second*/){
         return [
-            'type'      => 'carousel',
-            'response'  => $carouselTemplates,
+            'type'      => 'list',
+            'response'  => $lists,
             'delay'     => $delay
         ];
     }

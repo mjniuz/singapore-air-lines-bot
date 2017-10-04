@@ -53,6 +53,9 @@ class MessengerRepository extends Repository
                 case 'audio':
                     //$this->sendAudio($response['response']);
                     break;
+                case 'list':
+                    $this->sendListMessage($response['response']);
+                    break;
                 case 'generic':
                     $this->sendGenericMessage($response['response']);
                     break;
@@ -66,6 +69,43 @@ class MessengerRepository extends Repository
         }
 
         return "success";
+    }
+
+    public function sendListMessage($messages){
+        $elements   = [];
+        foreach ($messages as $message){
+            $image      = !empty($message['image']) ? $message['image'] : false;
+            $element    = [
+                "title"     => $message['title'],
+                "subtitle"  => $message['subtitle'],
+                "image_url" => $image,
+                "buttons"   => $this->getButtons($message['buttons'])
+            ];
+
+            if(!$image){
+                unset($element['image_url']);
+            }
+
+            $elements[] = $element;
+        }
+        $params = [
+            'recipient' => [
+                'id' => $this->facebookID,
+            ],
+            'message'   => [
+                'attachment' => [
+                    "type"      => "template",
+                    "payload"   => [
+                        "template_type"     => "list",
+                        "top_element_style" => "compact",
+                        "elements"          => $elements
+                    ]
+                ]
+            ],
+        ];
+
+        // return data
+        return $this->bot->getFacebookReplyMessage($params);
     }
 
     public function sendGenericMessage($message){
