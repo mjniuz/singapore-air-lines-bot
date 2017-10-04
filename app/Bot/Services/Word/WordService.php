@@ -96,12 +96,8 @@ class WordService{
 
     public function askFinalConfirmList($flight){
         $messages[]    = [
-            "title"     => "Departure",
-            "subtitle"  => ucfirst($flight->from),
-        ];
-        $messages[]    = [
-            "title"     => "Destination",
-            "subtitle"  => ucfirst($flight->to),
+            "title"     => "Departure - Destination",
+            "subtitle"  => ucfirst($flight->from) . " - " . ucfirst($flight->to),
         ];
         $messages[]    = [
             "title"     => "Flight Date",
