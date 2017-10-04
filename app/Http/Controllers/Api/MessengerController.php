@@ -101,7 +101,14 @@ class MessengerController extends ApiController
     }
 
     private function getFacebookID($data){
-        return $data['entry'][0]['messaging'][0]['sender']['id'];
+        $facebookID = $data['entry'][0]['messaging'][0]['sender']['id'];
+
+        // only echo
+        if($facebookID == env('FACEBOOK_PAGE_USER_ID')){
+            return false;
+        }
+
+        return $facebookID;
     }
 
     private function isFeedBackReadDelivery($data){
@@ -124,6 +131,10 @@ class MessengerController extends ApiController
     }
 
     private function getMessageType(array $data = []){
+        if($this->isFeedBackReadDelivery($data) == true){
+            return false;
+        }
+
         $message    = $data['entry'][0]['messaging'][0]['message'];
 
         if(!empty($message['text'])){
