@@ -32,13 +32,16 @@ class RequestRepository extends Repository
                 // check format chat
                 if ($get_format_chat[0] == $request_message[0])
                 {
-                    // get count messege
-                    $count_messege = count($request_message);
+                    // get count message
+                    $count_message = count($request_message);
 
-                    // check count messege
-                    if ($count_messege < $chat->count_chat)
+                    // check count message
+                    if ($count_message < $chat->count_chat)
                     {
-                        return "your format is not correct, format chat is " . $chat->format_chat . ", ex: is " . $chat->example_chat;
+                        return [
+                            "status"  => 2,
+                            "message" => "your format is not correct, format chat is " . $chat->format_chat . ", ex: is " . $chat->example_chat,
+                        ];
                     }
 
                     // check format date
@@ -49,7 +52,10 @@ class RequestRepository extends Repository
                     }
                     else
                     {
-                        return "your format date is not correct, format date is yyyy-mm-dd, example : 2017-12-12";
+                        return [
+                            "status"  => 2,
+                            "message" => "yourformatdateisnotcorrect, formatdateisyyyy - mm - dd, example:2017 - 12 - 12",
+                        ];
                     }
                 }
             }

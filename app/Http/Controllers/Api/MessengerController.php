@@ -94,10 +94,22 @@ class MessengerController extends ApiController
             $sender_message = $this->request_repository->handlingRequest($facebook_id, $message);
             if (!empty($sender_message))
             {
-                // send message to messenger
-                $return_response = $bot->sendTextMessage($sender_message);
-                // return mesege
-                return $bot->responseMessage([$this->template->sendText($sender_message)]);
+                // get message
+                $response_message = $sender_message['message'];
+
+                // check status
+                if ($sender_message['status'] != 1)
+                {
+                    // send message to messenger
+                    $return_response = $bot->sendTextMessage($response_message);
+                }
+                else
+                {
+                    return "berhasil";
+                }
+
+                // return message
+                return $bot->responseMessage([$this->template->sendText($response_message)]);
             }
 
             $priceReminder = new PriceReminderService($user, $message, $msgType, $hasNonFinishedFlight);
