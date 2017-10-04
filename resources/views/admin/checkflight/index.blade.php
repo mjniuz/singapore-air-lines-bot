@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-Users
+Check Flights
 @stop
 
 @section('content')
@@ -11,8 +11,8 @@ Users
 			<div class="box">
 				<div class="box-header">
 					<div class="col-md-12">
-							<h3 align="center">Users</h3>
-						{!! Form::open(['role' => 'form', 'route' => 'admin.users', 'method' => 'GET']) !!}
+							<h3 align="center">Check Flights</h3>
+						{!! Form::open(['role' => 'form', 'route' => 'admin.checkflights', 'method' => 'GET']) !!}
 							<div class="col-md-4">
 							<hr>
 								{!! Form::text('searchname', Input::get('searchname')?: null, ['class' => 'form-control', 'placeholder' => 'Searching By Name ']) !!}
@@ -45,36 +45,28 @@ Users
 								<thead>
 									<tr>
 										<th>No.</th>
-										<th>Full Name</th>
-										<th>Image</th>
-										<th>Username</th>
-										<th>Access</th>
+										<th>Location Form</th>
+										<th>Location To</th>
+										<th>Amount Found</th>
+										<th>Travel Time</th>
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($users as $key => $user)
+									@foreach($checkflights as $key => $user)
 										<tr>
                                             <td align="center">
-                                                {{ ($users->currentpage()-1) * $users->perpage() + $key + 1 }}
+                                                {{ ($checkflights->currentpage()-1) * $checkflights->perpage() + $key + 1 }}
                                             </td>
-											<td>{{ $user->full_name }}</td>
-											<td align="center">
-												<img src="{{ $user->image_path }}" width="100px">
-											</td>
-											<td>{{ $user->username }}</td>
-											<td>
-												@if ($user->access != \App\Models\User::ADMIN)
-													Member
-												@else
-													Admin
-												@endif
-											</td>
+											<td>{{ $user->from_location }}</td>
+											<td>{{ $user->to_location }}</td>
+											<td>{{ $user->amount_found }}</td>
+											<td>{{ $user->travel_time }} Minute</td>
 										</tr>
 									@endforeach
 								</tbody>
 							</table>
 						</div>
-					{!! $users->appends(Input::all())->render() !!}
+					{!! $checkflights->appends(Input::all())->render() !!}
 					</div>
 			</div>
 		</div>

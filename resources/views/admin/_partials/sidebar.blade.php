@@ -28,6 +28,12 @@
                     <span>Promotions</span>
                 </a>
             </li>
+            <li class="{{ (Request::is('*/checkflights*')) ? 'active' : '' }}">
+                <a href="{{ route('admin.checkflights') }}">
+                    <i class='glyphicon glyphicon-plane'></i> 
+                    <span>Check Flights</span>
+                </a>
+            </li>
         </ul>
     </section>
 </aside>
