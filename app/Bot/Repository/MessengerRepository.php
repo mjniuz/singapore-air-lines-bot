@@ -57,7 +57,7 @@ class MessengerRepository extends Repository
                     //$this->sendCarousels($response['response']);
                     break;
                 case 'button':
-                    //$this->sendButton($response['response']);
+                    $this->sendButtonMessage($response['response']);
                     break;
                 default:
                     $this->sendTextMessage($response['response']);
@@ -66,6 +66,56 @@ class MessengerRepository extends Repository
         }
 
         return "success";
+    }
+
+    public function sendButtonMessage($message)
+    {
+        $buttons    = [];
+        foreach ($message['buttons'] as $button){
+            if($button['type']  == 'url'){
+                $button =  [
+                    "type"  => "web_url",
+                    "url"   => $button['data'],
+                    "title" => $button['label'],
+                    "webview_height_ratio"  => "compact"
+                ];
+            }
+
+            if($button['type']  == 'postback'){
+                $button =  [
+                    "type"      => "postback",
+                    "payload"   => $button['data'],
+                    "title"     => $button['label']
+                ];
+            }
+
+            if($button['type']  == 'call'){
+                $button =  [
+                    "type"      => "phone_number",
+                    "payload"   => $button['data'],
+                    "title"     => $button['label']
+                ];
+            }
+
+            $buttons[]  = $button;
+        }
+        $params = [
+            'recipient' => [
+                'id' => $this->facebookID,
+            ],
+            'message'   => [
+                'attachment' => [
+                    "type"      => "template",
+                    "payload"   => [
+                        "template_type" => "button",
+                        "text"          => $message['title'],
+                        "buttons"       => $buttons
+                    ]
+                ]
+            ],
+        ];
+        // return data
+        return $this->bot->getFacebookReplyMessage($params);
     }
 
     /**

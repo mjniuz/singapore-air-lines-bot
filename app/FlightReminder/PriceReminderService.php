@@ -3,14 +3,16 @@
 namespace App\FlightPriceReminder;
 
 use App\Bot\Repository\TemplateService;
+use App\Bot\Services\Word\WordService;
 
 class PriceReminderService extends FlightReminderRepository{
-    protected $user, $message, $type, $template;
+    protected $user, $message, $type, $template, $word;
     public function __construct($user, $message, $type = 'text') {
         $this->user     = $user;
         $this->message  = $message;
         $this->type     = $type;
         $this->template = new TemplateService();
+        $this->word     = new WordService();
     }
 
 
@@ -27,9 +29,10 @@ class PriceReminderService extends FlightReminderRepository{
     }
 
     private function createNew(){
+        $askCreateNew   = $this->word->askStartNewPriceReminder();
 
         return [
-            $this->template->sendText("Ini response buat baru")
+            $this->template->sendButton($askCreateNew)
         ];
     }
 
