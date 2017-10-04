@@ -196,7 +196,7 @@ class PriceReminderService extends FlightReminderRepository{
         // hardcode for demo purpose
         if(strtolower($this->message) != "singapore"){
             $msg    = "Please set your destination airport";
-            $msg    .= PHP_EOL . "For demo only, you can select \"Singapore\" as your destination location";
+            $msg    .= PHP_EOL . "For demo only, you can select \"Singapore\" as your destination";
 
             return [
                 $this->template->sendText($msg)

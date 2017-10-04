@@ -86,7 +86,7 @@ class WordService{
                 [
                     "type"      => "postback",
                     "data"      => http_build_query(["price_reminder_change_flight_date" => 1]),
-                    "label"     => "Change Destination"
+                    "label"     => "Change Date"
                 ]
             ]
         ];

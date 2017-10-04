@@ -75,15 +75,15 @@ class MessengerRepository extends Repository
         $elements   = [];
         foreach ($messages as $message){
             $image      = !empty($message['image']) ? $message['image'] : false;
-            $element    = [
-                "title"     => $message['title'],
-                "subtitle"  => $message['subtitle'],
-                "image_url" => $image,
-                "buttons"   => $this->getButtons($message['buttons'])
-            ];
+            $element['title']    = $message['title'];
+            $element['subtitle']    = $message['subtitle'];
 
-            if(!$image){
-                unset($element['image_url']);
+            if($image){
+                $element['image_url']    = $image;
+            }
+
+            if(!empty($message['buttons'])){
+                $element['buttons']    = $message['buttons'];
             }
 
             $elements[] = $element;
