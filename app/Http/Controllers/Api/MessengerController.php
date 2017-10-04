@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Api;
 
+use App\Activity\ActivityRepository;
 use App\Bot\Repository\MessengerRepository;
 use App\Bot\Repository\RequestRepository;
 use App\Bot\Repository\TemplateService;
@@ -8,6 +9,7 @@ use App\Bot\Services\Word\WordService;
 use App\FlightPriceReminder\FlightReminderRepository;
 use App\FlightPriceReminder\PriceReminderService;
 use App\Http\Controllers\Api\ApiController;
+use App\Message\MessageService;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -19,14 +21,16 @@ class MessengerController extends ApiController
      *
      * @param \Illuminate\Http\Request $request The request
      */
-    protected $request_repository, $userRepo, $template;
-    public function __construct(Request $request)
-    {
+    protected $request_repository, $userRepo, $template, $activity, $message;
+
+    public function __construct(Request $request) {
         parent::__construct($request);
         // this repository for handling request
-        $this->request_repository   = new RequestRepository();
-        $this->userRepo             = new UserRepository();
-        $this->template             = new TemplateService();
+        $this->request_repository = new RequestRepository();
+        $this->userRepo = new UserRepository();
+        $this->template = new TemplateService();
+        $this->activity = new ActivityRepository();
+        $this->message  = new MessageService();
     }
 
     /**
@@ -35,10 +39,8 @@ class MessengerController extends ApiController
      * @param  \Illuminate\Http\Request $request The request
      * @return string
      */
-    public function verifyToken(Request $request)
-    {
-        if ($request->input('hub_mode') === "subscribe" && $request->input('hub_verify_token') === env('FACEBOOK_VERIFY_TOKEN'))
-        {
+    public function verifyToken(Request $request) {
+        if ($request->input('hub_mode') === "subscribe" && $request->input('hub_verify_token') === env('FACEBOOK_VERIFY_TOKEN')) {
             return response($request->input('hub_challenge'), 200);
         }
         Log::error(json_encode($request->all()));
@@ -49,140 +51,60 @@ class MessengerController extends ApiController
     /**
      * this function for get data from facebook
      *
-     * @param  \Illuminate\Http\Request   $request The request
+     * @param  \Illuminate\Http\Request $request The request
      * @return string
      */
-    public function messengerBot(Request $request)
-    {
+    public function messengerBot(Request $request) {
         $data = $request->all();
-        $isFeedBackOnly = $this->isFeedBackReadDelivery($data);
+        $isFeedBackOnly = $this->message->isFeedBackReadDelivery($data);
 
         if (!$isFeedBackOnly) {
-            $facebook_id    = $this->getFacebookID($data);
-            $msgType        = $this->getMessageType($data);
+            $facebook_id = $this->message->getFacebookID($data);
+            $msgType = $this->message->getMessageType($data);
 
             // get detail user
-            $user   = $this->userRepo->findUserByFacebookID($facebook_id);
-            if(!$user){
-                $user   = $this->userRepo->getDetailMember($facebook_id);
-                if(is_null($user)){
-                    return response()->json([
-                        'message'   => 'error'
-                    ]);
+            $user = $this->userRepo->findUserByFacebookID($facebook_id);
+            if (!$user) {
+                $user = $this->userRepo->getDetailMember($facebook_id);
+                if (is_null($user)) {
+                    return response()->json(['message' => 'error']);
                 }
             }
-            $bot    = new MessengerRepository($user->facebook_id);
+            $bot = new MessengerRepository($user->facebook_id);
 
-            $message        = $this->getMessage($data);
-            if(!$message){
-                return $bot->responseMessage([
-                    $this->template->sendText("Sorry, your message is empty or not supported")
-                ]);
+            $message = $this->message->getMessage($data);
+            if (!$message) {
+                return $bot->responseMessage([$this->template->sendText("Sorry, your message is empty or not supported")]);
             }
 
             // create log
-            $this->userRepo->createActivity($user->id,$msgType, $message);
+            $this->activity->createActivity($user->id, $msgType, $message);
 
-            $priceReminderRepo      = new FlightReminderRepository();
-            $hasNonFinishedFlight   = $priceReminderRepo->findNotFinishedByUser($user->id);
+            $priceReminderRepo = new FlightReminderRepository();
+            $hasNonFinishedFlight = $priceReminderRepo->findNotFinishedByUser($user->id);
 
-            $priceReminder          = new PriceReminderService($user, $message, $msgType, $hasNonFinishedFlight);
-            if($hasNonFinishedFlight OR $this->stringContain($message, "price reminder") OR $this->stringContain($message, "price_reminder")){
-                $priceReminderResponse  = $priceReminder->start();
+            $priceReminder = new PriceReminderService($user, $message, $msgType, $hasNonFinishedFlight);
+            if ($hasNonFinishedFlight OR $this->message->stringContain($message, "price reminder") OR $this->stringContain($message, "price_reminder")) {
+                $priceReminderResponse = $priceReminder->start();
 
-                if(!empty($priceReminderResponse)){
+                if (!empty($priceReminderResponse)) {
                     return $bot->responseMessage($priceReminderResponse);
                 }
             }
 
-            if($this->stringContain($message, "check in demo")){
-                $word       = new WordService();
-                $checkIn    = $word->askFlightCheckIn();
+            if ($this->message->stringContain($message, "check in demo")) {
+                $word = new WordService();
+                $checkIn = $word->askFlightCheckIn();
                 $response[] = $this->template->sendCheckIn($checkIn);
 
                 return $bot->responseMessage($response);
             }
 
             // default
-            return $bot->responseMessage([
-                $this->template->sendText($message)
-            ]);
+            return $bot->responseMessage([$this->template->sendText($message)]);
+        } else {
+            return response()->json(['message' => 'error']);
         }
-        else
-        {
-            return response()->json([
-                'message'   => 'error'
-            ]);
-        }
-    }
-
-    private function getFacebookID($data){
-        $facebookID = $data['entry'][0]['messaging'][0]['sender']['id'];
-
-        // only echo
-        if($facebookID == env('FACEBOOK_PAGE_USER_ID')){
-            return false;
-        }
-
-        return $facebookID;
-    }
-
-    private function isFeedBackReadDelivery($data){
-        // is event read
-        $messaging  = !empty($data['entry'][0]['messaging']) ? $data['entry'][0]['messaging'][0] : false;
-
-        if(!$messaging OR !empty($messaging['read']) OR !empty($messaging['delivery'])
-            OR (!empty($messaging['message']) AND !empty($messaging['message']['is_echo']))){
-            return true;
-        }
-
-        return false;
-    }
-
-    private function getMessage($data){
-        if($this->getMessageType($data) == 'text'){
-            return $data['entry'][0]['messaging'][0]['message']['text'];
-        }
-
-        if($this->getMessageType($data) == 'postback'){
-            return $data['entry'][0]['messaging'][0]['postback']['payload'];
-        }
-
-        return false;
-    }
-
-    private function getMessageType(array $data = []){
-        if($this->isFeedBackReadDelivery($data) == true){
-            return false;
-        }
-
-        $messaging  = $data['entry'][0]['messaging'][0];
-        if(!empty($messaging['message'])){
-            if(!empty($messaging['message']['text'])){
-                return 'text';
-            }
-        }
-
-        if(!empty($messaging['postback'])){
-            return 'postback';
-        }
-
-        if(!empty($messaging['message']['attachments'])){
-            return $messaging['message']['attachments'][0]['type'];
-        }
-
-        return false;
-    }
-
-    private function stringContain($str = "", $contain = ""){
-        if($str == "" OR $contain == ""){
-            return false;
-        }
-
-        if (strpos($str, $contain) !== false) {
-            return true;
-        }
-
-        return false;
     }
 }
+
