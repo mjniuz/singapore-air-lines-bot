@@ -2,8 +2,8 @@
 
 use App\Models\BaseModel;
 
-class CheckFlight extends BaseModel
+class Flight extends BaseModel
 {
-    protected $table   = 'check_flights';
+    protected $table   = 'flights';
     protected $guarded = [];
 }

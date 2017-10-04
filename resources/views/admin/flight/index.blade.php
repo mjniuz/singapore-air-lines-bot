@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-Check Flights
+Flights
 @stop
 
 @section('content')
@@ -11,7 +11,7 @@ Check Flights
 			<div class="box">
 				<div class="box-header">
 					<div class="col-md-12">
-							<h3 align="center">Check Flights</h3>
+							<h3 align="center">Flights</h3>
 						{!! Form::open(['role' => 'form', 'route' => 'admin.checkflights', 'method' => 'GET']) !!}
 							<div class="col-md-4">
 							<hr>

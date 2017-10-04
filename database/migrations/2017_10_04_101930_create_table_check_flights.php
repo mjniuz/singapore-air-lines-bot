@@ -13,7 +13,7 @@ class CreateTableCheckFlights extends Migration
      */
     public function up()
     {
-        Schema::create('check_flights', function (Blueprint $table)
+        Schema::create('flights', function (Blueprint $table)
         {
             $table->increments('id');
             $table->string('from_location');
@@ -36,6 +36,6 @@ class CreateTableCheckFlights extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('check_flights');
+        Schema::dropIfExists('flights');
     }
 }

@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\CheckFlight;
+use App\Models\Flight;
 use Illuminate\Http\Request;
 
 class CheckFlightController extends Controller
@@ -17,7 +17,7 @@ class CheckFlightController extends Controller
         $searchlocationfrom = $request->input('searchlocationfrom');
         $searchlocationto   = $request->input('searchlocationto');
         $searchdate         = $request->input('searchdate');
-        $checkflights       = CheckFlight::orderBy('id', 'desc');
+        $checkflights       = Flight::orderBy('id', 'desc');
 
         // check location from
         if (!empty($searchlocationfrom))
@@ -39,6 +39,6 @@ class CheckFlightController extends Controller
 
         $checkflights = $checkflights->paginate();
 
-        return view('admin.checkflight.index', compact('checkflights'));
+        return view('admin.flight.index', compact('checkflights'));
     }
 }
