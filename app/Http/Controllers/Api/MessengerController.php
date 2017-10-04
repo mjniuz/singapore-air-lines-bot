@@ -57,7 +57,6 @@ class MessengerController extends ApiController
         {
             $msgType        = $this->getMessageType($data);
             $facebook_id    = $this->getFacebookID($data);
-            $message        = $data['entry'][0]['messaging'][0]['message']['text'];
 
             // get detail user
             $user   = $this->userRepo->findUserByFacebookID($facebook_id);
@@ -69,11 +68,18 @@ class MessengerController extends ApiController
                     ]);
                 }
             }
+            $bot    = new MessengerRepository($user->facebook_id);
+
+            $message        = $this->getMessage($data);
+            if(!$message){
+                return $bot->responseMessage([
+                    $this->template->sendText("Sorry, your message is empty or not supported")
+                ]);
+            }
 
             // check if sender messege if not empty
             if (!empty($message))
             {
-                $bot    = new MessengerRepository($user->facebook_id);
                 $this->userRepo->create($user->id,$msgType, $message);
 
                 $priceReminder          = new PriceReminderService($user, $message, $msgType);
