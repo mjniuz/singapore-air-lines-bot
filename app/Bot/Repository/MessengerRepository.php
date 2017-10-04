@@ -68,17 +68,13 @@ class MessengerRepository extends Repository
         return "success";
     }
 
-    public function sendGenericMessage($messages){
-        $elements   = [];
-        foreach ($messages as $message){
-            $element[]    = [
-                "title"     => $message['title'],
-                "image_url" => $message['image'],
-                "subtitle"  => $message['subtitle'],
-                "buttons"   => $this->getButtons($message['buttons'])
-            ];
-        }
-
+    public function sendGenericMessage($message){
+        $elements[]    = [
+            "title"     => $message['title'],
+            "image_url" => $message['image'],
+            "subtitle"  => $message['subtitle'],
+            "buttons"   => $this->getButtons($message['buttons'])
+        ];
         $params = [
             'recipient' => [
                 'id' => $this->facebookID,
