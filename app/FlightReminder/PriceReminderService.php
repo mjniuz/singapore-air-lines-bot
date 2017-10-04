@@ -150,7 +150,7 @@ class PriceReminderService extends FlightReminderRepository{
             ];
         }
 
-        if($isValid < date("d-m-Y")){
+        if($this->message < date("d-m-Y")){
             return [
                 $this->template->sendText("You can't set date flight less than today, please set your date flight again, example " . date("m-d-Y", strtotime("+7 day")))
             ];
