@@ -57,7 +57,7 @@ class MessengerController extends ApiController
 
             // get detail user
             $user   = $this->messenger_repository->getDetailMember($facebook_id);
-            if(!is_null($user)){
+            if(is_null($user)){
                 return response()->json([
                     'message'   => 'error'
                 ]);
