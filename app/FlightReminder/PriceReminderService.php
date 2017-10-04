@@ -144,7 +144,7 @@ class PriceReminderService extends FlightReminderRepository{
         if(!empty($this->arr['price_reminder_set_flight_date'])){
             // final confirm date
             $validDate  = $this->arr['price_reminder_set_flight_date'];
-            if($validDate < date("d-m-Y")){
+            if(strtotime($validDate) < strtotime(date("Y-m-d"))){
                 return [
                     $this->template->sendText("You can't set date flight less than today, please set your date flight again, example " . date("m-d-Y", strtotime("+7 day")))
                 ];
