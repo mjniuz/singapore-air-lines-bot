@@ -4,16 +4,18 @@ namespace App\FlightPriceReminder;
 
 use App\Bot\Repository\TemplateService;
 use App\Bot\Services\Word\WordService;
+use App\Message\MessageService;
 use Illuminate\Support\Facades\Log;
 
 class PriceReminderService extends FlightReminderRepository{
-    protected $user, $message, $type, $template, $word, $arr, $has_active;
+    protected $user, $message, $type, $template, $word, $arr, $has_active, $msgService;
     public function __construct($user, $message, $type = 'text', $nonFinishedConfiguration) {
         $this->user     = $user;
         $this->message  = $message;
         $this->type     = $type;
         $this->template = new TemplateService();
         $this->word     = new WordService();
+        $this->msgService   = new MessageService();
 
         // get postback param
         parse_str($this->message, $arr);
@@ -33,15 +35,15 @@ class PriceReminderService extends FlightReminderRepository{
             return $this->nonFinishedFlightReminder();
         }
 
-        if($this->stringContain($this->message, "price reminder create new")){
+        if($this->msgService->stringContain($this->message, "price reminder create new")){
             return $this->intro();
         }
 
-        if($this->stringContain($this->message, "price_reminder_start_confirm")){
+        if($this->msgService->stringContain($this->message, "price_reminder_start_confirm")){
             return $this->createNew();
         }
 
-        if($this->stringContain($this->message, "price_reminder_found_detail")){
+        if($this->msgService->stringContain($this->message, "price_reminder_found_detail")){
             return $this->responseFoundDetail();
         }
 
@@ -122,7 +124,7 @@ class PriceReminderService extends FlightReminderRepository{
     }
 
     private function setAmount(){
-        if($this->stringContain($this->message, "price_reminder_change_amount")){
+        if($this->msgService->stringContain($this->message, "price_reminder_change_amount")){
             $message    = "Now set your new maximum budget (in SGD) for airfare price, if the airfare price changed to go down or same as your budget, we will send an alert to you";
             return [
                 $this->template->sendText($message)
@@ -158,7 +160,7 @@ class PriceReminderService extends FlightReminderRepository{
     }
 
     private function setDateFlight(){
-        if($this->stringContain($this->message, "price_reminder_change_flight_date")){
+        if($this->msgService->stringContain($this->message, "price_reminder_change_flight_date")){
             return [
                 $this->template->sendText("please set your new flight date, format (dd-mm-yyyy) ex 31-12-2017")
             ];
@@ -294,18 +296,6 @@ class PriceReminderService extends FlightReminderRepository{
             //$this->template->sendButton($askCreateNew),
             $this->template->sendGeneric($askGenericNew)
         ];
-    }
-
-    private function stringContain($str = "", $contain = ""){
-        if($str == "" OR $contain == ""){
-            return false;
-        }
-
-        if (strpos($str, $contain) !== false) {
-            return true;
-        }
-
-        return false;
     }
 
     private function isValidDate($date){
