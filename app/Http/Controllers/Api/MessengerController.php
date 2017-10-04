@@ -4,6 +4,7 @@ use App\Bot\Repository\MessengerRepository;
 use App\Bot\Repository\RequestRepository;
 use App\Bot\Repository\TemplateService;
 use App\Bot\Repository\UserRepository;
+use App\Bot\Services\Word\WordService;
 use App\FlightPriceReminder\FlightReminderRepository;
 use App\FlightPriceReminder\PriceReminderService;
 use App\Http\Controllers\Api\ApiController;
@@ -92,6 +93,14 @@ class MessengerController extends ApiController
                 if(!empty($priceReminderResponse)){
                     return $bot->responseMessage($priceReminderResponse);
                 }
+            }
+
+            if($this->stringContain($message, "check in demo")){
+                $word       = new WordService();
+                $checkIn    = $word->askFlightCheckIn();
+                $response[] = $this->template->sendCheckIn($checkIn);
+
+                return $bot->responseMessage($response);
             }
 
             // default

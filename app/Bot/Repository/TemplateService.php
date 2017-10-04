@@ -43,13 +43,10 @@ class TemplateService
         ];
     }
 
-    public function sendSticker($stickerID = '', $packageID = 1, $delay = 0 /*second*/){
+    public function sendCheckIn($message = [], $delay = 0 /*second*/){
         return [
-            'type'      => 'sticker',
-            'response'  => [
-                'sticker_id'    => $stickerID,
-                'package_id'    => $packageID
-            ],
+            'type'      => 'airline_checkin',
+            'response'  => $message,
             'delay'     => $delay
         ];
     }

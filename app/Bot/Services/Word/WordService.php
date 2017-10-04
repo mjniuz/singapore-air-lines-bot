@@ -1,6 +1,8 @@
 <?php
 namespace App\Bot\Services\Word;
 
+use function GuzzleHttp\Psr7\str;
+
 class WordService{
     public function askStartNewPriceReminderButton(){
         $buttons    = [
@@ -205,5 +207,31 @@ class WordService{
         ];
 
         return $buttons;
+    }
+
+    public function askFlightCheckIn(){
+        return [
+            "title"         => "Check-in is available now",
+            "pnr_number"    => "XYZ",
+            "checkin_url"   => url('checking/XYZ'),
+            "flight_number" => "F212",
+            "departure_airport" => [
+                "airport_code"      => "CGK",
+                "city"              => "Jakarta",
+                "terminal"          => "T1",
+                "gate"              => "G6"
+            ],
+            "arrival_airport" => [
+                "airport_code"      => "SIN",
+                "city"              => "Singapore",
+                "terminal"          => "T2",
+                "gate"              => "G12"
+            ],
+            "flight_schedule"   => [
+                "boarding_time"     => date("Y-m-d H:i:s", strtotime("+1 day")),
+                "departure_time"    => date("Y-m-d H:i:s", strtotime("+1 day +40 minutes")),
+                "arrival_time"      => date("Y-m-d H:i:s", strtotime("+1 day +1 hour +30 minutes"))
+            ]
+        ];
     }
 }

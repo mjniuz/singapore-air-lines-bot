@@ -41,8 +41,8 @@ class MessengerRepository extends Repository
                 case 'text':
                     $this->sendTextMessage($response['response']);
                     break;
-                case 'confirm':
-                    //$this->sendConfirm($response['response']);
+                case 'checkin':
+                    $this->sendCheckInMessage($response['response']);
                     break;
                 case 'image':
                     //$this->sendImage($response['response']);
@@ -69,6 +69,48 @@ class MessengerRepository extends Repository
         }
 
         return "success";
+    }
+
+    public function sendCheckInMessage($message){
+        $params = [
+            'recipient' => [
+                'id' => $this->facebookID,
+            ],
+            'message'   => [
+                'attachment' => [
+                    "type"      => "template",
+                    "payload"   => [
+                        "template_type" => "airline_checkin",
+                        "intro_message" => $message['title'],
+                        "locale"        => (!empty($message['locale']) ? $message['locale'] : "en_US"),
+                        "pnr_number"    => $message['pnr_number'],
+                        "checkin_url"   => $message['checkin_url'],
+                        "flight_info"   => [
+                            "flight_number"     => $message['flight_number'],
+                            "departure_airport" => [
+                                "airport_code"      => $message['departure_airport']['airport_code'],
+                                "city"              => $message['departure_airport']['city'],
+                                "terminal"          => $message['departure_airport']['terminal'],
+                                "gate"              => $message['departure_airport']['gate'],
+                            ],
+                            "arrival_airport" => [
+                                "airport_code"      => $message['arrival_airport']['airport_code'],
+                                "city"              => $message['arrival_airport']['city'],
+                                "terminal"          => $message['arrival_airport']['terminal'],
+                                "gate"              => $message['arrival_airport']['gate'],
+                            ],
+                            "flight_schedule" => [
+                                "boarding_time"     => date("Y-m-dTH:m", strtotime($message['flight_schedule']['boarding_time'])),
+                                "departure_time"    => date("Y-m-dTH:m", strtotime($message['flight_schedule']['departure_time'])),
+                                "arrival_time"      => date("Y-m-dTH:m", strtotime($message['flight_schedule']['arrival_time']))
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+        ];
+        // return data
+        return $this->bot->getFacebookReplyMessage($params);
     }
 
     public function sendListMessage($messages){
