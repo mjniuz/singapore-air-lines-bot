@@ -34,6 +34,12 @@
                     <span>Check Flights</span>
                 </a>
             </li>
+            <li class="{{ (Request::is('*/chat*')) ? 'active' : '' }}">
+                <a href="{{ route('admin.chats') }}">
+                    <i class='glyphicon glyphicon-comment'></i> 
+                    <span>Chat</span>
+                </a>
+            </li>
         </ul>
     </section>
 </aside>

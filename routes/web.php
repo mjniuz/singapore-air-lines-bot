@@ -38,5 +38,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
 
         // check flights
         Route::get('/checkflights', ['as' => 'admin.checkflights', 'uses' => 'CheckFlightController@index']);
+
+        // chats
+        Route::get('/chats', ['as' => 'admin.chats', 'uses' => 'ChatController@index']);
     });
 });
