@@ -114,7 +114,7 @@ class MessengerController extends ApiController
     private function isFeedBackReadDelivery($data){
         // is event read
         $messaging  = !empty($data['entry'][0]['messaging']) ? $data['entry'][0]['messaging'][0] : false;
-        
+
         if(!$messaging OR !empty($messaging['read']) OR !empty($messaging['delivery'])){
             return true;
         }
@@ -141,7 +141,7 @@ class MessengerController extends ApiController
 
         $messaging  = $data['entry'][0]['messaging'][0];
         if(!empty($messaging['message'])){
-            if(!empty($message['text'])){
+            if(!empty($messaging['message']['text'])){
                 return 'text';
             }
         }
@@ -150,8 +150,8 @@ class MessengerController extends ApiController
             return 'postback';
         }
 
-        if(!empty($message['message']['attachments'])){
-            return $message['attachments'][0]['type'];
+        if(!empty($messaging['message']['attachments'])){
+            return $messaging['message']['attachments'][0]['type'];
         }
 
         return false;
