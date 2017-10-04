@@ -94,6 +94,26 @@ class WordService{
         return $buttons;
     }
 
+    public function askConfirmBudgetButton($budget = 0){
+        $buttons    = [
+            "title"     => "Is your budget " . number_format($budget,0) . " correct?",
+            "buttons"   => [
+                [
+                    "type"      => "postback",
+                    "data"      => http_build_query(["price_reminder_set_amount" => $budget]),
+                    "label"     => "Yes"
+                ],
+                [
+                    "type"      => "postback",
+                    "data"      => http_build_query(["price_reminder_change_amount" => 1]),
+                    "label"     => "Change Date"
+                ]
+            ]
+        ];
+
+        return $buttons;
+    }
+
     public function askFinalConfirmList($flight){
         $messages[]    = [
             "title"     => "Departure - Destination",
