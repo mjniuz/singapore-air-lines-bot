@@ -103,6 +103,14 @@ class FlightReminderRepository{
         return $flight;
     }
 
+    public function updateIncreaseCronCount($flightID = null){
+        $flight             = $this->find($flightID);
+        $flight->cron_count = ($flight->cron_count + 1);
+        $flight->save();
+
+        return $flight;
+    }
+
     public function airlinesCheckPrice($flights){
         $newFlights = [];
         foreach ($flights as $flight){
@@ -119,6 +127,9 @@ class FlightReminderRepository{
                 $flight->flight_time    = $newFlight->flight_time;
 
                 $newFlights[]   = $flight;
+            }else{
+                // update cron count
+                $this->updateIncreaseCronCount($flight->id);
             }
         }
 
