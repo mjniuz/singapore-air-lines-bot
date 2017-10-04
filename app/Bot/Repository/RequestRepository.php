@@ -2,6 +2,7 @@
 
 use App\Bot\Helper\Helper;
 use App\Models\Chat;
+use App\Models\Flight;
 
 /**
  * this class for handling request message
@@ -44,17 +45,39 @@ class RequestRepository extends Repository
                         ];
                     }
 
+                    // set messege request
+                    $date   = $request_message[1];
+                    $depart = $request_message[2];
+                    $arrive = $request_message[3];
+
                     // check format date
-                    $check_date_format = Helper::checkFormatDate($request_message[1]);
+                    $check_date_format = Helper::checkFormatDate($date);
                     if ($check_date_format)
                     {
-                        dd($get_format_chat);
+                        // get all data flights
+                        $flights = Flight::where('date', 'LIKE', '%' . $date . '%')->where('from_location', 'LIKE', '%' . $depart . '%')->where('to_location', 'LIKE', '%' . $arrive . '%')->get()->toArray();
+
+                        if (!empty($flights))
+                        {
+                            // return data
+                            return [
+                                "status"  => 1,
+                                "message" => $flights,
+                            ];
+                        }
+                        else
+                        {
+                            return [
+                                "status"  => 2,
+                                "message" => "Data Not Found",
+                            ];
+                        }
                     }
                     else
                     {
                         return [
                             "status"  => 2,
-                            "message" => "yourformatdateisnotcorrect, formatdateisyyyy - mm - dd, example:2017 - 12 - 12",
+                            "message" => "your format date is not correct, format date is yyyy-mm-dd, ex: 2017-12-12",
                         ];
                     }
                 }
