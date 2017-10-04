@@ -45,7 +45,7 @@ class TemplateService
 
     public function sendCheckIn($message = [], $delay = 0 /*second*/){
         return [
-            'type'      => 'airline_checkin',
+            'type'      => 'checkin',
             'response'  => $message,
             'delay'     => $delay
         ];
