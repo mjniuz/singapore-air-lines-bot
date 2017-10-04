@@ -141,24 +141,15 @@ class PriceReminderService extends FlightReminderRepository{
             ];
         }
 
-        $isValid    = $this->isValidDate($this->message);
-        if(is_null($isValid)){
-            $msg    = "Date format invalid, please send the valid date for your flight date plan, example 31-12-2017";
-
-            return [
-                $this->template->sendText($msg)
-            ];
-        }
-
-        if($this->message < date("d-m-Y")){
-            return [
-                $this->template->sendText("You can't set date flight less than today, please set your date flight again, example " . date("m-d-Y", strtotime("+7 day")))
-            ];
-        }
-
         if(!empty($this->arr['price_reminder_set_flight_date'])){
             // final confirm date
             $validDate  = $this->arr['price_reminder_set_flight_date'];
+            if($validDate < date("d-m-Y")){
+                return [
+                    $this->template->sendText("You can't set date flight less than today, please set your date flight again, example " . date("m-d-Y", strtotime("+7 day")))
+                ];
+            }
+
             $this->updateDate($this->has_active->id, $validDate);
             $message    = "Now set your maximum budget (in SGD) for airfare price, if the airfare price changed to go down or same as your budget, we will send an alert to you";
             $message2   = "Please reply just a number (ex. 120)";
@@ -166,6 +157,15 @@ class PriceReminderService extends FlightReminderRepository{
                 $this->template->sendText("Your flight date saved"),
                 $this->template->sendText($message),
                 $this->template->sendText($message2)
+            ];
+        }
+
+        $isValid    = $this->isValidDate($this->message);
+        if(is_null($isValid)){
+            $msg    = "Date format invalid, please send the valid date for your flight date plan, example 31-12-2017";
+
+            return [
+                $this->template->sendText($msg)
             ];
         }
 
