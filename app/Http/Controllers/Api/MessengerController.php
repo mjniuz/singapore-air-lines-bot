@@ -54,7 +54,9 @@ class MessengerController extends ApiController
     {
         $data = $request->all();
         $facebook_id    = $this->getFacebookID($data);
-        if ($facebook_id) {
+        $isFeedBackOnly = $this->isFeedBackReadDelivery($data);
+
+        if ($facebook_id AND !$isFeedBackOnly) {
             $msgType        = $this->getMessageType($data);
 
             // get detail user
@@ -99,8 +101,18 @@ class MessengerController extends ApiController
     }
 
     private function getFacebookID($data){
-
         return $data['entry'][0]['messaging'][0]['sender']['id'];
+    }
+
+    private function isFeedBackReadDelivery($data){
+        // is event read
+        $messaging  = $data['entry'][0]['messaging'][0];
+
+        if(!empty($messaging['read']) OR !empty($messaging['delivery'])){
+            return true;
+        }
+
+        return false;
     }
 
     private function getMessage($data){
