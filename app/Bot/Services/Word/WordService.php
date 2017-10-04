@@ -166,7 +166,7 @@ class WordService{
         ];
         $messages[]    = [
             "title"     => "Found Flight Date",
-            "subtitle"  => date("d F Y H:i", strtotime($flight))
+            "subtitle"  => date("d F Y H:i", strtotime($flight->flight_time))
         ];
         $messages[]    = [
             "title"     => "Airline",
