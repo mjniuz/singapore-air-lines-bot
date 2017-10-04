@@ -1,4 +1,5 @@
-<?php namespace App\Bot\Repository;
+<?php
+namespace App\Bot\Repository;
 
 use App\Bot\Services\Bot\Bot;
 use App\Models\User;
@@ -13,12 +14,179 @@ class MessengerRepository extends Repository
      *
      * @param \Illuminate\Http\Request $request The request
      */
-    protected $bot, $activity;
-    public function __construct()
+    protected $bot, $facebookID;
+    public function __construct($facebookID = "")
     {
         // repository messenger for handle process data
-        $this->bot = new Bot;
-        $this->activity = new Activity();
+        $this->facebookID   = $facebookID;
+        $this->bot          = new Bot;
+    }
+
+    public function responseMessage(array $responses){
+        if(!is_array($responses)){
+            return "error";
+        }
+
+        if(env('APP_ENV') == "local"){
+            return $responses;
+        }
+
+        foreach($responses as $response){
+            // sleep/delay
+            if($response['delay'] != 0){
+                sleep($response['delay']);
+            }
+
+            switch ($response['type']){
+                case 'text':
+                    $this->sendTextMessage($response['response']);
+                    break;
+                case 'confirm':
+                    //$this->sendConfirm($response['response']);
+                    break;
+                case 'image':
+                    //$this->sendImage($response['response']);
+                    break;
+                case 'sticker':
+                    //$this->sendSticker($response['response']);
+                    break;
+                case 'audio':
+                    //$this->sendAudio($response['response']);
+                    break;
+                case 'list':
+                    $this->sendListMessage($response['response']);
+                    break;
+                case 'generic':
+                    $this->sendGenericMessage($response['response']);
+                    break;
+                case 'button':
+                    $this->sendButtonMessage($response['response']);
+                    break;
+                default:
+                    $this->sendTextMessage($response['response']);
+                    break;
+            }
+        }
+
+        return "success";
+    }
+
+    public function sendListMessage($messages){
+        $elements   = [];
+        foreach ($messages as $message){
+            $image      = !empty($message['image']) ? $message['image'] : false;
+            $element    = [
+                "title"     => $message['title'],
+                "subtitle"  => $message['subtitle'],
+                "image_url" => $image,
+                "buttons"   => $this->getButtons($message['buttons'])
+            ];
+
+            if(!$image){
+                unset($element['image_url']);
+            }
+
+            $elements[] = $element;
+        }
+        $params = [
+            'recipient' => [
+                'id' => $this->facebookID,
+            ],
+            'message'   => [
+                'attachment' => [
+                    "type"      => "template",
+                    "payload"   => [
+                        "template_type"     => "list",
+                        "top_element_style" => "compact",
+                        "elements"          => $elements
+                    ]
+                ]
+            ],
+        ];
+
+        // return data
+        return $this->bot->getFacebookReplyMessage($params);
+    }
+
+    public function sendGenericMessage($message){
+        $elements[]    = [
+            "title"     => $message['title'],
+            "image_url" => $message['image'],
+            "subtitle"  => $message['subtitle'],
+            "buttons"   => $this->getButtons($message['buttons'])
+        ];
+        $params = [
+            'recipient' => [
+                'id' => $this->facebookID,
+            ],
+            'message'   => [
+                'attachment' => [
+                    "type"      => "template",
+                    "payload"   => [
+                        "template_type" => "generic",
+                        "elements"      => $elements
+                    ]
+                ]
+            ],
+        ];
+
+        // return data
+        return $this->bot->getFacebookReplyMessage($params);
+    }
+
+    public function sendButtonMessage($message)
+    {
+        $params = [
+            'recipient' => [
+                'id' => $this->facebookID,
+            ],
+            'message'   => [
+                'attachment' => [
+                    "type"      => "template",
+                    "payload"   => [
+                        "template_type" => "button",
+                        "text"          => $message['title'],
+                        "buttons"       => $this->getButtons($message['buttons'])
+                    ]
+                ]
+            ],
+        ];
+        // return data
+        return $this->bot->getFacebookReplyMessage($params);
+    }
+
+    private function getButtons($buttonsData){
+        $buttons    = [];
+        foreach ($buttonsData as $button){
+            if($button['type']  == 'url'){
+                $button =  [
+                    "type"  => "web_url",
+                    "url"   => $button['data'],
+                    "title" => $button['label'],
+                    "webview_height_ratio"  => "compact"
+                ];
+            }
+
+            if($button['type']  == 'postback'){
+                $button =  [
+                    "type"      => "postback",
+                    "payload"   => $button['data'],
+                    "title"     => $button['label']
+                ];
+            }
+
+            if($button['type']  == 'call'){
+                $button =  [
+                    "type"      => "phone_number",
+                    "payload"   => $button['data'],
+                    "title"     => $button['label']
+                ];
+            }
+
+            $buttons[]  = $button;
+        }
+
+        return $buttons;
     }
 
     /**
@@ -27,57 +195,18 @@ class MessengerRepository extends Repository
      * @param integer $id      The identifier
      * @param string  $message The message
      */
-    public function sendTextMessage($id, $message)
+    public function sendTextMessage($message)
     {
         $params = [
             'recipient' => [
-                'id' => $id,
+                'id' => $this->facebookID,
             ],
             'message'   => [
                 'text' => $message,
             ],
         ];
         // return data
-        return $this->bot->getFacebookReplyMessege($params);
+        return $this->bot->getFacebookReplyMessage($params);
     }
 
-    /**
-     * this function for save member facebook id
-     * @param  integer  $facebook_id
-     * @return object
-     */
-    public function getDetailMember($facebook_id)
-    {
-        // hit api facebok for get detail user
-        $get_facebook_detail = $this->bot->getUserFacebookDetail($facebook_id);
-        // check http code
-        if ($get_facebook_detail['http_code'] == 200)
-        {
-            // saving data user
-            $data                  = $get_facebook_detail['message'];
-            $name                  = $data->first_name . ' ' . $data->last_name;
-            $username              = str_slug($name);
-            $user                  = User::firstOrNew(['username' => $username, 'facebook_id' => $facebook_id]);
-            $user->username        = $username;
-            $user->full_name       = $name;
-            $user->facebook_id     = $facebook_id;
-            $user->profile_picture = $data->profile_pic;
-            $user->access          = User::MEMBER;
-            $user->save();
-
-            return $user;
-        }
-        return null;
-    }
-
-    public function create($userID = null, $type = 'text', $message = ""){
-        $activity   = new Activity();
-        $activity->user_id  = $userID;
-        $activity->type     = $type;
-        $activity->message  = $message;
-        $activity->save();
-
-        return $activity;
-
-    }
 }

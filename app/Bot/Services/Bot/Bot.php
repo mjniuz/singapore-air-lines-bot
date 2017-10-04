@@ -71,7 +71,7 @@ class Bot extends GuzzleHttpLibrary
      * @param  string   $params The parameters
      * @return array
      */
-    public function getFacebookReplyMessege(array $params)
+    public function getFacebookReplyMessage(array $params)
     {
         $this->body    = $params; //data in body
         $this->method  = 'POST'; // method
