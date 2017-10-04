@@ -18,6 +18,7 @@ class CreateTableChats extends Migration
             $table->increments('id');
             $table->string('format_chat');
             $table->string('example_chat');
+            $table->integer('count_chat')->default(0);
             $table->timestamps();
         });
     }

@@ -44,7 +44,7 @@ Chat
 										<th>Chat Format</th>
 										<th>Chat Example</th>
 										<th>
-							                <a href="{{ URL::route('admin.promotion.form') }}" class="btn btn-default btn-primary">
+							                <a href="{{ URL::route('admin.chat.form') }}" class="btn btn-default btn-primary">
 							                    <i class="fa fa-plus"></i> Create Chat
 							                </a>
 										</th>
@@ -59,7 +59,7 @@ Chat
 											<td>{{ $chat->format_chat }}</td>
 											<td>{{ $chat->example_chat }}</td>
 											<td>
-								                <a href="{{ URL::route('admin.promotion.form',$chat->id) }}" class="btn btn-default btn-warning">
+								                <a href="{{ URL::route('admin.chat.form',$chat->id) }}" class="btn btn-default btn-warning">
 								                    <i class="glyphicon glyphicon-pencil"></i>  &nbsp;Edit
 								                </a>
 	                        						{!! Form::model($chat, ['role' => 'form', 'method' => 'DELETE', 'route' => ['admin.promotion.delete', $chat->id]]) !!}
