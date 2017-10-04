@@ -24,7 +24,7 @@ class MessengerRepository extends Repository
 
     public function responseMessage(array $responses){
         if(!is_array($responses)){
-            return false;
+            return "error";
         }
 
         if(env('APP_ENV') == "local"){
@@ -65,7 +65,7 @@ class MessengerRepository extends Repository
             }
         }
 
-        return true;
+        return "success";
     }
 
     /**
