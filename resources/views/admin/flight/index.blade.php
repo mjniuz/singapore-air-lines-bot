@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-Users
+Flights
 @stop
 
 @section('content')
@@ -11,23 +11,19 @@ Users
 			<div class="box">
 				<div class="box-header">
 					<div class="col-md-12">
-							<h3 align="center">Users</h3>
-						{!! Form::open(['role' => 'form', 'route' => 'admin.users', 'method' => 'GET']) !!}
+							<h3 align="center">Flights</h3>
+						{!! Form::open(['role' => 'form', 'route' => 'admin.checkflights', 'method' => 'GET']) !!}
 							<div class="col-md-4">
 							<hr>
-								{!! Form::text('searchname', Input::get('searchname')?: null, ['class' => 'form-control', 'placeholder' => 'Searching By Name ']) !!}
+								{!! Form::text('searchlocationfrom', Input::get('searchlocationfrom')?: null, ['class' => 'form-control', 'placeholder' => 'Searching By Location From ']) !!}
 							</div>
 							<div class="col-md-4">
 							<hr>
-							    {!! Form::select('searchaccess', [
-							    		1 => 'Access Admin',
-							    		2 => 'Access Member',
-							    	], Input::get('searchaccess')?: null, ['class' => 'form-control select2 to-select',
-							        'placeholder' => 'Searching By Access' ]) !!}
+								{!! Form::text('searchlocationto', Input::get('searchlocationto')?: null, ['class' => 'form-control', 'placeholder' => 'Searching By Location To']) !!}
 							</div>
 							<div class="col-md-4">
 							<hr>
-								{!! Form::text('searchusername', Input::get('searchusername')?: null, ['class' => 'form-control', 'placeholder' => 'Searching By Username']) !!}
+								{!! Form::text('searchdate', Input::get('searchdate')?: null, ['class' => 'form-control datepicker', 'data-date-format' => 'yyyy-mm-dd', 'placeholder' => 'Searching By Date']) !!}
 							</div>
 
 							<div class="col-md-12">
@@ -45,36 +41,30 @@ Users
 								<thead>
 									<tr>
 										<th>No.</th>
-										<th>Full Name</th>
-										<th>Image</th>
-										<th>Username</th>
-										<th>Access</th>
+										<th>Location Form</th>
+										<th>Location To</th>
+										<th>Amount Found</th>
+										<th>Date</th>
+										<th>Travel Time</th>
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($users as $key => $user)
+									@foreach($checkflights as $key => $user)
 										<tr>
                                             <td align="center">
-                                                {{ ($users->currentpage()-1) * $users->perpage() + $key + 1 }}
+                                                {{ ($checkflights->currentpage()-1) * $checkflights->perpage() + $key + 1 }}
                                             </td>
-											<td>{{ $user->full_name }}</td>
-											<td align="center">
-												<img src="{{ $user->image_path }}" width="100px">
-											</td>
-											<td>{{ $user->username }}</td>
-											<td>
-												@if ($user->access != \App\Models\User::ADMIN)
-													Member
-												@else
-													Admin
-												@endif
-											</td>
+											<td>{{ $user->from_location }}</td>
+											<td>{{ $user->to_location }}</td>
+											<td>{{ $user->amount_found }}</td>
+											<td>{{ $user->date }}</td>
+											<td>{{ $user->travel_time }} Minute</td>
 										</tr>
 									@endforeach
 								</tbody>
 							</table>
 						</div>
-					{!! $users->appends(Input::all())->render() !!}
+					{!! $checkflights->appends(Input::all())->render() !!}
 					</div>
 			</div>
 		</div>
@@ -84,7 +74,7 @@ Users
 @section('script')
 <script src="{{ asset('assets/js/dataTable-boostrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap-switch.js') }}"></script>
-<script>
+<script type="text/javascript">
 	$(function () {
 		$("#example1").DataTable();
 		$('#example2').DataTable({
@@ -97,5 +87,17 @@ Users
         });
         $("[type='checkbox']").bootstrapSwitch();
 	});
+
+    $(function() {
+        //Timepicker
+        $(".timepicker").timepicker({
+    		use24hours: true,
+            showInputs: false
+        });
+	});
+    $('.datepicker').datepicker({
+    	format: 'yyyy-mm-dd'
+    });
 </script>
 @stop
+
