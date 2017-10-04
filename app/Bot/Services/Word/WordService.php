@@ -34,6 +34,23 @@ class WordService{
         return $buttons;
     }
 
+    public function askFoundPriceReminderGeneric($flightID){
+        $buttons    = [
+            "title"     => "Price Reminder Airlines",
+            "image"     => "https://media.mjniuz.com/dating/d0976fd8b348eb56f9f15911709f85c02017-10-04-22-01-09.jpeg",
+            "subtitle"  => "We found the airline ticket prices that fit with your budget, hurry up!!",
+            "buttons"   => [
+                [
+                    "type"      => "postback",
+                    "data"      => http_build_query(["price_reminder_found_detail" => $flightID]),
+                    "label"     => "See Detail"
+                ]
+            ]
+        ];
+
+        return $buttons;
+    }
+
     public function askDepartureButton($departure = ""){
         $buttons    = [
             "title"     => "Is your departure " . ucfirst($departure) . " correct?",
@@ -132,9 +149,37 @@ class WordService{
             "subtitle"  => "Please press confirm button",
             "buttons"   => [
                 [
-                    "type"      => "postback",
+                    "type"      => "url",
                     "data"      => http_build_query(["price_reminder_confirm_all" => 1]),
                     "label"     => "Yes Confirm"
+                ]
+            ]
+        ];
+
+        return $messages;
+    }
+
+    public function askFoundDetailList($flight){
+        $messages[]    = [
+            "title"     => "Departure - Destination",
+            "subtitle"  => ucfirst($flight->from) . " - " . ucfirst($flight->to),
+        ];
+        $messages[]    = [
+            "title"     => "Found Flight Date",
+            "subtitle"  => date("d F Y H:i", strtotime($flight))
+        ];
+        $messages[]    = [
+            "title"     => "Airline",
+            "subtitle"  => ucfirst($flight->airline)
+        ];
+        $messages[]    = [
+            "title"     => "Your Budget - Found Budget",
+            "subtitle"  => "SGD" . number_format($flight->amount) . ' - ' . "SGD" . number_format($flight->amount_found),
+            "buttons"   => [
+                [
+                    "type"      => "url",
+                    "data"      => "https://www.singaporeair.com/en_UK/id/home",
+                    "label"     => "Book Now"
                 ]
             ]
         ];

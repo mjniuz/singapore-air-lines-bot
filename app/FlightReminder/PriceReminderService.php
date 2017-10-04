@@ -41,7 +41,26 @@ class PriceReminderService extends FlightReminderRepository{
             return $this->createNew();
         }
 
+        if($this->stringContain($this->message, "price_reminder_found_detail")){
+            return $this->responseFoundDetail();
+        }
+
         return [];
+    }
+
+    private function responseFoundDetail(){
+        $flightID   = $this->arr['price_reminder_found_detail'];
+        $flight      = $this->findDetail($flightID);
+        if(!$flight){
+            return [
+                $this->template->sendText("Sorry, your information could not be found, please try again later")
+            ];
+        }
+
+        $foundList  = $this->word->askFoundDetailList($flight);
+        return [
+            $this->template->sendList($foundList)
+        ];
     }
 
     private function nonFinishedFlightReminder(){

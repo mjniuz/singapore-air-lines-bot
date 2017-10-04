@@ -49,7 +49,7 @@ class MessengerController extends ApiController
      * this function for get data from facebook
      *
      * @param  \Illuminate\Http\Request   $request The request
-     * @return \Illuminate\Http\Request
+     * @return string
      */
     public function messengerBot(Request $request)
     {
