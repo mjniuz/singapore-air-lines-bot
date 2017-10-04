@@ -101,9 +101,9 @@ class MessengerRepository extends Repository
                                     "gate"              => $message['arrival_airport']['gate'],
                                 ],
                                 "flight_schedule" => [
-                                    "boarding_time"     => date("Y-m-d". "T" . "H:m", strtotime($message['flight_schedule']['boarding_time'])),
-                                    "departure_time"    => date("Y-m-d". "T" . "H:m", strtotime($message['flight_schedule']['departure_time'])),
-                                    "arrival_time"      => date("Y-m-d". "T" . "H:m", strtotime($message['flight_schedule']['arrival_time']))
+                                    "boarding_time"     => date("Y-m-d", strtotime($message['flight_schedule']['boarding_time'])) . "T". date("H:m"),
+                                    "departure_time"    => date("Y-m-d", strtotime($message['flight_schedule']['departure_time'])) . "T". date("H:m"),
+                                    "arrival_time"      => date("Y-m-d", strtotime($message['flight_schedule']['arrival_time'])) . "T". date("H:m")
                                 ]
                             ]
                         ]
