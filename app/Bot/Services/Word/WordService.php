@@ -115,11 +115,6 @@ class WordService{
                     "type"      => "postback",
                     "data"      => http_build_query(["price_reminder_confirm_all" => 1]),
                     "label"     => "Yes Confirm"
-                ],
-                [
-                    "type"      => "postback",
-                    "data"      => http_build_query(["price_reminder_delete_all" => 1]),
-                    "label"     => "Delete it"
                 ]
             ]
         ];
