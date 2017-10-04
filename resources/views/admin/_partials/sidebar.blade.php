@@ -28,6 +28,20 @@
                     <span>Promotions</span>
                 </a>
             </li>
+            <li class="{{ (Request::is('*/checkflights*')) ? 'active' : '' }}">
+                <a href="{{ route('admin.checkflights') }}">
+                    <i class='glyphicon glyphicon-plane'></i> 
+                    <span>Check Flights</span>
+                </a>
+            </li>
+            {{-- 
+            <li class="{{ (Request::is('*/chat*')) ? 'active' : '' }}">
+                <a href="{{ route('admin.chats') }}">
+                    <i class='glyphicon glyphicon-comment'></i> 
+                    <span>Chat</span>
+                </a>
+            </li>
+             --}}
         </ul>
     </section>
 </aside>
