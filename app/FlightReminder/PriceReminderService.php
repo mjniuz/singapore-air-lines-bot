@@ -57,7 +57,7 @@ class PriceReminderService extends FlightReminderRepository{
             return $this->setDateFlight();
         }
 
-        if($this->has_active->amount == 0){
+        if((int)$this->has_active->amount == 0){
             // please set your amount
             $this->setAmount();
         }
