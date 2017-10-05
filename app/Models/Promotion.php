@@ -50,4 +50,15 @@ class Promotion extends BaseModel
     {
         return date("Y-m-d", strtotime($this->attributes['expired_at']));
     }
+
+    /**
+     * this function for save slug in promotions
+     * @param  array    $options
+     * @return object
+     */
+    public function save(array $options = [])
+    {
+        $this->slug = str_slug($this->title);
+        parent::save();
+    }
 }
