@@ -16,6 +16,14 @@ Route::get('/', function ()
     return view('welcome');
 });
 
+// set frontend routing
+Route::group(['namespace' => 'Frontend', 'prefix' => 'frontend'], function ()
+{
+    Route::get('/', ['as' => 'frontend.home', 'uses' => 'SiteController@index']);
+    Route::get('/format/chat', ['as' => 'frontend.formatchat', 'uses' => 'SiteController@formatChat']);
+});
+
+// set admin routing
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
 {
     // auth
@@ -25,6 +33,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
 
     Route::group(['middleware' => 'auth.admin'], function ()
     {
+        // set dashboard
         Route::get('/dashboard', ['as' => 'admin.dashboard', 'uses' => 'SiteController@dashboard']);
 
         // users
@@ -46,5 +55,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
          * Route::post('/chat/form/{id?}', ['as' => 'admin.chat.store', 'uses' => 'ChatController@store']);
          * Route::delete('chat/delete/{id?}', ['as' => 'admin.chat.delete', 'uses' => 'ChatController@delete']);
          */
+
     });
 });
