@@ -1,0 +1,18 @@
+#style{
+	font-family:medium-content-serif-font,Georgia,Cambria,"Times New Roman",Times,serif;
+	line-height: 290%;
+	/*white-space: nowrap;*/
+}
+#style #title{
+	font-size: 40px;
+	color: black;
+	font-weight: bold;
+}
+#style #content{
+	font-size: 30px;
+}
+#style #content .image{
+	width: 600px;
+	height: 250px;
+	display: block;
+}
