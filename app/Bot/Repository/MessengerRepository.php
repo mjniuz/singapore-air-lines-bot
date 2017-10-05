@@ -254,6 +254,7 @@ class MessengerRepository extends Repository
     public function sendDataFlights($flights, $user)
     {
         $flights = $this->setFlight($flights);
+        $price   = $flights['price_all'] + 500;
         $params  = [
             'recipient' => [
                 'id' => $this->facebookID,
@@ -273,20 +274,30 @@ class MessengerRepository extends Repository
                                 'passenger_id'  => $user->facebook_id,
                             ],
                         ],
-                        "flight_info"            => $flights,
+                        "flight_info"            => $flights['flights'],
                         "passenger_segment_info" => [
                             [
                                 "segment_id"   => "SA002",
                                 "passenger_id" => $user->facebook_id,
                                 "seat"         => "34D",
                                 "seat_type"    => "Business",
+                                "product_info" => [
+                                    [
+                                        "title" => "Price",
+                                        "value" => "3,500,000",
+                                    ],
+                                ],
                             ],
                             [
                                 "segment_id"   => "SA002",
                                 "passenger_id" => $user->facebook_id,
-                                "seat"         => "34D",
+                                "seat"         => "21D",
                                 "seat_type"    => "World Business",
                                 "product_info" => [
+                                    [
+                                        "title" => "Price",
+                                        "value" => "4,500,000",
+                                    ],
                                     [
                                         "title" => "Lounge",
                                         "value" => "Complimentary lounge access",
@@ -305,25 +316,36 @@ class MessengerRepository extends Repository
                                 "currency" => "SGD",
                             ],
                         ],
-                        "base_price"             => "12206",
+                        "base_price"             => "{$flights['price_all']}",
                         "tax"                    => "200",
-                        "total_price"            => "140003",
+                        "total_price"            => "{$price}",
                         "currency"               => "SGD",
                     ],
                 ],
             ],
         ];
+
         // return data
         return $this->bot->getFacebookReplyMessage($params);
     }
 
     public function setFlight($flights)
     {
+        // set price all
+        $price_all = 0;
         foreach ($flights as $key => $flight)
         {
+            // save price all
+            $price_all = $flight['amount_found'] + $price_all;
+
+            // set depature airport
             $departure_airport = $flight['only_date'] . "T" . $flight['only_time'];
-            $arrival_airport   = $flight['only_date'] . "T" . date("H:i", strtotime('+' . $flight['travel_time'] . ' minutes', strtotime($flight['only_time'])));
-            $params[]          = [
+
+            // set arrival airport
+            $arrival_airport = $flight['only_date'] . "T" . date("H:i", strtotime('+' . $flight['travel_time'] . ' minutes', strtotime($flight['only_time'])));
+
+            // set flights
+            $set_flights[] = [
                 "connection_id"     => "SA001",
                 "segment_id"        => "SA002",
                 "flight_number"     => "KL9123",
@@ -347,6 +369,9 @@ class MessengerRepository extends Repository
                 ],
             ];
         }
+        // set price all
+        $params['price_all'] = $price_all;
+        $params['flights']   = $set_flights;
 
         return $params;
     }
