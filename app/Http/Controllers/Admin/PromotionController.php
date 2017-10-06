@@ -1,8 +1,10 @@
 <?php namespace App\Http\Controllers\Admin;
 
+use App\Bot\Repository\MessengerRepository;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PromotionRequest;
 use App\Models\Promotion;
+use App\Models\User;
 use Config;
 use Illuminate\Http\Request;
 use Storage;
@@ -109,12 +111,32 @@ class PromotionController extends Controller
         // create and update data
         if ($id == '' || empty($id))
         {
-            Promotion::create($data);
+            $promotion = Promotion::create($data);
         }
         else
         {
-            Promotion::firstOrCreate(['id' => $id])
+            Promotion::firstOrNew(['id' => $id])
                 ->update($data);
+            $promotion = Promotion::find($id);
+        }
+
+        // get all data users
+        $users = User::orderBy('id', 'desc')->get();
+
+        // check users is not empty
+        if (!empty($users))
+        {
+            // looping data users
+            foreach ($users as $key => $user)
+            {
+                // check facebook id is not empty
+                if (!empty($user->facebook_id))
+                {
+                    $bot = new MessengerRepository($user->facebook_id);
+                    // send message to messenger
+                    $return_response = $bot->sendTextMessage($promotion->title . " " . route('frontend.promotion', $promotion->slug));
+                }
+            }
         }
 
         return redirect()->route('admin.promotions')->with('success', 'Success save promotion');
