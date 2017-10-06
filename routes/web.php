@@ -24,6 +24,12 @@ Route::group(['namespace' => 'Frontend', 'prefix' => 'frontend'], function ()
     Route::get('/promo/{slug?}', ['as' => 'frontend.promotion', 'uses' => 'SiteController@promotion']);
 });
 
+Route::group(['namespace' => 'Frontend', 'prefix' => 'check-in'], function ()
+{
+    Route::get('/{token?}', ['uses' => 'SiteController@checkInIndex']);
+    Route::post('/{token?}', ['uses' => 'SiteController@checkInSave']);
+});
+
 // set admin routing
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
 {

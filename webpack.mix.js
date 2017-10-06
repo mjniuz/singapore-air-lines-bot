@@ -14,8 +14,14 @@ let mix = require('laravel-mix');
 // mix.js('resources/assets/js/app.js', 'public/js')
 //    .sass('resources/assets/sass/app.scss', 'public/css');
 
-mix.js('resources/assets/js/front.js', 'public/js/app.min.js');
+mix.js([
+    'resources/assets/js/front.js',
+    'node_modules/sweetalert2/dist/sweetalert2.min.js',
+    'resources/assets/js/main.js'
+], 'public/js/app.min.js');
 mix.combine([
+    'node_modules/sweetalert2/dist/sweetalert2.min.css',
 	'resources/assets/css/app.css', 
 	'resources/assets/css/style.css',
+    'resources/assets/css/check-in.css',
 	], 'public/css/site.min.css');

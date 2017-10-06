@@ -226,17 +226,4 @@ class CheckInService extends CheckInRepository{
             $this->template->sendGeneric($askGenericNew)
         ];
     }
-
-    private function isValidDate($date){
-        $timestamp = strtotime($date);
-        return $timestamp ? date("d-m-Y", strtotime($date)) : null;
-    }
-
-    private function isValidNum($string_number = ""){
-        //$string_number = '1.512.523,55';
-        // NOTE: You don't really have to use floatval() here, it's just to prove that it's a legitimate float value.
-        $number = floatval(str_replace(',', '.', str_replace('.', '', $string_number)));
-
-        return $number;
-    }
 }

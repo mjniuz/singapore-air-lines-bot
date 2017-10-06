@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Frontend;
 
+use App\CheckIn\CheckInRepository;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use App\Models\Promotion;
@@ -8,6 +9,13 @@ use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
+    protected $checkIn;
+    public function __construct(Request $request) {
+        parent::__construct($request);
+
+        $this->checkIn  = new CheckInRepository();
+    }
+
     /**
      * this function for get all data chat
      * @param  Request $request
@@ -53,5 +61,25 @@ class SiteController extends Controller
         }
 
         return view('frontend.site.promotion', compact('promotion'));
+    }
+
+    public function checkInIndex($token = "", Request $request){
+        $checkIn    = $this->checkIn->findByToken($token);
+        if(!$checkIn){
+            return redirect(url(''));
+        }
+        $seats  = $this->checkIn->generateDummySeat(json_decode($checkIn->seats));
+
+        return view('frontend.site.check-in', compact('checkIn','seats'));
+    }
+
+    public function checkInSave($token = "", Request $request){
+        $seats      = $request->get('seats');
+        $checkIn    = $this->checkIn->updateSeat($token, $seats);
+        if(!$checkIn){
+            return redirect(url(''));
+        }
+
+        return redirect(url('check-in/' . $checkIn->token));
     }
 }

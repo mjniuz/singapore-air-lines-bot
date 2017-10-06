@@ -290,7 +290,7 @@ class WordService{
         return [
             "title"         => "Check-in is available now",
             "pnr_number"    => $checkIn->pnr_number,
-            "checkin_url"   => url('checking/' . $checkIn->token),
+            "checkin_url"   => url('check-in/' . $checkIn->token),
             "flight_number" => $checkIn->flight_number,
             "departure_airport" => [
                 "airport_code"      => $checkIn->departure_airport_code,
