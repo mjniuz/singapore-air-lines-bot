@@ -135,7 +135,7 @@ class MessengerController extends ApiController
              */
             $checkInRepo            = new CheckInRepository();
             $hasNonFinishedCheckIn  = $checkInRepo->findNotFinishedByUser($user->id);
-            if ($hasNonFinishedCheckIn OR $this->message->stringContain($message, "check in"))
+            if ($hasNonFinishedCheckIn OR $this->message->stringContain($message, ["check in", "check_in"]))
             {
                 $checkIn        = new CheckInService($user, $message, $msgType, $hasNonFinishedCheckIn);
                 $response       = $checkIn->start();

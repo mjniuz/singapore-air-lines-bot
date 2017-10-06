@@ -45,7 +45,7 @@ class WordService{
                 [
                     "type"      => "postback",
                     "data"      => http_build_query(["check_in_start_confirm" => 1]),
-                    "label"     => "Check In"
+                    "label"     => "Configure CheckIn"
                 ]
             ]
         ];
