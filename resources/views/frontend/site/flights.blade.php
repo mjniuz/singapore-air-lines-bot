@@ -22,17 +22,23 @@
                 <div class="panel-body">
                     <div id="style">
                       <div id="title">
-                        {{ Input::get('searchlocationfrom')?: null }} > {{ Input::get('searchlocationto')?: null }}
+                        {{ Input::get('searchlocationfrom')?: null }} 
+                        <img src="{{ URL('assets/img/pesawat.png') }}" width="5%">
+                        {{ Input::get('searchlocationto')?: null }}
                       </div>
                     </div>
                     {!! Form::open(['role' => 'form', 'route' => 'frontend.flights', 'method' => 'GET']) !!}
-                      <div class="col-md-6">
+                      <div class="col-md-4">
+                        <hr>
+                        {{ Input::get('searchdate')?: null }} | 1 Adult | Business
+                      </div>
+                      <div class="col-md-4">
                       <hr>
                         {!! Form::text('searchdate', Input::get('searchdate')?: null, ['class' => 'form-control datepicker', 'data-date-format' => 'yyyy-mm-dd', 'placeholder' => 'Searching By Date']) !!}
                         {!! Form::hidden('searchlocationfrom', Input::get('searchlocationfrom')?: null, ['class' => 'form-control datepicker', 'data-date-format' => 'yyyy-mm-dd', 'placeholder' => 'Searching By Date']) !!}
                         {!! Form::hidden('searchlocationto', Input::get('searchlocationto')?: null, ['class' => 'form-control datepicker', 'data-date-format' => 'yyyy-mm-dd', 'placeholder' => 'Searching By Date']) !!}
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-4">
                       <hr>
                         {!! Form::submit('Search',['class'=>'btn btn-primary btn-block', 'width' => '1000px', 'height' => '1000px']) !!}
                       </div>
