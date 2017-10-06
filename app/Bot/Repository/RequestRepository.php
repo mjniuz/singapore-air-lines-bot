@@ -41,7 +41,7 @@ class RequestRepository extends Repository
                     {
                         return [
                             "status"  => 2,
-                            "message" => "your format is not correct, format chat is " . $chat->format_chat . ", ex: is " . $chat->example_chat,
+                            "message" => "your format is not correct, format chat is " . $chat->format_chat . ", ex: is " . $chat->example_chat . " " . route('frontend.formatchat'),
                         ];
                     }
 
