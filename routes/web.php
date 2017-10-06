@@ -25,6 +25,10 @@ Route::group(['namespace' => 'Frontend'], function ()
         Route::get('/format/chat', ['as' => 'frontend.formatchat', 'uses' => 'SiteController@formatChat']);
         Route::get('/promo/{slug?}', ['as' => 'frontend.promotion', 'uses' => 'SiteController@promotion']);
         Route::get('/flights', ['as' => 'frontend.flights', 'uses' => 'FlightController@searchFlights']);
+
+        // auth
+        Route::get('/login', ['as' => 'frontend.login', 'uses' => 'AuthController@login']);
+        Route::post('/login', ['as' => 'frontend.login.submit', 'uses' => 'AuthController@loginSubmit']);
     });
 
     Route::group(['prefix' => 'check-in'], function ()

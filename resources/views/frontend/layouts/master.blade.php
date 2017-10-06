@@ -41,6 +41,9 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
+                            <a href="{{ route('frontend.login') }}">
+                                <button class="btn btn-warning btn-outline-success" type="button">Login</button>
+                            </a>
                         <li><a href="{{ route('frontend.home') }}">Home</a></li>
                     </ul>
                 </div>
