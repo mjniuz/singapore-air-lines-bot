@@ -55,7 +55,7 @@ class RequestRepository extends Repository
                     if ($check_date_format)
                     {
                         // get all data flights
-                        $flights = Flight::where('date', 'LIKE', '%' . $date . '%')->where('from_location', 'LIKE', '%' . $depart . '%')->where('to_location', 'LIKE', '%' . $arrive . '%')->get()->toArray();
+                        $flights = Flight::where('date', 'LIKE', '%' . $date . '%')->where('from_location', 'LIKE', '%' . $depart . '%')->where('to_location', 'LIKE', '%' . $arrive . '%')->take(2)->get()->toArray();
 
                         if (!empty($flights))
                         {
