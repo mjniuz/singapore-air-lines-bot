@@ -47,4 +47,15 @@ class AuthController extends Controller
 
         return redirect()->route('frontend.login')->with('success', 'Success Register');
     }
+
+    /**
+     * Logout from CMS page
+     * @param  \Illuminate\Http\Request                                           $request
+     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
+     */
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return redirect()->back()->with('success', 'Success Logout');
+    }
 }

@@ -41,9 +41,15 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
+                        @if (!Auth::check())
                             <a href="{{ route('frontend.login') }}">
                                 <button class="btn btn-warning btn-outline-success" type="button">Login</button>
                             </a>
+                        @else
+                            <a href="{{ route('frontend.logout') }}">
+                                <button class="btn btn-danger btn-outline-success" type="button">Logout</button>
+                            </a>
+                        @endif
                         <li><a href="{{ route('frontend.home') }}">Home</a></li>
                     </ul>
                 </div>
