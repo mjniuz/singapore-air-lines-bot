@@ -3,7 +3,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Bot\Repository\TemplateService;
 use App\Bot\Services\Word\WordService;
-use App\FlightPriceReminder\CheckInRepository;
+use App\FlightPriceReminder\FlightReminderRepository;
 use App\Http\Controllers\Controller;
 use App\Message\MessageService;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ class CronController extends Controller {
     public function __construct(Request $request) {
         parent::__construct($request);
 
-        $this->price    = new CheckInRepository();
+        $this->price    = new FlightReminderRepository();
         $this->word     = new WordService();
         $this->template = new TemplateService();
         $this->message  = new MessageService();
