@@ -7,7 +7,7 @@ use App\Bot\Services\Word\WordService;
 use App\Message\MessageService;
 use Illuminate\Support\Facades\Log;
 
-class PriceReminderService extends FlightReminderRepository{
+class PriceReminderService extends FlightReminderRepository {
     protected $user, $message, $type, $template, $word, $arr, $has_active, $msgService;
     public function __construct($user, $message, $type = 'text', $nonFinishedConfiguration) {
         $this->user     = $user;

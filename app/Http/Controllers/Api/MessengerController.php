@@ -6,6 +6,8 @@ use App\Bot\Repository\RequestRepository;
 use App\Bot\Repository\TemplateService;
 use App\Bot\Repository\UserRepository;
 use App\Bot\Services\Word\WordService;
+use App\CheckIn\CheckInRepository;
+use App\CheckIn\CheckInService;
 use App\FlightPriceReminder\FlightReminderRepository;
 use App\FlightPriceReminder\PriceReminderService;
 use App\Http\Controllers\Api\ApiController;
@@ -87,9 +89,6 @@ class MessengerController extends ApiController
             // create log
             $this->activity->createActivity($user->id, $msgType, $message);
 
-            $priceReminderRepo    = new FlightReminderRepository();
-            $hasNonFinishedFlight = $priceReminderRepo->findNotFinishedByUser($user->id);
-
             // check handling request form users
             $sender_message = $this->request_repository->handlingRequest($facebook_id, $message);
             if (!empty($sender_message))
@@ -113,8 +112,14 @@ class MessengerController extends ApiController
                 return $bot->responseMessage([$this->template->sendText($response_message)]);
             }
 
+
+            /*
+             * Flight Reminder Logic
+             */
+            $priceReminderRepo    = new FlightReminderRepository();
+            $hasNonFinishedFlight = $priceReminderRepo->findNotFinishedByUser($user->id);
             $priceReminder = new PriceReminderService($user, $message, $msgType, $hasNonFinishedFlight);
-            if ($hasNonFinishedFlight or $this->message->stringContain($message, "price reminder") or $this->message->stringContain($message, "price_reminder"))
+            if ($hasNonFinishedFlight OR $this->message->stringContain($message, "price reminder") or $this->message->stringContain($message, "price_reminder"))
             {
                 $priceReminderResponse = $priceReminder->start();
 
@@ -124,13 +129,19 @@ class MessengerController extends ApiController
                 }
             }
 
-            if ($this->message->stringContain($message, "check in demo"))
-            {
-                $word       = new WordService();
-                $checkIn    = $word->askFlightCheckIn();
-                $response[] = $this->template->sendCheckIn($checkIn);
 
-                return $bot->responseMessage($response);
+            /*
+             * Check In Logic
+             */
+            $checkInRepo            = new CheckInRepository();
+            $hasNonFinishedCheckIn  = $checkInRepo->findNotFinishedByUser($user->id);
+            if ($hasNonFinishedCheckIn OR $this->message->stringContain($message, ["check in", "check_in"]))
+            {
+                $checkIn        = new CheckInService($user, $message, $msgType, $hasNonFinishedCheckIn);
+                $response       = $checkIn->start();
+                if($checkIn){
+                    return $bot->responseMessage($response);
+                }
             }
 
             // default

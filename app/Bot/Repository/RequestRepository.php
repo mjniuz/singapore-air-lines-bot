@@ -13,7 +13,7 @@ class RequestRepository extends Repository
      * this function for handling request
      *
      * @param  integer  $id The identifier
-     * @return string
+     * @return array
      */
     public function handlingRequest($id, $message)
     {

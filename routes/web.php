@@ -25,6 +25,12 @@ Route::group(['namespace' => 'Frontend', 'prefix' => 'frontend'], function ()
     Route::get('/flights', ['as' => 'frontend.flights', 'uses' => 'FlightController@searchFlights']);
 });
 
+Route::group(['namespace' => 'Frontend', 'prefix' => 'check-in'], function ()
+{
+    Route::get('/{token?}', ['uses' => 'SiteController@checkInIndex']);
+    Route::post('/{token?}', ['uses' => 'SiteController@checkInSave']);
+});
+
 // set admin routing
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
 {

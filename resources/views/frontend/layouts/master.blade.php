@@ -57,5 +57,7 @@
         <script src="{{asset('assets/js/bootstrap-timepicker.min.js')}}"></script>
     {{-- <script src="{{ asset('js/app.min.js') }}"></script> --}}
     @yield('script')
+    {{-- <script src="{{ asset('/js/app.min.js') }}"></script> --}}
+    {{--<script src="{{ asset('/js/main.js') }}"></script>--}}
 </body>
 </html>

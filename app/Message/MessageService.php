@@ -67,8 +67,16 @@ class MessageService{
     }
 
     public function stringContain($str = "", $contain = ""){
-        if($str == "" OR $contain == ""){
+        if($str == ""){
             return false;
+        }
+
+        if(is_array($contain)){
+            foreach ($contain as $value){
+                if (strpos($str, $value) !== false) {
+                    return true;
+                }
+            }
         }
 
         if (strpos($str, $contain) !== false) {

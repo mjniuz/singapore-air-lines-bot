@@ -36,6 +36,23 @@ class WordService{
         return $buttons;
     }
 
+    public function askStartNewCheckInGeneric(){
+        $buttons    = [
+            "title"     => "Check In Singapore Airlines",
+            "image"     => "https://media.mjniuz.com/dating/6f90b969c7ef862ec0239fd5eb1399742017-10-06-18-55-05.jpeg",
+            "subtitle"  => "You can Check In your flight in here with only view step",
+            "buttons"   => [
+                [
+                    "type"      => "postback",
+                    "data"      => http_build_query(["check_in_start_confirm" => 1]),
+                    "label"     => "Configure CheckIn"
+                ]
+            ]
+        ];
+
+        return $buttons;
+    }
+
     public function askFoundPriceReminderGeneric($flightID){
         $buttons    = [
             "title"     => "Price Reminder Airlines",
@@ -73,6 +90,26 @@ class WordService{
         return $buttons;
     }
 
+    public function askBookingNumberButton($bookNum = ""){
+        $buttons    = [
+            "title"     => "Is your booking number " . strtoupper($bookNum) . " correct?",
+            "buttons"   => [
+                [
+                    "type"      => "postback",
+                    "data"      => http_build_query(["check_in_set_booking_number" => strtoupper($bookNum)]),
+                    "label"     => "Yes"
+                ],
+                [
+                    "type"      => "postback",
+                    "data"      => http_build_query(["check_in_change_booking_number" => 1]),
+                    "label"     => "Change It"
+                ]
+            ]
+        ];
+
+        return $buttons;
+    }
+
     public function askDestinationButton($dest = ""){
         $buttons    = [
             "title"     => "Is your destination " . ucfirst($dest) . " correct?",
@@ -86,6 +123,26 @@ class WordService{
                     "type"      => "postback",
                     "data"      => http_build_query(["price_reminder_change_destination" => 1]),
                     "label"     => "Change Destination"
+                ]
+            ]
+        ];
+
+        return $buttons;
+    }
+
+    public function askCheckInLastNameButton($lastName = ""){
+        $buttons    = [
+            "title"     => "Is your last name " . ucfirst($lastName) . " correct?",
+            "buttons"   => [
+                [
+                    "type"      => "postback",
+                    "data"      => http_build_query(["check_in_set_last_name" => ucfirst($lastName)]),
+                    "label"     => "Yes"
+                ],
+                [
+                    "type"      => "postback",
+                    "data"      => http_build_query(["check_in_change_last_name" => 1]),
+                    "label"     => "Change It"
                 ]
             ]
         ];
@@ -151,7 +208,7 @@ class WordService{
             "subtitle"  => "Please press confirm button",
             "buttons"   => [
                 [
-                    "type"      => "url",
+                    "type"      => "postback",
                     "data"      => http_build_query(["price_reminder_confirm_all" => 1]),
                     "label"     => "Yes Confirm"
                 ]
@@ -209,29 +266,74 @@ class WordService{
         return $buttons;
     }
 
-    public function askFlightCheckIn(){
+    public function askConfirmDeleteCheckInButton(){
+        $buttons    = [
+            "title"     => "Are you sure to delete this?",
+            "buttons"   => [
+                [
+                    "type"      => "postback",
+                    "data"      => http_build_query(["check_in_delete_confirm" => 1]),
+                    "label"     => "Yes Delete"
+                ],
+                [
+                    "type"      => "postback",
+                    "data"      => http_build_query(["check_in_show_final_confirm" => 1]),
+                    "label"     => "No Keep it"
+                ]
+            ]
+        ];
+
+        return $buttons;
+    }
+
+    public function askFlightCheckIn($checkIn){
         return [
             "title"         => "Check-in is available now",
-            "pnr_number"    => "XYZ",
-            "checkin_url"   => url('checking/XYZ'),
-            "flight_number" => "F212",
+            "pnr_number"    => $checkIn->pnr_number,
+            "checkin_url"   => url('check-in/' . $checkIn->token),
+            "flight_number" => $checkIn->flight_number,
             "departure_airport" => [
-                "airport_code"      => "CGK",
-                "city"              => "Jakarta",
-                "terminal"          => "T1",
-                "gate"              => "G6"
+                "airport_code"      => $checkIn->departure_airport_code,
+                "city"              => $checkIn->departure_city,
+                "terminal"          => $checkIn->departure_terminal,
+                "gate"              => $checkIn->departure_gate
             ],
             "arrival_airport" => [
-                "airport_code"      => "SIN",
-                "city"              => "Singapore",
-                "terminal"          => "T2",
-                "gate"              => "G12"
+                "airport_code"      => $checkIn->arrival_airport_code,
+                "city"              => $checkIn->arrival_city,
+                "terminal"          => $checkIn->arrival_terminal,
+                "gate"              => $checkIn->arrival_gate
             ],
             "flight_schedule"   => [
-                "boarding_time"     => date("Y-m-d H:i:s", strtotime("+1 day")),
-                "departure_time"    => date("Y-m-d H:i:s", strtotime("+1 day +40 minutes")),
-                "arrival_time"      => date("Y-m-d H:i:s", strtotime("+1 day +1 hour +30 minutes"))
+                "boarding_time"     => $checkIn->flight_schedule_boarding,
+                "departure_time"    => $checkIn->flight_schedule_departure,
+                "arrival_time"      => $checkIn->flight_schedule_arrival
             ]
         ];
     }
+
+    public function askFinalConfirmCheckInList($checkIn){
+        $messages[]    = [
+            "title"     => "Booking Number",
+            "subtitle"  => strtoupper($checkIn->booking_number),
+        ];
+        $messages[]    = [
+            "title"     => "Last Name",
+            "subtitle"  => ucfirst($checkIn->last_name)
+        ];
+        $messages[]    = [
+            "title"     => "Is it correct?",
+            "subtitle"  => "Please press confirm button",
+            "buttons"   => [
+                [
+                    "type"      => "postback",
+                    "data"      => http_build_query(["check_in_confirm_all" => 1]),
+                    "label"     => "Yes Confirm"
+                ]
+            ]
+        ];
+
+        return $messages;
+    }
+
 }
