@@ -144,7 +144,7 @@ class CheckInService extends CheckInRepository{
             $validLastName = $this->arr['check_in_set_last_name'];
 
             // update last name
-            $this->updateLastName($this->has_active->id, $validLastName);
+            $this->has_active   = $this->updateLastName($this->has_active->id, $validLastName);
             $finalListConfirm   = $this->word->askFinalConfirmCheckInList($this->has_active);
 
             return [
