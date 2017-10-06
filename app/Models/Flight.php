@@ -26,4 +26,14 @@ class Flight extends BaseModel
         $minutes = ($time % 60);
         return sprintf($format, $hours, $minutes);
     }
+
+    public function getFormatRupiahAttribute()
+    {
+        return "Rp. " . number_format($this->attributes['amount_found'], 2, ',', '.');
+    }
+
+    public function getOnlyTimeArrivalAttribute()
+    {
+        return date("H:i", strtotime('+' . $this->attributes['travel_time'] . ' minutes', strtotime($this->getOnlyTimeAttribute())));
+    }
 }
