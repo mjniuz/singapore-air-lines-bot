@@ -5,7 +5,6 @@ use App\Bot\Repository\MessengerRepository;
 use App\Bot\Repository\RequestRepository;
 use App\Bot\Repository\TemplateService;
 use App\Bot\Repository\UserRepository;
-use App\Bot\Services\Word\WordService;
 use App\CheckIn\CheckInRepository;
 use App\CheckIn\CheckInService;
 use App\FlightPriceReminder\FlightReminderRepository;
@@ -105,21 +104,22 @@ class MessengerController extends ApiController
                 else
                 {
                     // send message to messenger
-                    $return_response = $bot->sendDataFlights($response_message, $user);
+                    $return_response = $bot->sendDataFlights($response_message['flights'], $user);
+                    $route           = route('frontend.flights') . "?searchdate=" . $response_message['data']['date'] . "&searchlocationfrom=" . $response_message['data']['depart'] . "&searchlocationto=" . $response_message['data']['arrive'];
+                    $return_response = $bot->sendTextMessage($route);
                 }
 
                 // return message
                 return $bot->responseMessage([$this->template->sendText($response_message)]);
             }
 
-
             /*
              * Flight Reminder Logic
              */
             $priceReminderRepo    = new FlightReminderRepository();
             $hasNonFinishedFlight = $priceReminderRepo->findNotFinishedByUser($user->id);
-            $priceReminder = new PriceReminderService($user, $message, $msgType, $hasNonFinishedFlight);
-            if ($hasNonFinishedFlight OR $this->message->stringContain($message, "price reminder") or $this->message->stringContain($message, "price_reminder"))
+            $priceReminder        = new PriceReminderService($user, $message, $msgType, $hasNonFinishedFlight);
+            if ($hasNonFinishedFlight or $this->message->stringContain($message, "price reminder") or $this->message->stringContain($message, "price_reminder"))
             {
                 $priceReminderResponse = $priceReminder->start();
 
@@ -129,17 +129,17 @@ class MessengerController extends ApiController
                 }
             }
 
-
             /*
              * Check In Logic
              */
-            $checkInRepo            = new CheckInRepository();
-            $hasNonFinishedCheckIn  = $checkInRepo->findNotFinishedByUser($user->id);
-            if ($hasNonFinishedCheckIn OR $this->message->stringContain($message, ["check in", "check_in"]))
+            $checkInRepo           = new CheckInRepository();
+            $hasNonFinishedCheckIn = $checkInRepo->findNotFinishedByUser($user->id);
+            if ($hasNonFinishedCheckIn or $this->message->stringContain($message, ["check in", "check_in"]))
             {
-                $checkIn        = new CheckInService($user, $message, $msgType, $hasNonFinishedCheckIn);
-                $response       = $checkIn->start();
-                if($checkIn){
+                $checkIn  = new CheckInService($user, $message, $msgType, $hasNonFinishedCheckIn);
+                $response = $checkIn->start();
+                if ($checkIn)
+                {
                     return $bot->responseMessage($response);
                 }
             }

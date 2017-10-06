@@ -12,7 +12,7 @@ class RequestRepository extends Repository
     /**
      * this function for handling request
      *
-     * @param  integer  $id The identifier
+     * @param  integer $id The identifier
      * @return array
      */
     public function handlingRequest($id, $message)
@@ -62,7 +62,14 @@ class RequestRepository extends Repository
                             // return data
                             return [
                                 "status"  => 1,
-                                "message" => $flights,
+                                "message" => [
+                                    "flights" => $flights,
+                                    "data"    => [
+                                        "date"   => $date,
+                                        "depart" => $depart,
+                                        "arrive" => $arrive,
+                                    ],
+                                ],
                             ];
                         }
                         else
