@@ -73,7 +73,7 @@ class MessageService{
 
         if(is_array($contain)){
             foreach ($contain as $value){
-                if (strpos($str, $value) !== false) {
+                if (strpos(strtolower($str), strtolower($value)) !== false) {
                     return true;
                 }
             }
@@ -81,7 +81,7 @@ class MessageService{
             return false;
         }
 
-        if (strpos($str, $contain) !== false) {
+        if (strpos(strtolower($str), strtolower($contain)) !== false) {
             return true;
         }
 
