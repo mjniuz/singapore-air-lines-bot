@@ -251,6 +251,12 @@ class MessengerRepository extends Repository
         return $buttons;
     }
 
+    /**
+     * this function for send data flights to messenger
+     * @param  array    $flights
+     * @param  object   $user
+     * @return object
+     */
     public function sendDataFlights($flights, $user)
     {
         $flights = $this->setFlight($flights);
@@ -329,6 +335,10 @@ class MessengerRepository extends Repository
         return $this->bot->getFacebookReplyMessage($params);
     }
 
+    /**
+     * this function for set all flights data
+     * @param array $flights
+     */
     public function setFlight($flights)
     {
         // set price all
