@@ -4,7 +4,9 @@
 <div class="container">
     <div class="row">
         <div id="style">
-          <div class="col-md-8 col-md-offset-3">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+          {{-- <div class="col-md-8 col-md-offset-3"> --}}
               <div id="title">
                 <p>
                   {{ $promotion->title }}
@@ -19,6 +21,7 @@
                   </p>
               </div>
           </div>
+          <div class="col-md-6"></div>
         </div>
     </div>
 </div>
