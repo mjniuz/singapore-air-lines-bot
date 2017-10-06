@@ -17,18 +17,21 @@ Route::get('/', function ()
 });
 
 // set frontend routing
-Route::group(['namespace' => 'Frontend', 'prefix' => 'frontend'], function ()
+Route::group(['namespace' => 'Frontend'], function ()
 {
-    Route::get('/', ['as' => 'frontend.home', 'uses' => 'SiteController@index']);
-    Route::get('/format/chat', ['as' => 'frontend.formatchat', 'uses' => 'SiteController@formatChat']);
-    Route::get('/promo/{slug?}', ['as' => 'frontend.promotion', 'uses' => 'SiteController@promotion']);
-    Route::get('/flights', ['as' => 'frontend.flights', 'uses' => 'FlightController@searchFlights']);
-});
+    Route::group(['prefix' => 'frontend'], function ()
+    {
+        Route::get('/', ['as' => 'frontend.home', 'uses' => 'SiteController@index']);
+        Route::get('/format/chat', ['as' => 'frontend.formatchat', 'uses' => 'SiteController@formatChat']);
+        Route::get('/promo/{slug?}', ['as' => 'frontend.promotion', 'uses' => 'SiteController@promotion']);
+        Route::get('/flights', ['as' => 'frontend.flights', 'uses' => 'FlightController@searchFlights']);
+    });
 
-Route::group(['namespace' => 'Frontend', 'prefix' => 'check-in'], function ()
-{
-    Route::get('/{token?}', ['uses' => 'SiteController@checkInIndex']);
-    Route::post('/{token?}', ['uses' => 'SiteController@checkInSave']);
+    Route::group(['prefix' => 'check-in'], function ()
+    {
+        Route::get('/{token?}', ['uses' => 'SiteController@checkInIndex']);
+        Route::post('/{token?}', ['uses' => 'SiteController@checkInSave']);
+    });
 });
 
 // set admin routing
