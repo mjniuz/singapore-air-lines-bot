@@ -108,7 +108,7 @@ class CheckInService extends CheckInRepository{
         }
 
         if(!empty($this->arr['check_in_show_final_confirm'])){
-            $finalListConfirm   = $this->word->askFinalConfirmList($this->has_active);
+            $finalListConfirm   = $this->word->askFinalConfirmCheckInList($this->has_active);
 
             return [
                 $this->template->sendList($finalListConfirm)
@@ -116,7 +116,7 @@ class CheckInService extends CheckInRepository{
         }
 
         // default response
-        $finalListConfirm   = $this->word->askFinalConfirmList($this->has_active);
+        $finalListConfirm   = $this->word->askFinalConfirmCheckInList($this->has_active);
         return [
             $this->template->sendList($finalListConfirm)
         ];
@@ -145,7 +145,7 @@ class CheckInService extends CheckInRepository{
 
             // update last name
             $this->updateLastName($this->has_active->id, $validLastName);
-            $finalListConfirm   = $this->word->askFinalConfirmList($this->has_active);
+            $finalListConfirm   = $this->word->askFinalConfirmCheckInList($this->has_active);
 
             return [
                 $this->template->sendList($finalListConfirm)
