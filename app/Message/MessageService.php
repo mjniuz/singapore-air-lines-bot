@@ -77,6 +77,8 @@ class MessageService{
                     return true;
                 }
             }
+
+            return false;
         }
 
         if (strpos($str, $contain) !== false) {
