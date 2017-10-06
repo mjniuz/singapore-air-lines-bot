@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\LoginRequest;
+use App\Http\Requests\Frontend\RegisterRequest;
+use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 use Redirect;
@@ -26,5 +28,23 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         return view('frontend.auth.login');
+    }
+
+    public function register(Request $request)
+    {
+        return view('frontend.auth.register');
+    }
+
+    public function registerSubmit(RegisterRequest $request)
+    {
+        $data = [
+            'full_name' => $request->input('fullname'),
+            'username'  => $request->input('username'),
+            'password'  => $request->input('password'),
+        ];
+
+        $user = User::create($data);
+
+        return redirect()->route('frontend.login')->with('success', 'Success Register');
     }
 }

@@ -29,6 +29,8 @@ Route::group(['namespace' => 'Frontend'], function ()
         // auth
         Route::get('/login', ['as' => 'frontend.login', 'uses' => 'AuthController@login']);
         Route::post('/login', ['as' => 'frontend.login.submit', 'uses' => 'AuthController@loginSubmit']);
+        Route::get('/register', ['as' => 'frontend.register', 'uses' => 'AuthController@register']);
+        Route::post('/register', ['as' => 'frontend.register.submit', 'uses' => 'AuthController@registerSubmit']);
     });
 
     Route::group(['prefix' => 'check-in'], function ()
