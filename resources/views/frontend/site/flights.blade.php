@@ -1,11 +1,43 @@
 @extends('frontend.layouts.master')
 
+@section('script')    
+<script type="text/javascript">
+  $(function() {
+        //Timepicker
+        $(".timepicker").timepicker({
+          use24hours: true,
+          showInputs: false
+        });
+  });
+  $('.datepicker').datepicker({
+    format: 'yyyy-mm-dd'
+  });
+</script>
+@stop
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-body">
+                    <div id="style">
+                      <div id="title">
+                        {{ Input::get('searchlocationfrom')?: null }} > {{ Input::get('searchlocationto')?: null }}
+                      </div>
+                    </div>
+                    {!! Form::open(['role' => 'form', 'route' => 'frontend.flights', 'method' => 'GET']) !!}
+                      <div class="col-md-6">
+                      <hr>
+                        {!! Form::text('searchdate', Input::get('searchdate')?: null, ['class' => 'form-control datepicker', 'data-date-format' => 'yyyy-mm-dd', 'placeholder' => 'Searching By Date']) !!}
+                        {!! Form::hidden('searchlocationfrom', Input::get('searchlocationfrom')?: null, ['class' => 'form-control datepicker', 'data-date-format' => 'yyyy-mm-dd', 'placeholder' => 'Searching By Date']) !!}
+                        {!! Form::hidden('searchlocationto', Input::get('searchlocationto')?: null, ['class' => 'form-control datepicker', 'data-date-format' => 'yyyy-mm-dd', 'placeholder' => 'Searching By Date']) !!}
+                      </div>
+                      <div class="col-md-6">
+                      <hr>
+                        {!! Form::submit('Search',['class'=>'btn btn-primary btn-block', 'width' => '1000px', 'height' => '1000px']) !!}
+                      </div>
+                      <br><br>
+                    {!! Form::close() !!}
                     <table class="table table-striped">
                       <thead>
                         <tr>

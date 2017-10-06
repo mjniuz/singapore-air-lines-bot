@@ -8,8 +8,9 @@
 
     <title>Bot Singapore Airlines</title>
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('/css/site.min.css') }}">
+    <!-- Styles -->     
+    <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/site.min.css') }}">
 </head>
 <body>
     <div id="app">
@@ -50,6 +51,11 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('/js/app.min.js') }}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="{{asset('assets/js/app.min.js')}}"></script>
+        <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
+        <script src="{{asset('assets/js/bootstrap-timepicker.min.js')}}"></script>
+    {{-- <script src="{{ asset('js/app.min.js') }}"></script> --}}
+    @yield('script')
 </body>
 </html>
