@@ -326,7 +326,7 @@ class WordService{
             "subtitle"  => "Please press confirm button",
             "buttons"   => [
                 [
-                    "type"      => "url",
+                    "type"      => "postback",
                     "data"      => http_build_query(["check_in_confirm_all" => 1]),
                     "label"     => "Yes Confirm"
                 ]
