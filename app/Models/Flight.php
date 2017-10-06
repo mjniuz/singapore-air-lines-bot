@@ -6,7 +6,7 @@ class Flight extends BaseModel
 {
     protected $table   = 'flights';
     protected $guarded = [];
-    protected $appends = ['only_date', 'only_time', 'convert_time'];
+    protected $appends = ['only_date', 'only_time', 'convert_time', 'only_time_arrival'];
 
     public function getOnlyDateAttribute()
     {

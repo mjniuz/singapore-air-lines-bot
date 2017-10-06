@@ -352,7 +352,7 @@ class MessengerRepository extends Repository
             $departure_airport = $flight['only_date'] . "T" . $flight['only_time'];
 
             // set arrival airport
-            $arrival_airport = $flight['only_date'] . "T" . date("H:i", strtotime('+' . $flight['travel_time'] . ' minutes', strtotime($flight['only_time'])));
+            $arrival_airport = $flight['only_date'] . "T" . $flight['only_time_arrival'];
 
             // set flights
             $set_flights[] = [
