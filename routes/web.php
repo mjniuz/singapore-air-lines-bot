@@ -22,6 +22,7 @@ Route::group(['namespace' => 'Frontend', 'prefix' => 'frontend'], function ()
     Route::get('/', ['as' => 'frontend.home', 'uses' => 'SiteController@index']);
     Route::get('/format/chat', ['as' => 'frontend.formatchat', 'uses' => 'SiteController@formatChat']);
     Route::get('/promo/{slug?}', ['as' => 'frontend.promotion', 'uses' => 'SiteController@promotion']);
+    Route::get('/flights', ['as' => 'frontend.flights', 'uses' => 'FlightController@searchFlights']);
 });
 
 // set admin routing
