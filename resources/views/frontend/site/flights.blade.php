@@ -1,6 +1,7 @@
 @extends('frontend.layouts.master')
 
-@section('script')    
+@section('script')
+<script src="{{asset('assets/js/app.min.js')}}"></script>
 <script type="text/javascript">
   $(function() {
         //Timepicker
