@@ -74,7 +74,8 @@ class MessengerRepository extends Repository
         return "success";
     }
 
-    public function sendBoardingMessage($message){
+    public function sendBoardingMessage($message)
+    {
         $params = [
             'recipient' => [
                 'id' => $this->facebookID,
@@ -86,34 +87,34 @@ class MessengerRepository extends Repository
                         "template_type" => "airline_boardingpass",
                         "intro_message" => $message['title'],
                         "locale"        => (!empty($message['locale']) ? $message['locale'] : "en_US"),
-                        "boarding_pass"   => [
+                        "boarding_pass" => [
                             [
-                                "passenger_name"    => "John " . $message['last_name'],
-                                "pnr_number"        => $message['pnr_number'],
-                                "seat"              => $message['seat'],
-                                "logo_image_url"    => "https://www.singaporeair.com/saar5/images/logo-footer-singaporeairlines.png",
-                                "qr_code"           => (!empty($message['qr_code']) ? $message['qr_code'] : ("M1SMITH\/" . $message['last_name'] ."  CG4X7U nawouehgawgnapwi3jfa0wfh")),
-                                "auxiliary_fields"  => [
+                                "passenger_name"   => "John " . $message['last_name'],
+                                "pnr_number"       => $message['pnr_number'],
+                                "seat"             => $message['seat'],
+                                "logo_image_url"   => "https://www.singaporeair.com/saar5/images/logo-footer-singaporeairlines.png",
+                                "qr_code"          => (!empty($message['qr_code']) ? $message['qr_code'] : ("M1SMITH\/" . $message['last_name'] . "  CG4X7U nawouehgawgnapwi3jfa0wfh")),
+                                "auxiliary_fields" => [
                                     [
                                         "label" => "Terminal",
-                                        "value" => $message['departure_airport']['terminal']
+                                        "value" => $message['departure_airport']['terminal'],
                                     ],
                                     [
                                         "label" => "Departure",
-                                        "value" => $message['flight_schedule_departure']
-                                    ]
+                                        "value" => $message['flight_schedule_departure'],
+                                    ],
                                 ],
-                                "secondary_fields"  => [
+                                "secondary_fields" => [
                                     [
                                         "label" => "Boarding",
-                                        "value" => $message['flight_schedule_boarding']
+                                        "value" => $message['flight_schedule_boarding'],
                                     ],
                                     [
                                         "label" => "Gate",
-                                        "value" => $message['departure_airport']['gate']
-                                    ]
+                                        "value" => $message['departure_airport']['gate'],
+                                    ],
                                 ],
-                                "flight_info"   => [
+                                "flight_info"      => [
                                     "flight_number"     => $message['flight_number'],
                                     "departure_airport" => [
                                         "airport_code" => $message['departure_airport']['airport_code'],
@@ -130,9 +131,9 @@ class MessengerRepository extends Repository
                                     "flight_schedule"   => [
                                         "departure_time" => date("Y-m-d", strtotime($message['flight_schedule']['departure_time'])) . "T" . date("H:m", strtotime($message['flight_schedule']['departure_time'])),
                                         "arrival_time"   => date("Y-m-d", strtotime($message['flight_schedule']['arrival_time'])) . "T" . date("H:m", strtotime($message['flight_schedule']['arrival_time'])),
-                                    ]
-                                ]
-                            ]
+                                    ],
+                                ],
+                            ],
                         ],
                     ],
                 ],
@@ -469,6 +470,30 @@ class MessengerRepository extends Repository
             ],
             'message'   => [
                 'text' => $message,
+            ],
+        ];
+        // return data
+        return $this->bot->getFacebookReplyMessage($params);
+    }
+
+    /**
+     * this function for send image to user
+     * @param  object   $message
+     * @return object
+     */
+    public function sendImageMessage($image_url)
+    {
+        $params = [
+            'recipient' => [
+                'id' => $this->facebookID,
+            ],
+            'message'   => [
+                'attachment' => [
+                    'type'    => 'image',
+                    'payload' => [
+                        'url' => $image_url,
+                    ],
+                ],
             ],
         ];
         // return data

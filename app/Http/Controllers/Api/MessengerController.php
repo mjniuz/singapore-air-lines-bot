@@ -106,7 +106,18 @@ class MessengerController extends ApiController
                     // send message to messenger
                     $return_response = $bot->sendDataFlights($response_message['flights'], $user);
                     $route           = route('frontend.flights') . "?searchdate=" . $response_message['data']['date'] . "&searchlocationfrom=" . $response_message['data']['depart'] . "&searchlocationto=" . $response_message['data']['arrive'];
-                    $return_response = $bot->sendTextMessage($route);
+                    $params          = [
+                        'title'   => 'to know other flights',
+                        'buttons' => [
+                            [
+                                'type'  => 'url',
+                                'data'  => $route,
+                                'label' => 'Click Here!!!',
+                            ],
+                        ],
+                    ];
+                    $return_response = $bot->sendButtonMessage($params);
+                    // $return_response = $bot->sendTextMessage($route);
                 }
 
                 // return message

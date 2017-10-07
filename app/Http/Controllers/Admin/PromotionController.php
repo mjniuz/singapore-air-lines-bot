@@ -132,9 +132,29 @@ class PromotionController extends Controller
                 // check facebook id is not empty
                 if (!empty($user->facebook_id))
                 {
-                    $bot = new MessengerRepository($user->facebook_id);
+                    $type = $request->input('type');
+                    $bot  = new MessengerRepository($user->facebook_id);
+
                     // send message to messenger
-                    $return_response = $bot->sendTextMessage($promotion->title . " " . route('frontend.promotion', $promotion->slug));
+                    if ($type != 1)
+                    {
+                        $return_response = $bot->sendTextMessage($promotion->title . " " . route('frontend.promotion', $promotion->slug));
+                    }
+                    else
+                    {
+                        $return_response = $bot->sendImageMessage($promotion->image_file);
+                        $params          = [
+                            'title'   => $promotion->title,
+                            'buttons' => [
+                                [
+                                    'type'  => 'url',
+                                    'data'  => route('frontend.promotion', $promotion->slug),
+                                    'label' => 'Click Here!!!',
+                                ],
+                            ],
+                        ];
+                        $return_response = $bot->sendButtonMessage($params);
+                    }
                 }
             }
         }

@@ -40,6 +40,14 @@
 	                            <label>Expired At</label>
 	                            {!! Form::text('expired_at', isset($promotion->expired_at) ? $promotion->expired : null, ['class' => 'datepicker form-control', 'data-date-format' => 'yyyy-mm-dd', 'required']) !!}
 	                        </div>
+	                        <div class="form-group required">
+	                            <label>Type</label>
+							    {!! Form::select('type', [
+							    		1 => 'Button Link',
+							    		2 => 'URL Link',
+							    	], null, ['class' => 'form-control select2 to-select',
+							        'placeholder' => 'Searching By Type', 'required']) !!}
+	                        </div>
 	                        <div class="form-group">
 	                            <label>Image</label>
 	                            @if (!empty($promotion))

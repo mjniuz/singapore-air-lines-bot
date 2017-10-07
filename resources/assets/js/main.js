@@ -6,7 +6,6 @@ $(document).ready(function (e) {
         let exist       = $("#existing-seats").val();
         let newThis = this;
 
-        alert(exist);
         if(exist !== ""){
             e.preventDefault();
             swal(
@@ -14,6 +13,8 @@ $(document).ready(function (e) {
                 'You already checked in, please check you messenger for boarding pass detail',
                 'warning'
             );
+
+            return false;
         }
 
         if(seatVal.val() !== ""){
