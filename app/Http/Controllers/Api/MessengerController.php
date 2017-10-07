@@ -126,6 +126,17 @@ class MessengerController extends ApiController
             }
 
             /*
+             * Flight Booking Logic
+             */
+            if($this->message->stringContain($message, "booking create new")){
+                $response = [
+                    $this->template->sendText("Reply with this format SA_DATE_DESTINATION-LOCATION_FROM-LOCATION (ex. SA_2017-12-12_Jakarta_Singapore)")
+                ];
+
+                return $bot->responseMessage($response);
+            }
+
+            /*
              * Flight Reminder Logic
              */
             $priceReminderRepo    = new FlightReminderRepository();
