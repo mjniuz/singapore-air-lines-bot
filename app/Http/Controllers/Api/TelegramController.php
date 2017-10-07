@@ -3,6 +3,7 @@
 use App\Bot\Repository\RequestRepository;
 use App\Bot\Repository\TelegramRepository;
 use App\Bot\Repository\TemplateService;
+use App\Bot\Repository\UserRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -20,6 +21,8 @@ class TelegramController extends Controller
 
         // repository messenger for handle process data
         $this->telegram_repository = new TelegramRepository();
+        // repository users
+        $this->user_repository = new UserRepository();
         // this repository for handling request
         $this->request_repository = new RequestRepository();
         $this->template           = new TemplateService();
@@ -52,7 +55,8 @@ class TelegramController extends Controller
             // check if sender messege if not empty
             if (!empty($message))
             {
-                $sender_message = $this->request_repository->handlingRequest($id, $message);
+                $user_repository = $this->user_repository->saveUserTelegram($data['message']['from']);
+                $sender_message  = $this->request_repository->handlingRequest($id, $message);
 
                 // check sender message
                 if (!empty($sender_message))
