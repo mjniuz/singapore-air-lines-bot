@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers\Frontend;
 
+use App\CheckIn\CheckInInjectService;
 use App\CheckIn\CheckInRepository;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
@@ -79,6 +80,12 @@ class SiteController extends Controller
         if(!$checkIn){
             return redirect(url(''));
         }
+
+        //success inject to messanger
+        $check      = $this->checkIn->findByToken($token);
+
+        $inject = new CheckInInjectService();
+        $inject->sendBoardingPass($check->user, $check->id);
 
         return redirect(url('check-in/' . $checkIn->token));
     }

@@ -51,6 +51,14 @@ class TemplateService
         ];
     }
 
+    public function sendBoarding($message = [], $delay = 0 /*second*/){
+        return [
+            'type'      => 'boarding',
+            'response'  => $message,
+            'delay'     => $delay
+        ];
+    }
+
     public function sendList($lists = [], $delay = 0 /*second*/){
         return [
             'type'      => 'list',

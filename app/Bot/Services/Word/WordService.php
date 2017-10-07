@@ -312,6 +312,35 @@ class WordService{
         ];
     }
 
+    public function boardingPassDetail($checkIn){
+        return [
+            "title"         => "You are checked in.",
+            "last_name"     => $checkIn->last_name,
+            "pnr_number"    => $checkIn->pnr_number,
+            "seat"          => $checkIn->seat,
+            "flight_number" => $checkIn->flight_number,
+            "flight_schedule_departure" => date("mF H:i", strtotime($checkIn->flight_schedule_departure)),
+            "flight_schedule_boarding"  => date("H:i", strtotime($checkIn->flight_schedule_boarding)),
+            "departure_airport" => [
+                "airport_code"      => $checkIn->departure_airport_code,
+                "city"              => $checkIn->departure_city,
+                "terminal"          => $checkIn->departure_terminal,
+                "gate"              => $checkIn->departure_gate
+            ],
+            "arrival_airport" => [
+                "airport_code"      => $checkIn->arrival_airport_code,
+                "city"              => $checkIn->arrival_city,
+                "terminal"          => $checkIn->arrival_terminal,
+                "gate"              => $checkIn->arrival_gate
+            ],
+            "flight_schedule"   => [
+                "boarding_time"     => $checkIn->flight_schedule_boarding,
+                "departure_time"    => $checkIn->flight_schedule_departure,
+                "arrival_time"      => $checkIn->flight_schedule_arrival
+            ]
+        ];
+    }
+
     public function askFinalConfirmCheckInList($checkIn){
         $messages[]    = [
             "title"     => "Booking Number",
