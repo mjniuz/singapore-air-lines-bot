@@ -301,7 +301,7 @@ class WordService
             "buttons"  => [
                 [
                     "type"  => "url",
-                    "data"  => "https://www.singaporeair.com/en_UK/id/home",
+                    "data"  => url("frontend/flights?searchdate=" . date("Y-m-d",strtotime($flight->flight_time)). "&searchlocationfrom=Jakarta&searchlocationto=Singapore&price=" . $flight->amount_found),
                     "label" => "Book Now",
                 ],
             ],
