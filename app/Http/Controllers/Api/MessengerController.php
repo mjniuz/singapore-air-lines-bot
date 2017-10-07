@@ -162,6 +162,18 @@ class MessengerController extends ApiController
              * Intro
              */
             $word           = new WordService();
+            /* example delay */
+            if($this->message->stringContain($this->message, "sample_delay")){
+                $check          = new CheckInRepository();
+                $checkIn        = $check->findRandom();
+                $airlineUpdate  = $word->airlineUpdateDelay($checkIn);
+                $dataDelayExample   = [
+                    $this->template->sendAirlineUpdate($airlineUpdate)
+                ];
+
+                return $bot->responseMessage($dataDelayExample);
+            }
+
             $introTemplate  = $word->introList();
 
             return $bot->responseMessage([

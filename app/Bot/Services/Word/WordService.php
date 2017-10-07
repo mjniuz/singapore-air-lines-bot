@@ -339,6 +339,32 @@ class WordService{
         return $buttons;
     }
 
+    public function airlineUpdateDelay($checkIn){
+        return [
+            "title"         => "Your flight is delayed",
+            "pnr_number"    => $checkIn->pnr_number,
+            "flight_number" => $checkIn->flight_number,
+            "update_type"   => "delayed",
+            "departure_airport" => [
+                "airport_code"      => $checkIn->departure_airport_code,
+                "city"              => $checkIn->departure_city,
+                "terminal"          => $checkIn->departure_terminal,
+                "gate"              => $checkIn->departure_gate
+            ],
+            "arrival_airport" => [
+                "airport_code"      => $checkIn->arrival_airport_code,
+                "city"              => $checkIn->arrival_city,
+                "terminal"          => $checkIn->arrival_terminal,
+                "gate"              => $checkIn->arrival_gate
+            ],
+            "flight_schedule"   => [
+                "boarding_time"     => $checkIn->flight_schedule_boarding,
+                "departure_time"    => $checkIn->flight_schedule_departure,
+                "arrival_time"      => $checkIn->flight_schedule_arrival
+            ]
+        ];
+    }
+
     public function askFlightCheckIn($checkIn){
         return [
             "title"         => "Check-in is available now",
