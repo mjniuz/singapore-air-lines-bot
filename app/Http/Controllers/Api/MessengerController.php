@@ -163,7 +163,7 @@ class MessengerController extends ApiController
              */
             $word           = new WordService();
             $introTemplate  = $word->introList();
-            
+
             return $bot->responseMessage([$this->template->sendList($introTemplate)]);
         }
         else
