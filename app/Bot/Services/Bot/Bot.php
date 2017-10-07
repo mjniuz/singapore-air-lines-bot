@@ -93,10 +93,20 @@ class Bot extends GuzzleHttpLibrary
         return $this->handler();
     }
 
-    /**
-     * send data via guzzle to etalastic
-     * @return string
-     */
+    public function sendMessegeTelegram($telegram_id, $message)
+    {
+        $this->endpoint = env('TELEGRAM_ENDPOINT'); // get endpoint
+        $this->version  = ':443';
+        $this->method   = 'GET'; // method
+        $this->service  = '/bot' . env('TELEGRAM_TOKEN') . "/sendMessage?chat_id=" . $telegram_id . "&text=" . $message;
+
+        return $this->handler();
+    }
+
+/**
+ * send data via guzzle to etalastic
+ * @return string
+ */
     private function _send()
     {
         $this->service = $this->endpoint . $this->version . $this->service;

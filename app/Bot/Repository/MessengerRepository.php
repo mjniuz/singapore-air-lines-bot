@@ -5,7 +5,6 @@ use App\Bot\Services\Bot\Bot;
 
 class MessengerRepository extends Repository
 {
-
     /**
      * this function for first call function if call another function
      *

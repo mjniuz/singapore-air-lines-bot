@@ -3,13 +3,13 @@ namespace App\Bot\Repository;
 
 use App\Bot\Services\Bot\Bot;
 use App\Models\User;
-use App\Models\Activity;
-use Illuminate\Support\Facades\Log;
 
-class UserRepository{
+class UserRepository
+{
 
-    public function __construct() {
-        $this->bot          = new Bot;
+    public function __construct()
+    {
+        $this->bot = new Bot;
     }
 
     /**
@@ -41,9 +41,25 @@ class UserRepository{
         return null;
     }
 
-    public function findUserByFacebookID($fbID = ""){
+    public function findUserByFacebookID($fbID = "")
+    {
         return User::with([])
             ->where('facebook_id', $fbID)
             ->first();
+    }
+
+    public function saveUserTelegram($user)
+    {
+        // saving data user
+        $data                  = $get_facebook_detail['message'];
+        $name                  = $data->first_name . ' ' . $data->last_name;
+        $username              = str_slug($name);
+        $user                  = User::firstOrNew(['username' => $username, 'facebook_id' => $facebook_id]);
+        $user->username        = $username;
+        $user->full_name       = $name;
+        $user->facebook_id     = $facebook_id;
+        $user->profile_picture = $data->profile_pic;
+        $user->access          = User::MEMBER;
+        $user->save();
     }
 }
