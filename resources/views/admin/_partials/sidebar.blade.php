@@ -40,6 +40,12 @@
                     <span>Flights Reminder</span>
                 </a>
             </li>
+            <li class="{{ (Request::is('*/checkin*')) ? 'active' : '' }}">
+                <a href="{{ route('admin.checkins') }}">
+                    <i class='glyphicon glyphicon-log-in'></i> 
+                    <span>Check In</span>
+                </a>
+            </li>
             {{-- 
             <li class="{{ (Request::is('*/chat*')) ? 'active' : '' }}">
                 <a href="{{ route('admin.chats') }}">

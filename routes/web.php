@@ -76,5 +76,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
 
         // flights reminder
         Route::get('/flightreminders', ['as' => 'admin.flightreminders', 'uses' => 'FlightReminderController@index']);
+
+        // check in
+        Route::get('/checkins', ['as' => 'admin.checkins', 'uses' => 'CheckinController@index']);
     });
 });
