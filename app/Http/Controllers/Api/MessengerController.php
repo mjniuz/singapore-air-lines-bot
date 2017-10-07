@@ -163,7 +163,7 @@ class MessengerController extends ApiController
              */
             $word           = new WordService();
             /* example delay */
-            if($this->message->stringContain($this->message, "sample_delay")){
+            if($this->message->stringContain($message, "sample_delay")){
                 $check          = new CheckInRepository();
                 $checkIn        = $check->findRandom();
                 $airlineUpdate  = $word->airlineUpdateDelay($checkIn);
