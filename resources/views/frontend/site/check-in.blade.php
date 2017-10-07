@@ -8,6 +8,9 @@
                 @if (Session::has('message'))
                 <div class="alert alert-success">
                     <strong>Success!</strong> {!! session('message') !!}
+                    <a href="http://m.me/866408300180289" class="btn btn-warning">
+                        Click here to open your messenger
+                    </a>
                 </div>
                 @endif
                 <h4>Passenger Information</h4>
