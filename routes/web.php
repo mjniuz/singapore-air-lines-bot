@@ -79,5 +79,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
 
         // check in
         Route::get('/checkins', ['as' => 'admin.checkins', 'uses' => 'CheckinController@index']);
+        Route::get('/checkin/form', ['as' => 'admin.checkin.form', 'uses' => 'CheckinController@form']);
+        Route::post('/checkin/form', ['as' => 'admin.checkin.store', 'uses' => 'CheckinController@store']);
     });
 });
