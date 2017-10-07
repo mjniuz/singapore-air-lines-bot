@@ -15,11 +15,11 @@ let mix = require('laravel-mix');
 //    .sass('resources/assets/sass/app.scss', 'public/css');
 
 mix.js([
-    'resources/assets/js/jquery.min.js',
-    'node_modules/jquery/dist/jquery.min.js',
+    // 'resources/assets/js/jquery.min.js',
+    // 'node_modules/jquery/dist/jquery.min.js',
     // 'resources/assets/js/app.min.js',
-    'resources/assets/js/bootstrap.min.js',
-    'resources/assets/js/bootstrap-timepicker.min.js',
+    // 'resources/assets/js/bootstrap.min.js',
+    // 'resources/assets/js/bootstrap-timepicker.min.js',
     'resources/assets/js/front.js',
     'node_modules/sweetalert2/dist/sweetalert2.min.js',
     'resources/assets/js/main.js',
