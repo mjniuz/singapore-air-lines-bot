@@ -145,6 +145,7 @@ class PromotionController extends Controller
                             ],
                         ],
                     ];
+                    $return_response = $bot->sendImageMessage($promotion->image_file);
                     $return_response = $bot->sendButtonMessage($params);
                 }
             }
