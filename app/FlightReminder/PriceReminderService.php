@@ -89,7 +89,7 @@ class PriceReminderService extends FlightReminderRepository {
             $this->updateReadyAt($this->has_active->id);
 
             return [
-                $this->template->sendText("Thats it, we will notify you when airfare price go down as your configuration set before")
+                $this->template->sendText("That's it, we will notify you when airfare price go down as your configuration set before")
             ];
         }
 
@@ -152,10 +152,19 @@ class PriceReminderService extends FlightReminderRepository {
         }
 
         // correct value
-        $askBudgetButton   = $this->word->askConfirmBudgetButton($this->message);
+        /*$askBudgetButton   = $this->word->askConfirmBudgetButton($this->message);
 
         return [
             $this->template->sendButton($askBudgetButton)
+        ];*/
+        $this->has_active   = $this->updateAmount($this->has_active->id, $this->message);
+
+        $message            = "Last step, please verify your configuration bellow";
+        $finalListConfirm   = $this->word->askFinalConfirmList($this->has_active);
+
+        return [
+            $this->template->sendText($message),
+            $this->template->sendList($finalListConfirm, 1)
         ];
     }
 
@@ -195,11 +204,25 @@ class PriceReminderService extends FlightReminderRepository {
         }
 
         // ask confirm
-        $askDateConfirm     = $this->word->askConfirmDateButton($this->message);
+        /*$askDateConfirm     = $this->word->askConfirmDateButton($this->message);
         return [
             $this->template->sendButton($askDateConfirm)
-        ];
+        ];*/
 
+        if(strtotime($this->message) < strtotime(date("Y-m-d"))){
+            return [
+                $this->template->sendText("You can't set date flight less than today, please set your date flight again, example " . date("m-d-Y", strtotime("+7 day")))
+            ];
+        }
+
+        $this->updateDate($this->has_active->id, $this->message);
+        $message    = "Now set your maximum budget (in SGD) for airfare price, if the airfare price changed to go down or same as your budget, we will send an alert to you";
+        $message2   = "Please reply just a number (ex. 120)";
+        return [
+            $this->template->sendText("Your flight date saved"),
+            $this->template->sendText($message),
+            $this->template->sendText($message2)
+        ];
     }
 
     private function setTo(){
@@ -233,9 +256,16 @@ class PriceReminderService extends FlightReminderRepository {
         }
 
         // confirm is destination destination
-        $askConfirm     = $this->word->askDestinationButton($this->message);
+        /*$askConfirm     = $this->word->askDestinationButton($this->message);
         return [
             $this->template->sendButton($askConfirm)
+        ];*/
+
+        // update departure
+        $this->updateDestination($this->has_active->id, $this->message);
+
+        return [
+            $this->template->sendText("Destination selected, now please set your flight date, format (dd-mm-yyyy) ex 31-12-2017")
         ];
     }
 
@@ -243,7 +273,6 @@ class PriceReminderService extends FlightReminderRepository {
         // from postback
         if(!empty($this->arr['price_reminder_set_departure'])){
             $validDeparture = $this->arr['price_reminder_set_departure'];
-
             // update departure
             $this->updateDeparture($this->has_active->id, $validDeparture);
 
@@ -269,9 +298,16 @@ class PriceReminderService extends FlightReminderRepository {
         }
 
         // confirm is departure correct
-        $askConfirm     = $this->word->askDepartureButton($this->message);
+        /*$askConfirm     = $this->word->askDepartureButton($this->message);
         return [
             $this->template->sendButton($askConfirm)
+        ];*/
+
+        // update departure
+        $this->updateDeparture($this->has_active->id, $this->message);
+
+        return [
+            $this->template->sendText("Departure selected, now please set your destination city/airports")
         ];
     }
 
