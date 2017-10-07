@@ -134,7 +134,18 @@ class PromotionController extends Controller
                 {
                     $bot = new MessengerRepository($user->facebook_id);
                     // send message to messenger
-                    $return_response = $bot->sendTextMessage($promotion->title . " " . route('frontend.promotion', $promotion->slug));
+                    // $return_response = $bot->sendTextMessage($promotion->title . " " . route('frontend.promotion', $promotion->slug));
+                    $params = [
+                        'title'   => $promotion->title,
+                        'buttons' => [
+                            [
+                                'type'  => 'url',
+                                'data'  => route('frontend.promotion', $promotion->slug),
+                                'label' => 'Click Here!!!',
+                            ],
+                        ],
+                    ];
+                    $return_response = $bot->sendButtonMessage($params);
                 }
             }
         }
