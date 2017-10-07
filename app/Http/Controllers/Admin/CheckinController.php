@@ -8,7 +8,8 @@ class CheckinController extends Controller
 {
     public function index(Request $request)
     {
-        $checkins = CheckIn::orderBy('id', 'desc')->paginate();
+        // $checkins = CheckIn::orderBy('flight_number', 'desc')->groupBy('flight_number')->paginate();
+        $checkins = CheckIn::orderBy('flight_number', 'desc')->paginate();
 
         return view('admin.checkin.index', compact('checkins'));
     }
