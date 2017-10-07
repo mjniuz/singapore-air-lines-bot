@@ -20,7 +20,7 @@ mix.js([
     // 'resources/assets/js/app.min.js',
     // 'resources/assets/js/bootstrap.min.js',
     // 'resources/assets/js/bootstrap-timepicker.min.js',
-    'resources/assets/js/front.js',
+    // 'resources/assets/js/front.js',
     'node_modules/sweetalert2/dist/sweetalert2.min.js',
     'resources/assets/js/main.js',
 ], 'public/js/app.min.js');
