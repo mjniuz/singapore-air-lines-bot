@@ -159,7 +159,7 @@ class CheckInService extends CheckInRepository{
 
         // hardcode for demo purpose
         if(strlen($this->message) < 3){
-            $msg    = "Your last name invalid, please check your last name (minimum 4 digit)";
+            $msg    = "Your last name invalid, please check your last name (minimum 4 character)";
             return [
                 $this->template->sendText($msg)
             ];
