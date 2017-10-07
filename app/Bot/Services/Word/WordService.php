@@ -8,6 +8,7 @@ class WordService{
         $messages[]    = [
             "title"     => "Flight Check In",
             "subtitle"  => "You can easily check in through your flight by just chat with us",
+            "image"     => "https://media.mjniuz.com/dating/6f90b969c7ef862ec0239fd5eb1399742017-10-06-18-55-05.jpeg",
             "buttons"   => [
                 [
                     "type"      => "postback",
@@ -19,6 +20,7 @@ class WordService{
         $messages[]    = [
             "title"     => "Flight with your own Budget",
             "subtitle"  => "Now you can set your own budget to flight to anywhere and anytime you want",
+            "image"     => "https://media.mjniuz.com/dating/a4aec4c8676e5464f504aff469ef292c2017-10-07-15-07-12.jpeg",
             "buttons"   => [
                 [
                     "type"      => "postback",
@@ -30,6 +32,7 @@ class WordService{
         $messages[]    = [
             "title"     => "Flight Booking",
             "subtitle"  => "Book your ticket in here and get the priority notif about the flight status",
+            "image"     => "https://media.mjniuz.com/dating/57b9f5509deeadad8da32959e8e3602e2017-10-07-15-08-11.jpeg",
             "buttons"   => [
                 [
                     "type"      => "postback",
@@ -41,6 +44,7 @@ class WordService{
         $messages[]    = [
             "title"     => "About Us",
             "subtitle"  => "We are chat bot platform that can help you to manage your flight to be better",
+            "image"     => "https://media.mjniuz.com/dating/90086014b4c6263c6955798ac99251902017-10-07-15-10-12.png",
             "buttons"   => [
                 [
                     "type"      => "url",
