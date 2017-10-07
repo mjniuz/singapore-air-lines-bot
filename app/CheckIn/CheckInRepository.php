@@ -102,6 +102,14 @@ class CheckInRepository{
         return $check;
     }
 
+    public function findRandom(){
+        return CheckIn::with([])
+            ->whereNotNull('ready_at')
+            ->where('is_valid',1)
+            ->where('seats','<>','')
+            ->first();
+    }
+
     public function findFlightNumberToday($date = ""){
         return CheckIn::with([])
             ->where("ready_at", '>', date("Y-m-d 00:00:00", strtotime($date)))

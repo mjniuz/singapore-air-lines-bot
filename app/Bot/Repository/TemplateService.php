@@ -51,6 +51,14 @@ class TemplateService
         ];
     }
 
+    public function sendAirlineUpdate($message = [], $delay = 0 /*second*/){
+        return [
+            'type'      => 'airline_update',
+            'response'  => $message,
+            'delay'     => $delay
+        ];
+    }
+
     public function sendBoarding($message = [], $delay = 0 /*second*/){
         return [
             'type'      => 'boarding',

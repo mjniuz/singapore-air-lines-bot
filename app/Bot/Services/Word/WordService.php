@@ -4,6 +4,59 @@ namespace App\Bot\Services\Word;
 use function GuzzleHttp\Psr7\str;
 
 class WordService{
+    public function introList(){
+        $messages[]    = [
+            "title"     => "Flight Check In",
+            "subtitle"  => "You can easily check in through your flight by just chat with us",
+            "image"     => "https://media.mjniuz.com/dating/6f90b969c7ef862ec0239fd5eb1399742017-10-06-18-55-05.jpeg",
+            "buttons"   => [
+                [
+                    "type"      => "postback",
+                    "data"      => "check in create new",
+                    "label"     => "Check In"
+                ]
+            ]
+        ];
+        $messages[]    = [
+            "title"     => "Flight with your own Budget",
+            "subtitle"  => "Now you can set your own budget to flight to anywhere and anytime you want",
+            "image"     => "https://media.mjniuz.com/dating/a4aec4c8676e5464f504aff469ef292c2017-10-07-15-07-12.jpeg",
+            "buttons"   => [
+                [
+                    "type"      => "postback",
+                    "data"      => "price reminder create new",
+                    "label"     => "Learn More"
+                ]
+            ]
+        ];
+        $messages[]    = [
+            "title"     => "Flight Booking",
+            "subtitle"  => "Book your ticket in here and get the priority notif about the flight status",
+            "image"     => "https://media.mjniuz.com/dating/57b9f5509deeadad8da32959e8e3602e2017-10-07-15-08-11.jpeg",
+            "buttons"   => [
+                [
+                    "type"      => "postback",
+                    "data"      => "booking create new",
+                    "label"     => "Booking Now"
+                ]
+            ]
+        ];
+        $messages[]    = [
+            "title"     => "About Us",
+            "subtitle"  => "We are chat bot platform that can help you to manage your flight to be better",
+            "image"     => "https://media.mjniuz.com/dating/90086014b4c6263c6955798ac99251902017-10-07-15-10-12.png",
+            "buttons"   => [
+                [
+                    "type"      => "url",
+                    "data"      => "http://singairline.azurewebsites.net/",
+                    "label"     => "Learn More"
+                ]
+            ]
+        ];
+
+        return $messages;
+    }
+
     public function askStartNewPriceReminderButton(){
         $buttons    = [
             "title"     => "Price Reminder Airlines",
@@ -232,7 +285,7 @@ class WordService{
             "subtitle"  => ucfirst($flight->airline)
         ];
         $messages[]    = [
-            "title"     => "Your Budget - Found Airfare",
+            "title"     => "Your Budget - Found",
             "subtitle"  => "SGD" . number_format($flight->amount) . ' - ' . "SGD" . number_format($flight->amount_found),
             "buttons"   => [
                 [
@@ -284,6 +337,32 @@ class WordService{
         ];
 
         return $buttons;
+    }
+
+    public function airlineUpdateDelay($checkIn){
+        return [
+            "title"         => "Your flight is delayed",
+            "pnr_number"    => $checkIn->pnr_number,
+            "flight_number" => $checkIn->flight_number,
+            "update_type"   => "delayed",
+            "departure_airport" => [
+                "airport_code"      => $checkIn->departure_airport_code,
+                "city"              => $checkIn->departure_city,
+                "terminal"          => $checkIn->departure_terminal,
+                "gate"              => $checkIn->departure_gate
+            ],
+            "arrival_airport" => [
+                "airport_code"      => $checkIn->arrival_airport_code,
+                "city"              => $checkIn->arrival_city,
+                "terminal"          => $checkIn->arrival_terminal,
+                "gate"              => $checkIn->arrival_gate
+            ],
+            "flight_schedule"   => [
+                "boarding_time"     => $checkIn->flight_schedule_boarding,
+                "departure_time"    => $checkIn->flight_schedule_departure,
+                "arrival_time"      => $checkIn->flight_schedule_arrival
+            ]
+        ];
     }
 
     public function askFlightCheckIn($checkIn){
