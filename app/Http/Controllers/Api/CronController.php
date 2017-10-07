@@ -23,7 +23,7 @@ class CronController extends Controller {
         $flights    = $this->price->getReadyAll();
         $results    = false;
 
-        if($flights AND $flights->count() == 0){
+        if($flights AND $flights->count() > 0){
             // check to airlines, dummy for now
             $newFlights = $this->price->airlinesCheckPrice($flights);
 
