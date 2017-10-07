@@ -74,5 +74,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
          * Route::delete('chat/delete/{id?}', ['as' => 'admin.chat.delete', 'uses' => 'ChatController@delete']);
          */
 
+        // flights reminder
+        Route::get('/flightreminders', ['as' => 'admin.flightreminders', 'uses' => 'ChatController@index']);
     });
 });

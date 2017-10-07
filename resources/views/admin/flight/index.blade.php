@@ -49,16 +49,16 @@ Flights
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($checkflights as $key => $user)
+									@foreach($checkflights as $key => $flight)
 										<tr>
                                             <td align="center">
                                                 {{ ($checkflights->currentpage()-1) * $checkflights->perpage() + $key + 1 }}
                                             </td>
-											<td>{{ $user->from_location }}</td>
-											<td>{{ $user->to_location }}</td>
-											<td>{{ $user->amount_found }}</td>
-											<td>{{ $user->date }}</td>
-											<td>{{ $user->travel_time }} Minute</td>
+											<td>{{ $flight->from_location }}</td>
+											<td>{{ $flight->to_location }}</td>
+											<td>{{ $flight->amount_found }}</td>
+											<td>{{ $flight->date }}</td>
+											<td>{{ $flight->travel_time }} Minute</td>
 										</tr>
 									@endforeach
 								</tbody>
