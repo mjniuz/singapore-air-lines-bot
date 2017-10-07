@@ -23,7 +23,7 @@ class PriceRepository
         $flights = $this->price->getReadyAll();
         $results = false;
 
-        if ($flights and $flights->count() == 0)
+        if ($flights and $flights->count() > 0)
         {
             // check to airlines, dummy for now
             $newFlights = $this->price->airlinesCheckPrice($flights);
