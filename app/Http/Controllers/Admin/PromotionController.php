@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers\Admin;
 
 use App\Bot\Repository\MessengerRepository;
+use App\Bot\Repository\TelegramRepository;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PromotionRequest;
 use App\Models\Promotion;
@@ -155,6 +156,14 @@ class PromotionController extends Controller
                         ];
                         $return_response = $bot->sendButtonMessage($params);
                     }
+                }
+
+                // check telegram id is not empty
+                if (!empty($user->telegram_id))
+                {
+                    $telegram_bot    = new TelegramRepository;
+                    $return_response = $telegram_bot->sendTextMessage($user->telegram_id, $promotion->title . " " . route('frontend.promotion', $promotion->slug));
+
                 }
             }
         }
