@@ -165,11 +165,19 @@ class CheckInService extends CheckInRepository{
             ];
         }
 
+
+        // update last name
+        $this->has_active   = $this->updateLastName($this->has_active->id, $this->message);
+        $finalListConfirm   = $this->word->askFinalConfirmCheckInList($this->has_active);
+
+        return [
+            $this->template->sendList($finalListConfirm)
+        ];
         // confirm is last name correct
-        $askConfirm     = $this->word->askCheckInLastNameButton($this->message);
+        /*$askConfirm     = $this->word->askCheckInLastNameButton($this->message);
         return [
             $this->template->sendButton($askConfirm)
-        ];
+        ];*/
     }
 
     private function setFrom(){
@@ -199,11 +207,17 @@ class CheckInService extends CheckInRepository{
             ];
         }
 
+        // update departure
+        $this->updateBookingNumber($this->has_active->id, $this->message);
+
+        return [
+            $this->template->sendText("Booking Number Updated, now please reply with your last name")
+        ];
         // confirm is booking number correct
-        $askConfirm     = $this->word->askBookingNumberButton($this->message);
+        /*$askConfirm     = $this->word->askBookingNumberButton($this->message);
         return [
             $this->template->sendButton($askConfirm)
-        ];
+        ];*/
     }
 
     private function createNew(){
