@@ -5,6 +5,7 @@ use App\Bot\Repository\MessengerRepository;
 use App\Bot\Repository\RequestRepository;
 use App\Bot\Repository\TemplateService;
 use App\Bot\Repository\UserRepository;
+use App\Bot\Services\Word\WordService;
 use App\CheckIn\CheckInRepository;
 use App\CheckIn\CheckInService;
 use App\FlightPriceReminder\FlightReminderRepository;
@@ -156,7 +157,14 @@ class MessengerController extends ApiController
             }
 
             // default
-            return $bot->responseMessage([$this->template->sendText($message)]);
+
+            /*
+             * Intro
+             */
+            $word           = new WordService();
+            $introTemplate  = $word->introList();
+            
+            return $bot->responseMessage([$this->template->sendList($introTemplate)]);
         }
         else
         {

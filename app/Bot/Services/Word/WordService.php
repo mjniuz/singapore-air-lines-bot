@@ -4,6 +4,55 @@ namespace App\Bot\Services\Word;
 use function GuzzleHttp\Psr7\str;
 
 class WordService{
+    public function introList(){
+        $messages[]    = [
+            "title"     => "Flight Check In",
+            "subtitle"  => "You can easily check in through your flight by just chat with us",
+            "buttons"   => [
+                [
+                    "type"      => "postback",
+                    "data"      => "check in create new",
+                    "label"     => "Check In"
+                ]
+            ]
+        ];
+        $messages[]    = [
+            "title"     => "Flight with your own Budget",
+            "subtitle"  => "Now you can set your own budget to flight to anywhere and anytime you want",
+            "buttons"   => [
+                [
+                    "type"      => "postback",
+                    "data"      => "price reminder create new",
+                    "label"     => "Learn More"
+                ]
+            ]
+        ];
+        $messages[]    = [
+            "title"     => "Flight Booking",
+            "subtitle"  => "Book your ticket in here and get the priority notif about the flight status",
+            "buttons"   => [
+                [
+                    "type"      => "postback",
+                    "data"      => "booking create new",
+                    "label"     => "Booking Now"
+                ]
+            ]
+        ];
+        $messages[]    = [
+            "title"     => "About Us",
+            "subtitle"  => "We are chat bot platform that can help you to manage your flight to be better",
+            "buttons"   => [
+                [
+                    "type"      => "url",
+                    "data"      => "http://singairline.azurewebsites.net/",
+                    "label"     => "Learn More"
+                ]
+            ]
+        ];
+
+        return $messages;
+    }
+
     public function askStartNewPriceReminderButton(){
         $buttons    = [
             "title"     => "Price Reminder Airlines",
