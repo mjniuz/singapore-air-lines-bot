@@ -77,13 +77,13 @@ class CheckInRepository{
 
     public function updateFinal($checkInID = null){
         $check  = $this->find($checkInID);
-        $flightNumber   = $this->findFlightNumberToday(date("Y-m-d", strtotime($check->ready_at)));
+        $flightNumber   = $this->findFlightNumberToday($check->ready_at);
 
         $check->token       = md5($checkInID . $check->last_name);
         $check->is_valid    = 1;
         $check->pnr_number  = "SG" . rand(100,999);
 
-        $check->flight_number           = ($flightNumber) ? $flightNumber->flight_number : ("SQ" . rand(100,999));
+        $check->flight_number           = ($flightNumber AND $flightNumber->flight_number != "") ? $flightNumber->flight_number : ("SQ" . rand(100,999));
         $check->departure_airport_code  = "CGK";
         $check->departure_city          = "Jakarta";
         $check->departure_terminal      = "T3";
@@ -104,7 +104,8 @@ class CheckInRepository{
 
     public function findFlightNumberToday($date = ""){
         return CheckIn::with([])
-            ->whereDate("ready_at", $date)
+            ->where("ready_at", '>', date("Y-m-d 00:00:00", strtotime($date)))
+            ->where("ready_at", '<', date("Y-m-d 23:59:59", strtotime($date)))
             ->first();
     }
 
