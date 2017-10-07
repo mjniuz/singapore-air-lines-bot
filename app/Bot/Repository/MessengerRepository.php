@@ -92,7 +92,6 @@ class MessengerRepository extends Repository
                                 "pnr_number"        => $message['pnr_number'],
                                 "seat"              => $message['seat'],
                                 "logo_image_url"    => "https://www.singaporeair.com/saar5/images/logo-footer-singaporeairlines.png",
-                                "flight_number"     => $message['flight_number'],
                                 "qr_code"           => (!empty($message['qr_code']) ? $message['qr_code'] : ("M1SMITH\/" . $message['last_name'] ."  CG4X7U nawouehgawgnapwi3jfa0wfh")),
                                 "auxiliary_fields"  => [
                                     [

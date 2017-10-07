@@ -318,7 +318,6 @@ class WordService{
             "last_name"     => $checkIn->last_name,
             "pnr_number"    => $checkIn->pnr_number,
             "seat"          => $checkIn->seat,
-            "flight_number" => $checkIn->flight_number,
             "flight_schedule_departure" => date("mF H:i", strtotime($checkIn->flight_schedule_departure)),
             "flight_schedule_boarding"  => date("H:i", strtotime($checkIn->flight_schedule_boarding)),
             "departure_airport" => [
