@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class CronController extends Controller
 {
+    protected $price_repository;
     public function __construct(Request $request)
     {
         parent::__construct($request);

@@ -14,6 +14,9 @@ class FlightReminderRepository{
 
     public function getReadyAll(){
         return FlightReminder::with(['user'])
+            ->whereHas('user', function ($query){
+                $query->whereNotNull('facebook_id');
+            })
             ->whereNotNull('ready_at')
             ->whereNull('found_at')
             ->where('date_flight', '>', date("Y-m-d"))
