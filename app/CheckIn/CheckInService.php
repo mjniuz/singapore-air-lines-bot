@@ -65,11 +65,10 @@ class CheckInService extends CheckInRepository{
             ];
         }
 
-        // update new one
-        $askFound   = $this->word->askFlightCheckIn($check);
+        $boardingData   = $this->word->boardingPassDetail($check);
 
         return [
-            $this->template->sendCheckIn($askFound)
+            $this->template->sendBoarding($boardingData)
         ];
     }
 

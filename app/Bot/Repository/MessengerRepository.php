@@ -47,8 +47,8 @@ class MessengerRepository extends Repository
                 case 'checkin':
                     $this->sendCheckInMessage($response['response']);
                     break;
-                case 'image':
-                    //$this->sendImage($response['response']);
+                case 'boarding':
+                    $this->sendBoardingMessage($response['response']);
                     break;
                 case 'sticker':
                     //$this->sendSticker($response['response']);
@@ -72,6 +72,75 @@ class MessengerRepository extends Repository
         }
 
         return "success";
+    }
+
+    public function sendBoardingMessage($message){
+        $params = [
+            'recipient' => [
+                'id' => $this->facebookID,
+            ],
+            'message'   => [
+                'attachment' => [
+                    "type"    => "template",
+                    "payload" => [
+                        "template_type" => "airline_boardingpass",
+                        "intro_message" => $message['title'],
+                        "locale"        => (!empty($message['locale']) ? $message['locale'] : "en_US"),
+                        "boarding_pass"   => [
+                            [
+                                "passenger_name"    => "John " . $message['last_name'],
+                                "pnr_number"        => $message['pnr_number'],
+                                "seat"              => $message['seat'],
+                                "logo_image_url"    => "https://www.singaporeair.com/saar5/images/logo-footer-singaporeairlines.png",
+                                "qr_code"           => (!empty($message['qr_code']) ? $message['qr_code'] : ("M1SMITH\/" . $message['last_name'] ."  CG4X7U nawouehgawgnapwi3jfa0wfh")),
+                                "auxiliary_fields"  => [
+                                    [
+                                        "label" => "Terminal",
+                                        "value" => $message['departure_airport']['terminal']
+                                    ],
+                                    [
+                                        "label" => "Departure",
+                                        "value" => $message['flight_schedule_departure']
+                                    ]
+                                ],
+                                "secondary_fields"  => [
+                                    [
+                                        "label" => "Boarding",
+                                        "value" => $message['flight_schedule_boarding']
+                                    ],
+                                    [
+                                        "label" => "Gate",
+                                        "value" => $message['departure_airport']['gate']
+                                    ]
+                                ],
+                                "flight_info"   => [
+                                    "flight_number"     => $message['flight_number'],
+                                    "departure_airport" => [
+                                        "airport_code" => $message['departure_airport']['airport_code'],
+                                        "city"         => $message['departure_airport']['city'],
+                                        "terminal"     => $message['departure_airport']['terminal'],
+                                        "gate"         => $message['departure_airport']['gate'],
+                                    ],
+                                    "arrival_airport"   => [
+                                        "airport_code" => $message['arrival_airport']['airport_code'],
+                                        "city"         => $message['arrival_airport']['city'],
+                                        "terminal"     => $message['arrival_airport']['terminal'],
+                                        "gate"         => $message['arrival_airport']['gate'],
+                                    ],
+                                    "flight_schedule"   => [
+                                        "departure_time" => date("Y-m-d", strtotime($message['flight_schedule']['departure_time'])) . "T" . date("H:m", strtotime($message['flight_schedule']['departure_time'])),
+                                        "arrival_time"   => date("Y-m-d", strtotime($message['flight_schedule']['arrival_time'])) . "T" . date("H:m", strtotime($message['flight_schedule']['arrival_time'])),
+                                    ]
+                                ]
+                            ]
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        // return data
+        return $this->bot->getFacebookReplyMessage($params);
     }
 
     public function sendCheckInMessage($message)
