@@ -285,7 +285,7 @@ class WordService{
             "subtitle"  => ucfirst($flight->airline)
         ];
         $messages[]    = [
-            "title"     => "Your Budget - Found Airfare",
+            "title"     => "Your Budget - Found",
             "subtitle"  => "SGD" . number_format($flight->amount) . ' - ' . "SGD" . number_format($flight->amount_found),
             "buttons"   => [
                 [
