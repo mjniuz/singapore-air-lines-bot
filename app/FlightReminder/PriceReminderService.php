@@ -216,7 +216,7 @@ class PriceReminderService extends FlightReminderRepository {
         }
 
         $this->updateDate($this->has_active->id, $this->message);
-        $message    = "Now set your maximum budget (in SGD) for airfare price, if the airfare price changed to go down or same as your budget, we will send an alert to you";
+        $message    = "Now set your maximum budget (in SGD) for airfare price, if the flight prices drop or same as your budget, we will send an alert to you";
         $message2   = "Please reply just a number (ex. 120)";
         return [
             $this->template->sendText("Your flight date saved"),
