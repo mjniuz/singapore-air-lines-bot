@@ -68,7 +68,8 @@ class TelegramController extends Controller
                     if ($sender_message['status'] != 1)
                     {
                         // send message to messenger
-                        $return_response = $bot->sendTextMessage($response_message);
+                        $this->telegram_repository->sendTextMessage($id, $response_message);
+
                     }
                     else
                     {
