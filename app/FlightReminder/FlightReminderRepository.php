@@ -115,7 +115,7 @@ class FlightReminderRepository{
         $newFlights = [];
         foreach ($flights as $flight){
             // at least in second attempt, for fake only
-            if($flight->cron_count > 1){
+            if($flight->cron_count == 0){
                 $amountFound    = $this->getCostEstimation($flight);
 
                 // update successful
@@ -126,10 +126,9 @@ class FlightReminderRepository{
                 $flight->airline        = $newFlight->airline;
                 $flight->flight_time    = $newFlight->flight_time;
 
-                $newFlights[]   = $flight;
-            }else{
-                // update cron count
                 $this->updateIncreaseCronCount($flight->id);
+
+                $newFlights[]   = $flight;
             }
         }
 

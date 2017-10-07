@@ -96,7 +96,7 @@
                               <span class='glyphicon glyphicon-cutlery'></span>
                               <span class='glyphicon glyphicon-bed'></span>
                             </td>
-                            <td align="center">{{ $flight->format_rupiah }}</td>
+                            <td align="center">SGD {{ number_format($flight->amount_found,0) }}</td>
                           </tr>
                         @endforeach
                       </tbody>
