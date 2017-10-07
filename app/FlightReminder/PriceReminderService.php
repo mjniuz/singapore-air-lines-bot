@@ -136,7 +136,7 @@ class PriceReminderService extends FlightReminderRepository {
             $validAmount        = $this->arr['price_reminder_set_amount'];
             $this->has_active   = $this->updateAmount($this->has_active->id, $validAmount);
 
-            $message            = "Last step, please verify your airfare price reminder configuration bellow";
+            $message            = "Last step, please verify your configuration bellow";
             $finalListConfirm   = $this->word->askFinalConfirmList($this->has_active);
 
             return [
