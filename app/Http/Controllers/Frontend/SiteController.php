@@ -86,6 +86,7 @@ class SiteController extends Controller
 
         $inject = new CheckInInjectService();
         $inject->sendBoardingPass($check->user, $check->id);
+        $request->session()->flash('message', 'Check In Success, please check your messenger to see the boarding pass detail');
 
         return redirect(url('check-in/' . $checkIn->token));
     }

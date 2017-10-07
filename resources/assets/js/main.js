@@ -3,7 +3,19 @@ $(document).ready(function (e) {
     $("input[type=checkbox]").on("click", function (e) {
         let seatVal = $("#seats-value");
         let seatView    = $("#seat-selected");
+        let exist       = $("#existing-seats").val();
         let newThis = this;
+
+        if(exist !== ""){
+            e.preventDefault();
+            swal(
+                'Error!',
+                'You already checked in, please check you messenger for boarding pass detail',
+                'warning'
+            );
+
+            return false;
+        }
 
         if(seatVal.val() !== ""){
             swal({

@@ -5,7 +5,11 @@
     <div class="row">
         <div id="style">
             <div class="col-md-6">
-
+                @if (Session::has('message'))
+                <div class="alert alert-success">
+                    <strong>Success!</strong> {!! session('message') !!}
+                </div>
+                @endif
                 <h4>Passenger Information</h4>
                 <table class="table table-striped">
                     <tbody>
@@ -81,7 +85,7 @@
                         <td>
                             <span class="red" id="seat-selected">
                                 @if($checkIn->seats != "")
-                                    {{ json_decode($checkIn->seats)[0] }}
+                                    {{ $checkIn->seat }}
                                 @else
                                     Please select seat on the right
                                 @endif
@@ -91,6 +95,7 @@
                     </tbody>
                 </table>
                 {!! Form::open(['url' =>  url('check-in/' . $checkIn->token ), 'id' => 'check-in-form']) !!}
+                    <input type="hidden" id="existing-seats" value="{{ ($checkIn->seats != "") ? $checkIn->seats : "" }}"/>
                     <input type="hidden" id="seats-value" name="seats" value="{{ ($checkIn->seats != "") ? $checkIn->seats : "" }}"/>
                     <button type="submit" id="btn-submit" class="btn btn-success" {{ ($checkIn->seats != "") ? "disabled" : "" }}>
                         Save
