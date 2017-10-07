@@ -11,7 +11,15 @@ Check In
 			<div class="box">
 				<div class="box-header">
 					<div class="col-md-12">
-						<h3 align="center">Check In</h3>
+						<div class="col-md-6">
+							<h3 align="center">Check In</h3>
+						</div>
+						<div class="col-md-6">
+						<br/>
+							<a href="{{ route('admin.checkin.form') }}">
+								{!! Form::submit('checkin',['class'=>'btn btn-warning btn-block', 'width' => '1000px', 'height' => '1000px']) !!}
+							</a>
+						</div>
 					</div>
 				</div>
 				<div class="box-body">
