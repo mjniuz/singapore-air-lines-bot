@@ -75,6 +75,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin-manager'], function ()
          */
 
         // flights reminder
-        Route::get('/flightreminders', ['as' => 'admin.flightreminders', 'uses' => 'ChatController@index']);
+        Route::get('/flightreminders', ['as' => 'admin.flightreminders', 'uses' => 'FlightReminderController@index']);
     });
 });
