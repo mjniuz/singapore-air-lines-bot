@@ -130,7 +130,7 @@ class MessengerController extends ApiController
              */
             if($this->message->stringContain($message, "booking create new")){
                 $response = [
-                    $this->template->sendText("your format is not correct, format chat is SA_DATE_DESTINATION-LOCATION_FROM-LOCATION, ex: is SA_2017-12-12_Jakarta_Singapore " . url('frontend/format/chat'))
+                    $this->template->sendText("You can send to us with format chat SA_DATE_DESTINATION-LOCATION_FROM-LOCATION, ex: is SA_2017-12-12_Jakarta_Singapore " . url('frontend/format/chat'))
                 ];
 
                 return $bot->responseMessage($response);

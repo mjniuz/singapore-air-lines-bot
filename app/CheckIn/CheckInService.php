@@ -223,7 +223,7 @@ class CheckInService extends CheckInRepository{
     private function createNew(){
         $this->insertNew($this->user->id);
 
-        $welcome    = "This tools will help you to check in through the chat just by input your last name and booking number, it's great is not it?";
+        $welcome    = "This tools will help you to check in through the chat just by input your last name and booking number, it's awesome is not it?";
         $msg        = "First time, Please reply with your Booking Number";
 
         return [
