@@ -13,7 +13,7 @@
                         <li class="seat">
                             <input type="checkbox" {{ ($number->is_disabled) ? "disabled" : "" }} id="{{ strtoupper($number->id) }}" value="{{ strtolower($number->id) }}" name="seats"/>
                             <label for="{{ strtoupper($number->id) }}">
-                                {{ ($number->is_disabled) ? "Occupied" : strtoupper($number->id) }}
+                                {{ ($number->is_disabled) ? "x" : strtoupper($number->id) }}
                             </label>
                         </li>
                     @endforeach
