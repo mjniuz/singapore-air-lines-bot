@@ -236,7 +236,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div class="wthree-services-info">
 						<h5>Price Reminder</h5>
-						<p>Singa Boot will send you a notification when find the ticket that suitable
+						<p>Singa Bot will send you a notification when find the ticket that suitable
 						with your budget</p>
 					</div>
 				</div>
@@ -246,7 +246,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div class="wthree-services-info">
 						<h5>Flight Booking</h5>
-						<p>. </p>
+						<p>You can book your ticket 24 Hours</p>
 					</div>
 				</div>
 				<div class="col-md-3 wthree-services-grid">
@@ -254,8 +254,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<i class="fa fa-asterisk" aria-hidden="true"></i>
 					</div>
 					<div class="wthree-services-info">
-						<h5>Fusce feugiat</h5>
-						<p>Donec sed nisi leo. Ut at sagittis nisi. Cras porttitor a purus ac rutrum. </p>
+						<h5>Check in, Select Seat</h5>
+						<p>You can check in and choose your seat by chatting Singa Bot </p>
 					</div>
 				</div>
 				<div class="clearfix"> </div>
