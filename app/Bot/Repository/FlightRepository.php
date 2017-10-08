@@ -82,6 +82,7 @@ class FlightRepository extends Repository
                 "amount_found"      => $price,
                 "only_date"         => $date,
                 "only_time"         => date("H:i", strtotime("+" . $i . " hours")),
+                "only_time_arrival" => date("H:i", strtotime("+" . ($i + 1) . " hours")),
                 "date"              => ($date . " " .date("H:i:s", strtotime("+" . $i . " hours"))),
                 "travel_time"       => date("H:i", strtotime("+" . $i . " hours")),
                 "convert_time"      => "01 Hours",
