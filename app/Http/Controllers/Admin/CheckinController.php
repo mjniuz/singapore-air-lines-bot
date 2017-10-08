@@ -47,6 +47,7 @@ class CheckinController extends Controller
     {
         $checkins = CheckIn::orderBy('flight_number', 'desc')->groupBy('flight_number')->pluck('flight_number', 'id');
         $checkin  = null;
+        $check    = CheckIn::orderBy('id', 'desc')->first();
         if (!empty($id))
         {
             $checkin = CheckIn::find($id);
@@ -55,7 +56,7 @@ class CheckinController extends Controller
                 abort(404);
             }
         }
-        return view('admin.checkin.form', compact('checkin', 'checkins'));
+        return view('admin.checkin.form', compact('checkin', 'checkins', 'check'));
     }
 
     public function store(Request $request)

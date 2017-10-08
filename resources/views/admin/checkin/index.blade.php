@@ -36,6 +36,7 @@ Check In
 										<th>Flight Number</th>
 										<th>Depature</th>
 										<th>Arrival</th>
+										<th>Read</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -50,6 +51,7 @@ Check In
 											<td>{{ $checkin->flight_number }}</td>
 											<td>{{ $checkin->departure_city }}</td>
 											<td>{{ $checkin->arrival_city }}</td>
+											<td>1</td>
 										</tr>
 									@endforeach
 								</tbody>

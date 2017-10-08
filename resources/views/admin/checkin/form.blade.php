@@ -29,6 +29,16 @@ Blash
 	                            	1 => 'delay',
 	                            ], null, ['class' => 'form-control','required']) !!}
 	                        </div>
+	                        <div class="form-group required">
+	                            <label>Time</label>
+								{{-- {!! Form::text('time', null, ['class' => 'form-control datepicker', 'data-date-format' => 'yyyy-mm-dd', 'placeholder' => 'Date', 'required']) !!} --}}
+				                <div class='input-group date' id='datetimepicker1' style="width:250px;">
+				                    <input type='text' class="form-control" value="{{ $check->ready_at }}" />
+				                    <span class="input-group-addon">
+				                        <span class="glyphicon glyphicon-calendar"></span>
+				                    </span>
+				                </div>
+	                        </div>
 							<div class="form-group">
 								<label></label>
 								<button class="btn btn-flat btn-default bg-maroon">Submit</button>
@@ -41,4 +51,28 @@ Blash
 		</div>
 	</div>
 </section>
+@stop
+
+@section('script')
+<link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap-datetimepicker.min.css') }}">
+<script src="{{ asset('assets/bootstrap/js/bootstrap-datetimepicker.min.js') }}"></script>
+<script type="text/javascript">
+    $(function() {
+        //Timepicker
+        $(".timepicker").timepicker({
+    		use24hours: true,
+            showInputs: false
+        });
+	});
+    $('.datepicker').datepicker({
+    	format: 'yyyy-mm-dd'
+    });
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+    		use24hours: true,
+            showInputs: false,
+    		format: 'yyyy-mm-dd H:i:s'
+        });
+    });
+</script>
 @stop

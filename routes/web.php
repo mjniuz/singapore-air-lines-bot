@@ -13,7 +13,8 @@
 
 Route::get('/', function ()
 {
-    return view('welcome');
+    // return view('welcome');
+    return view('frontend.paralax.index');
 });
 
 // set frontend routing

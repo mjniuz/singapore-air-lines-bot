@@ -55,7 +55,8 @@ class UserRepository
     public function saveUserTelegram($data)
     {
         // saving data user
-        $name              = $data['first_name'] . ' ' . $data['last_name'];
+        $last_name         = isset($data['last_name']) ? $data['last_name'] : null;
+        $name              = $data['first_name'] . ' ' . $last_name;
         $username          = str_slug($name);
         $telegram_id       = $data['id'];
         $user              = User::firstOrNew(['username' => $username, 'telegram_id' => $telegram_id]);
