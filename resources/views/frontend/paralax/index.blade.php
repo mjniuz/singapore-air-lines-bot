@@ -226,8 +226,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<i class="fa fa-cutlery" aria-hidden="true"></i>
 					</div>
 					<div class="wthree-services-info">
-						<h5>Fusce feugiat</h5>
-						<p>Donec sed nisi leo. Ut at sagittis nisi. Cras porttitor a purus ac rutrum. </p>
+						<h5>Marketing Campaign in messanger</h5>
+						<p>Customer can chat with our officer via messenger. </p>
 					</div>
 				</div>
 				<div class="col-md-3 wthree-services-grid">
@@ -235,8 +235,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<i class="fa fa-glass" aria-hidden="true"></i>
 					</div>
 					<div class="wthree-services-info">
-						<h5>Fusce feugiat</h5>
-						<p>Donec sed nisi leo. Ut at sagittis nisi. Cras porttitor a purus ac rutrum. </p>
+						<h5>Price Reminder</h5>
+						<p>Singa Boot will send you a notification when find the ticket that suitable
+						with your budget</p>
 					</div>
 				</div>
 				<div class="col-md-3 wthree-services-grid">
@@ -244,8 +245,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<i class="fa fa-user" aria-hidden="true"></i>
 					</div>
 					<div class="wthree-services-info">
-						<h5>Fusce feugiat</h5>
-						<p>Donec sed nisi leo. Ut at sagittis nisi. Cras porttitor a purus ac rutrum. </p>
+						<h5>Flight Booking</h5>
+						<p>. </p>
 					</div>
 				</div>
 				<div class="col-md-3 wthree-services-grid">
