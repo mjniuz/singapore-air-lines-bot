@@ -80,6 +80,7 @@ class FlightRepository extends Repository
                 "to_code"           => "SIN",
                 "to_airport"        => "Changi Airport",
                 "amount_found"      => $price,
+                "only_date"         => $date,
                 "date"              => ($date . " " .date("H:i:s", strtotime("+" . $i . " hours"))),
                 "travel_time"       => date("H:i", strtotime("+" . $i . " hours")),
                 "convert_time"      => "01 Hours",
