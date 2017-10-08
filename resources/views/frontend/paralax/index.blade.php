@@ -51,12 +51,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="header-left">
 						<div class="agileinfo-social-grids">
 							<ul>
-								<li> <img src="{{ URL('paralax/images/logosingapore.png') }}" style="width: 30%"> </li>
+								<li> <img src="{{ URL('paralax/images/logo.png') }}" style="width: 30%"> </li>
 							</ul>
 						</div>
 						<div class="w3layouts-logo">
 							<h1>
-								<a href="{{ URL('/') }}">Singapore <span> Airlines</span></a>
+								<a href="{{ URL('/') }}">Singa <span> Boot</span></a>
 							</h1>
 						</div>
 						<div class="address-info-text">
@@ -112,9 +112,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<div class="clearfix"> </div>
 										</div>
 										<div class="banner-border"> </div>
-										<div class="w3-button">
-											<a href="single.html">Read More</a>
-										</div>
 									</li>
 									<li>	
 										<div class="wthree-banner-grids">
@@ -129,9 +126,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<div class="clearfix"> </div>
 										</div>
 										<div class="banner-border"> </div>
-										<div class="w3-button">
-											<a href="single.html">Read More</a>
-										</div>
 									</li>
 								</ul>
 							</div>
@@ -182,10 +176,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<h2 class="colororange text-center">Say, Hi To Me!</h2>
 							<div class="row">
 								<div class="col-md-4">
-									<a href="http://m.me/866408300180289" target="_blank"><img src="images/messangerlogo.png"></a>
+									<a href="http://m.me/866408300180289" target="_blank">
+										<img src="{{ URL('paralax/images/messangerlogo.png') }}">
+									</a>
 								</div>
 								<div class="col-md-4">
-									<img src="{{ URL('paralax/images/telegramlogo.png') }}">
+									<a href="t.me/TestSingaBot9" target="_blank">
+										<img src="{{ URL('paralax/images/telegramlogo.png') }}">
+									</a>
 								</div>
 								<div class="col-md-4">
 									<img src="{{ URL('paralax/images/linelogo.png') }}">
@@ -203,8 +201,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="col-md-4 mb20">
 								<h2 class="colororange text-center">Say, Hi To Me!</h2>
 								<div class="row">
-										<a href="http://m.me/866408300180289" target="_blank"><img src="images/messangerlogo.png"></a>
-										<img src="{{ URL('paralax/images/telegramlogo.png') }}">
+										<a href="http://m.me/866408300180289" target="_blank">
+												<img src="{{ URL('paralax/images/messangerlogo.png') }}">
+										</a>
+										<a href="t.me/TestSingaBot" target="_blank">
+											<img src="{{ URL('paralax/images/telegramlogo.png') }}">
+										</a>
 										<img src="{{ URL('paralax/images/linelogo.png') }}">
 								</div>
 							</div>
@@ -223,7 +225,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="services-grids">
 				<div class="col-md-3 wthree-services-grid">
 					<div class="wthree-services-icon">
-						<i class="fa fa-cutlery" aria-hidden="true"></i>
+						<i class="fa fa-comments" aria-hidden="true"></i>
 					</div>
 					<div class="wthree-services-info">
 						<h5>Marketing Campaign in messanger</h5>
@@ -232,7 +234,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<div class="col-md-3 wthree-services-grid">
 					<div class="wthree-services-icon">
-						<i class="fa fa-glass" aria-hidden="true"></i>
+						<i class="fa fa-credit-card" aria-hidden="true"></i>
 					</div>
 					<div class="wthree-services-info">
 						<h5>Price Reminder</h5>
@@ -242,7 +244,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<div class="col-md-3 wthree-services-grid">
 					<div class="wthree-services-icon">
-						<i class="fa fa-user" aria-hidden="true"></i>
+						<i class="fa fa-plane" aria-hidden="true"></i>
 					</div>
 					<div class="wthree-services-info">
 						<h5>Flight Booking</h5>
@@ -251,7 +253,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<div class="col-md-3 wthree-services-grid">
 					<div class="wthree-services-icon">
-						<i class="fa fa-asterisk" aria-hidden="true"></i>
+						<i class="fa fa-calendar-check-o" aria-hidden="true"></i>
 					</div>
 					<div class="wthree-services-info">
 						<h5>Check in, Select Seat</h5>
