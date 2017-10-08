@@ -77,10 +77,21 @@ class RequestRepository extends Repository
                         {
                             if ($flights->count() == 0)
                             {
-                                $price = $request->get('price');
+                                //$price = $request->get('price');
 
                                 $flightRepo = new FlightRepository();
-                                $flights    = $flightRepo->randomData($price);
+                                $flights    = $flightRepo->randomData();
+                                return [
+                                    "status"  => 1,
+                                    "message" => [
+                                        "flights" => $flights,
+                                        "data"    => [
+                                            "date"   => $date,
+                                            "depart" => $depart,
+                                            "arrive" => $arrive,
+                                        ],
+                                    ],
+                                ];
                             }
                         }
                     }
