@@ -56,7 +56,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="w3layouts-logo">
 							<h1>
-								<a href="{{ URL('/') }}">Singa <span> Boot</span></a>
+								<a href="{{ URL('/') }}">Singa <span> Bot</span></a>
 							</h1>
 						</div>
 						<div class="address-info-text">
