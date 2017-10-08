@@ -82,7 +82,7 @@ class RequestRepository extends Repository
                             return [
                                 "status"  => 1,
                                 "message" => [
-                                    "flights" => $flights,
+                                    "flights" => (array)$flights,
                                     "data"    => [
                                         "date"   => $date,
                                         "depart" => $depart,
