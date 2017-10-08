@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-Blash
+Flight Timely Update
 @stop
 
 @section('content')
@@ -11,7 +11,7 @@ Blash
 			<div class="box">
 				<div class="box-header">
 					<div class="col-md-12">
-						<h3 align="center">Blash</h3>
+						<h3 align="center">Flight Timely Update</h3>
 					</div>
 				</div>
 				<div class="box-body">
@@ -20,7 +20,7 @@ Blash
 						<div class="table-responsive">
 	                        {!! Form::open(['role' => 'form', 'files' => true, 'route' => ['admin.checkin.store']]) !!}
 	                        <div class="form-group required">
-	                            <label>Blash</label>
+	                            <label>Flight Number</label>
 	                            {!! Form::select('blash', $checkins, null, ['class' => 'form-control','required']) !!}
 	                        </div>
 	                        <div class="form-group required">
