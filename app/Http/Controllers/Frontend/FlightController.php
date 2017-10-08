@@ -34,10 +34,10 @@ class FlightController extends Controller
         }
 
         $flights = $flights->paginate();
-        //dd($flights);
 
-        if($flights->count() == 0){
-            $price      = $request->get('price');
+        if ($flights->count() == 0)
+        {
+            $price = $request->get('price');
 
             $flightRepo = new FlightRepository();
             $flights    = $flightRepo->randomData($price);

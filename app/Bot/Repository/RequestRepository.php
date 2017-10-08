@@ -1,6 +1,7 @@
 <?php namespace App\Bot\Repository;
 
 use App\Bot\Helper\Helper;
+use App\Bot\Repository\FlightRepository;
 use App\Models\Chat;
 use App\Models\Flight;
 
@@ -74,10 +75,13 @@ class RequestRepository extends Repository
                         }
                         else
                         {
-                            return [
-                                "status"  => 2,
-                                "message" => "Data Not Found",
-                            ];
+                            if ($flights->count() == 0)
+                            {
+                                $price = $request->get('price');
+
+                                $flightRepo = new FlightRepository();
+                                $flights    = $flightRepo->randomData($price);
+                            }
                         }
                     }
                     else
