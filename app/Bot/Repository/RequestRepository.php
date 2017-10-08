@@ -78,11 +78,11 @@ class RequestRepository extends Repository
                             //$price = $request->get('price');
 
                             $flightRepo = new FlightRepository();
-                            $flights    = $flightRepo->randomData();
+                            $flights    = $flightRepo->randomDataMessage();
                             return [
                                 "status"  => 1,
                                 "message" => [
-                                    "flights" => (array)$flights,
+                                    "flights" => $flights,
                                     "data"    => [
                                         "date"   => $date,
                                         "depart" => $depart,
