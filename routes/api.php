@@ -25,6 +25,11 @@ Route::group(['namespace' => 'Api', 'middleware' => 'api.auth'], function ()
     // telegram
     Route::get('bot/telegram', ['uses' => 'TelegramController@verifyToken']);
     Route::post('/bot/telegram', ['uses' => 'TelegramController@telegramBot']);
+
+    // line
+    Route::get('bot/line', ['uses' => 'LineController@verifyToken']);
+    Route::post('/bot/line', ['uses' => 'LineController@lineBot']);
+
 });
 
 Route::group(['namespace' => 'Api'], function ()

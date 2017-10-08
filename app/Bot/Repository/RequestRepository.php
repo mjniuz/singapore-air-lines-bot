@@ -75,8 +75,6 @@ class RequestRepository extends Repository
                         }
                         else
                         {
-                            //$price = $request->get('price');
-
                             $flightRepo = new FlightRepository();
                             $flights    = $flightRepo->randomData();
                             return [
