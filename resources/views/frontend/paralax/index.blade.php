@@ -443,5 +443,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							});
 					</script>
 	<script src="{{ asset('paralax/js/jquery.flexisel.js') }}"></script>
+	<script src="{{ asset('paralax/js/SmoothScroll.min.js') }}"></script>
 </body>	
 </html>
