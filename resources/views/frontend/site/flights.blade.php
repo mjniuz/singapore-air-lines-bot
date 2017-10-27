@@ -73,7 +73,7 @@
                           <tr>
                             <td align="center">
                                 {{-- <img src="{{ URL('assets/img/singapore-airlines.jpg') }}" width="100px" height="100px" style="display: block;"> --}}
-                                <img src="https://lunardream.files.wordpress.com/2012/01/singapore-airlines-mobile.png" width="100px" height="100px" style="display: block;">
+                                <img src="{{ $flight->image_logo }}" width="100px" height="100px" style="display: block;">
                                 <b>
                                   Singapore Airlines
                                 </b>

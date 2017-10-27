@@ -1,5 +1,7 @@
 <?php namespace App\Bot\Repository;
 
+use App\Bot\Helper\Helper;
+
 class FlightRepository extends Repository
 {
     public function randomData($price = 0)
@@ -41,6 +43,7 @@ class FlightRepository extends Repository
                 "only_time"         => date("H:i", strtotime("+" . $i . " hours")),
                 "only_time_arrival" => date("H:i", strtotime("+" . ($i + 1) . " hours")),
                 "convert_time"      => "01 Hours",
+                "image_logo"        => Helper::randomLinkAirlines(),
             ];
         }
 
@@ -64,7 +67,7 @@ class FlightRepository extends Repository
          */
 
         $price = 100;
-        $data = [];
+        $data  = [];
         for ($i = 1; $i < 4; $i++)
         {
             if ($i != 1)
@@ -83,7 +86,7 @@ class FlightRepository extends Repository
                 "only_date"         => $date,
                 "only_time"         => date("H:i", strtotime("+" . $i . " hours")),
                 "only_time_arrival" => date("H:i", strtotime("+" . ($i + 1) . " hours")),
-                "date"              => ($date . " " .date("H:i:s", strtotime("+" . $i . " hours"))),
+                "date"              => ($date . " " . date("H:i:s", strtotime("+" . $i . " hours"))),
                 "travel_time"       => date("H:i", strtotime("+" . $i . " hours")),
                 "convert_time"      => "01 Hours",
             ];

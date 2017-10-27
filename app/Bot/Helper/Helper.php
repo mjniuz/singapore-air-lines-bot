@@ -1,5 +1,7 @@
 <?php namespace App\Bot\Helper;
 
+use Illuminate\Support\Facades\Config;
+
 class Helper
 {
     /**
@@ -63,5 +65,18 @@ class Helper
         {
             return false;
         }
+    }
+
+    /**
+     * this function for random links airlines
+     * @return string
+     */
+    public static function randomLinkAirlines()
+    {
+        $urls       = Config::get('imageflights.flights');
+        $randomlink = array_rand($urls, 1);
+        $thelink    = $urls[$randomlink];
+
+        return $thelink;
     }
 }

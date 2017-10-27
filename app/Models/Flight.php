@@ -1,12 +1,13 @@
 <?php namespace App\Models;
 
+use App\Bot\Helper\Helper;
 use App\Models\BaseModel;
 
 class Flight extends BaseModel
 {
     protected $table   = 'flights';
     protected $guarded = [];
-    protected $appends = ['only_date', 'only_time', 'convert_time', 'only_time_arrival'];
+    protected $appends = ['only_date', 'only_time', 'convert_time', 'only_time_arrival', 'image_logo'];
 
     public function getOnlyDateAttribute()
     {
@@ -16,6 +17,11 @@ class Flight extends BaseModel
     public function getOnlyTimeAttribute()
     {
         return date("H:i", strtotime($this->attributes['date']));
+    }
+
+    public function getImageLogoAttribute()
+    {
+        return Helper::randomLinkAirlines();
     }
 
     public function getConvertTimeAttribute()
