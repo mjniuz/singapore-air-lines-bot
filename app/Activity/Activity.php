@@ -1,11 +1,9 @@
-<?php
-namespace App\Activity;
-
+<?php namespace App\Activity;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-    protected $table   = 'activity';
-    protected $timestamp    = true;
+    protected $table     = 'activity';
+    protected $timestamp = true;
 }
