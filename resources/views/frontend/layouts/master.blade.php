@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="https://lunardream.files.wordpress.com/2012/01/singapore-airlines-mobile.png"/>
+    <link rel="icon" href="https://cdn.worldvectorlogo.com/logos/facebook-4.svg"/>
 
-    <title>Bot Singapore Airlines</title>
+    <title>Bot Facebook</title>
 
     <!-- Styles -->     
     <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}">
@@ -28,7 +28,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ route('frontend.home') }}">
-                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9d/Singapore_Airlines_Logo.svg/1200px-Singapore_Airlines_Logo.svg.png" class="img-responsive" style="width:100px; height:40px; ">
+                        <img src="https://cdn.worldvectorlogo.com/logos/facebook-4.svg" class="img-responsive" style="width:100px; height:40px; ">
                     </a>
                 </div>
 
