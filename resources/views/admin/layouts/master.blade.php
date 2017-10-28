@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-		<link rel="icon" href="https://lunardream.files.wordpress.com/2012/01/singapore-airlines-mobile.png"/>
+		<link rel="icon" href="https://cdn.worldvectorlogo.com/logos/facebook-4.svg"/>
 		<title>Bot - @yield('title')</title>
 		<link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}">
 		<link rel="stylesheet" href="{{ asset('assets/css/sweetalert.css') }}">

@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Bot Singapore Airlines</title>
-        <link rel="icon" href="https://lunardream.files.wordpress.com/2012/01/singapore-airlines-mobile.png"/>
+        <title>Bot Facebook</title>
+        <link rel="icon" href="https://cdn.worldvectorlogo.com/logos/facebook-4.svg"/>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <link rel="stylesheet" href="{{asset('assets/css/app.min.css')}}">
     </head>
@@ -13,7 +13,7 @@
             @include('admin._partials.notifications')
             <div class="login-box-body" style="border-radius:15px;">
                 <div class="login-logo">
-                    <b>S</b>INGAPORE <b>A</b>IRLINES
+                    <b>B</b>OT <b>F</b>ACEBOOK
                 </div>
                 {!! Form::open(['route' => 'admin.login.submit']) !!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
